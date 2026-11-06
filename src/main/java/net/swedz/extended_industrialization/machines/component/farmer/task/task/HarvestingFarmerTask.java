@@ -1,8 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.farmer.task.task;
 
 import aztech.modern_industrialization.inventory.MIItemStorage;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.transaction.Transaction;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.FullChunkStatus;
@@ -56,7 +56,7 @@ public final class HarvestingFarmerTask extends FarmerTask
 				{
 					continue;
 				}
-				long inserted = itemOutput.insertAllSlot(ItemVariant.of(item), item.getCount(), transaction);
+				long inserted = itemOutput.insertAllSlot(ItemResource.of(item), item.getCount(), transaction);
 				if(inserted != item.getCount() &&
 				   !item.is(EITags.Items.FARMER_VOIDABLE))
 				{
@@ -196,7 +196,7 @@ public final class HarvestingFarmerTask extends FarmerTask
 			
 			if((updateFlag & 1) != 0)
 			{
-				level.blockUpdated(pos, oldState.getBlock());
+				level.updateNeighborsAt(pos, oldState.getBlock(), null);
 				if(!level.isClientSide() && newState.hasAnalogOutputSignal())
 				{
 					level.updateNeighbourForOutputSignal(pos, block);

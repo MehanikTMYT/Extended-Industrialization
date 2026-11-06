@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 public final class DatagenDelegatorClient
 {
-	public static void configure(GatherDataEvent event)
+	public static void configure(GatherDataEvent.Client event)
 	{
 		MIDatagenHooks.Client.includeMISprites(event);
 		
@@ -25,8 +25,8 @@ public final class DatagenDelegatorClient
 		add(event, LanguageDatagenProvider::new);
 	}
 	
-	private static void add(GatherDataEvent event, Function<GatherDataEvent, DataProvider> providerCreator)
+	private static void add(GatherDataEvent.Client event, Function<GatherDataEvent.Client, DataProvider> providerCreator)
 	{
-		event.getGenerator().addProvider(event.includeClient(), providerCreator.apply(event));
+		event.getGenerator().addProvider(true, providerCreator.apply(event));
 	}
 }

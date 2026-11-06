@@ -19,7 +19,7 @@ import aztech.modern_industrialization.materials.MIMaterials;
 import aztech.modern_industrialization.materials.part.MIParts;
 import aztech.modern_industrialization.util.MobSpawning;
 import com.google.common.collect.Maps;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.material.MapColor;
@@ -103,7 +103,7 @@ public final class EIMachines
 			return RECIPE_TYPE_NAMES;
 		}
 		
-		private static MachineRecipeType create(MachineRecipeTypesMIHookContext hook, String englishName, String id, Function<ResourceLocation, MachineRecipeType> creator)
+		private static MachineRecipeType create(MachineRecipeTypesMIHookContext hook, String englishName, String id, Function<Identifier, MachineRecipeType> creator)
 		{
 			MachineRecipeType recipeType = hook.create(id, creator);
 			RECIPE_TYPE_NAMES.put(recipeType, englishName);
@@ -428,11 +428,11 @@ public final class EIMachines
 				.registerMachine();
 		
 		hook.builder("tesla_particle_generator", "Tesla Particle Generator", TeslaParticleGeneratorMachineBlockEntity::new)
-				.modify((block) -> block.item().withoutModel())
+				
 				.properties((properties) -> properties
 						.mapColor(MapColor.METAL)
 						.isValidSpawn(MobSpawning.NO_SPAWN)
-						.noCollission()
+						.noCollision()
 						.noOcclusion()
 						.instabreak())
 				.excludeDefaultBlockProperties()

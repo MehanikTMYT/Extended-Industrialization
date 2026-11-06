@@ -6,7 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.swedz.extended_industrialization.EI;
@@ -21,9 +21,9 @@ public final class NanoSuitSpeedAbility implements NanoSuitAbility
 	private static final double SPEED_BOOST = 0.4;
 	
 	@Override
-	public ArmorItem.Type armorType()
+	public ArmorType armorType()
 	{
-		return ArmorItem.Type.LEGGINGS;
+		return ArmorType.LEGGINGS;
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public final class NanoSuitSpeedAbility implements NanoSuitAbility
 	@Override
 	public void onActivationChange(NanoSuitArmorItem item, Player player, ItemStack stack, boolean activated)
 	{
-		player.displayClientMessage(activated ? EI.text().nanoSuitSpeedToggledOn() : EI.text().nanoSuitSpeedToggledOff(), true);
+		player.sendOverlayMessage(activated ? EI.text().nanoSuitSpeedToggledOn() : EI.text().nanoSuitSpeedToggledOff());
 	}
 	
 	@Override

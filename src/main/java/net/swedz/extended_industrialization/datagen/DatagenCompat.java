@@ -1,26 +1,26 @@
 package net.swedz.extended_industrialization.datagen;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class DatagenCompat
 {
-	public static ResourceLocation mysticalAgriculture(String path)
+	public static Identifier mysticalAgriculture(String path)
 	{
-		return ResourceLocation.fromNamespaceAndPath("mysticalagriculture", path);
+		return Identifier.fromNamespaceAndPath("mysticalagriculture", path);
 	}
 	
-	public static ResourceLocation farmersDelight(String path)
+	public static Identifier farmersDelight(String path)
 	{
-		return ResourceLocation.fromNamespaceAndPath("farmersdelight", path);
+		return Identifier.fromNamespaceAndPath("farmersdelight", path);
 	}
 	
-	public static ResourceLocation eternalStarlight(String path)
+	public static Identifier eternalStarlight(String path)
 	{
-		return ResourceLocation.fromNamespaceAndPath("eternal_starlight", path);
+		return Identifier.fromNamespaceAndPath("eternal_starlight", path);
 	}
 	
-	public static ResourceLocation biomesWeveGone(String path)
+	public static Identifier biomesWeveGone(String path)
 	{
-		return ResourceLocation.fromNamespaceAndPath("biomeswevegone", path);
+		return Identifier.fromNamespaceAndPath("biomeswevegone", path);
 	}
 }

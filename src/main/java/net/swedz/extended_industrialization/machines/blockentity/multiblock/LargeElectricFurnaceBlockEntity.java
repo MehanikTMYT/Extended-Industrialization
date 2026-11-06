@@ -14,7 +14,7 @@ import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.datamap.LargeElectricFurnaceTier;
 import net.swedz.tesseract.neoforge.compat.mi.TesseractMI;
@@ -81,7 +81,7 @@ public final class LargeElectricFurnaceBlockEntity extends AbstractElectricMulti
 	);
 	
 	private static List<Tier>                  TIERS           = List.of();
-	private static Map<ResourceLocation, Tier> TIERS_BY_COIL   = Collections.unmodifiableMap(Maps.newHashMap());
+	private static Map<Identifier, Tier> TIERS_BY_COIL   = Collections.unmodifiableMap(Maps.newHashMap());
 	private static ShapeTemplate[]             SHAPE_TEMPLATES = new ShapeTemplate[0];
 	
 	public static List<Tier> getTiers()
@@ -89,12 +89,12 @@ public final class LargeElectricFurnaceBlockEntity extends AbstractElectricMulti
 		return TIERS;
 	}
 	
-	public static Map<ResourceLocation, Tier> getTiersByCoil()
+	public static Map<Identifier, Tier> getTiersByCoil()
 	{
 		return TIERS_BY_COIL;
 	}
 	
-	public record Tier(ResourceLocation blockId, int batchSize, float euCostMultiplier)
+	public record Tier(Identifier blockId, int batchSize, float euCostMultiplier)
 	{
 		public String getTranslationKey()
 		{

@@ -17,9 +17,9 @@ public final class BeheadingLootModifier extends LootModifier
 	
 	private final ItemStack drop;
 	
-	public BeheadingLootModifier(LootItemCondition[] conditions, ItemStack drop)
+	public BeheadingLootModifier(LootItemCondition[] conditions, int priority, ItemStack drop)
 	{
-		super(conditions);
+		super(conditions, priority);
 		this.drop = drop;
 	}
 	

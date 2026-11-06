@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization.machines.guicomponent;
 
 import aztech.modern_industrialization.inventory.SlotGroup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,17 +16,17 @@ import java.util.function.Supplier;
 
 public final class EIModularSlotPanelSlots
 {
-	public static final ResourceLocation TESLA_TOWER_UPGRADE = register(
+	public static final Identifier TESLA_TOWER_UPGRADE = register(
 			"tesla_tower_upgrade", SlotGroup.UPGRADES, 64,
 			(stack) -> stack.is(EIItems.TESLA_INTERDIMENSIONAL_UPGRADE.asItem()),
 			2, 0, () -> EI.text().teslaTowerUpgrade()
 	);
 	
-	public static final ResourceLocation FARMER_ENCHANTMENT_MODULE = registerEnchantmentModule(
+	public static final Identifier FARMER_ENCHANTMENT_MODULE = registerEnchantmentModule(
 			"farmer", EITags.Items.EnchantmentModules.FARMER
 	);
 	
-	public static final ResourceLocation LETHAL_TESLA_COIL_ENCHANTMENT_MODULE = registerEnchantmentModule(
+	public static final Identifier LETHAL_TESLA_COIL_ENCHANTMENT_MODULE = registerEnchantmentModule(
 			"lethal_tesla_coil", EITags.Items.EnchantmentModules.LETHAL_TESLA_COIL
 	);
 	
@@ -34,7 +34,7 @@ public final class EIModularSlotPanelSlots
 	{
 	}
 	
-	private static ResourceLocation register(String name, SlotGroup group,
+	private static Identifier register(String name, SlotGroup group,
 											 int stackLimit, Predicate<ItemStack> insertionChecker,
 											 int x, int y,
 											 Supplier<Component> tooltip)
@@ -47,7 +47,7 @@ public final class EIModularSlotPanelSlots
 		);
 	}
 	
-	private static ResourceLocation registerEnchantmentModule(String name, TagKey<Item> tag)
+	private static Identifier registerEnchantmentModule(String name, TagKey<Item> tag)
 	{
 		return register(
 				"%s_enchantment_module".formatted(name), SlotGroup.CONFIGURABLE_STACKS, 1,
@@ -56,7 +56,7 @@ public final class EIModularSlotPanelSlots
 		);
 	}
 	
-	private static ResourceLocation register(String name, SlotGroup group,
+	private static Identifier register(String name, SlotGroup group,
 											 int stackLimit, Predicate<ItemStack> insertionChecker,
 											 Supplier<Component> tooltip)
 	{

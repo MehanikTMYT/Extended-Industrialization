@@ -56,7 +56,7 @@ public abstract class TeslaNetworkReceiversPlayerMixin extends LivingEntity
 		
 		List<ItemStack> items = Lists.newArrayList();
 		items.addAll(inventory.armor);
-		items.addAll(inventory.items);
+		items.addAll(inventory.getNonEquipmentItems());
 		items.addAll(inventory.offhand);
 		items.addAll(EIModSlot.getContents(player, (stack) -> true));
 		

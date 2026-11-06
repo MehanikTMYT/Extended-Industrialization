@@ -38,7 +38,7 @@ public final class ElectricBeaconShapeMatcher extends ShapeMatcher
 	{
 		super.registerListeners(world);
 		
-		ChunkEventListeners.listeners.add(world, new ChunkPos(controllerPos), listener);
+		ChunkEventListeners.listeners.add(world, ChunkPos.containing(controllerPos), listener);
 	}
 	
 	@Override
@@ -46,6 +46,6 @@ public final class ElectricBeaconShapeMatcher extends ShapeMatcher
 	{
 		super.unregisterListeners(world);
 		
-		ChunkEventListeners.listeners.remove(world, new ChunkPos(controllerPos), listener);
+		ChunkEventListeners.listeners.remove(world, ChunkPos.containing(controllerPos), listener);
 	}
 }

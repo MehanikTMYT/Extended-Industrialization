@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network.transmitter;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import net.swedz.extended_industrialization.machines.component.tesla.network.TeslaNetworkPart;
 import net.swedz.extended_industrialization.machines.component.tesla.network.TeslaTransferLimits;
@@ -11,7 +14,7 @@ public interface TeslaTransmitter extends TeslaNetworkPart, TeslaTransferLimits
 	
 	long transmitEnergy(long maxTransmit);
 	
-	long extractEnergy(long maxExtract, boolean simulate);
+	int extractEnergy(int maxExtract, TransactionContext transaction);
 	
 	interface Delegate extends TeslaTransmitter
 	{
@@ -84,9 +87,9 @@ public interface TeslaTransmitter extends TeslaNetworkPart, TeslaTransferLimits
 		}
 		
 		@Override
-		default long extractEnergy(long maxExtract, boolean simulate)
+		default int extractEnergy(int maxExtract, TransactionContext transaction)
 		{
-			return this.getDelegateTransmitter().extractEnergy(maxExtract, simulate);
+			return this.getDelegateTransmitter().extractEnergy(maxExtract, transaction);
 		}
 	}
 }

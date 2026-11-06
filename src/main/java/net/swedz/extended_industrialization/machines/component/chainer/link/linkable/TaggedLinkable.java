@@ -25,8 +25,8 @@ public final class TaggedLinkable implements ChainerLinkable
 		}
 		else if(context.hasBlockEntity())
 		{
-			var itemHandler = context.level().getCapability(Capabilities.ItemHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
-			var fluidHandler = context.level().getCapability(Capabilities.FluidHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			var itemHandler = context.level().getCapability(Capabilities.Item.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			var fluidHandler = context.level().getCapability(Capabilities.Fluid.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
 			var energyHandler = context.level().getCapability(EnergyApi.SIDED, context.pos(), context.blockState(), context.blockEntity(), null);
 			if(itemHandler != null || fluidHandler != null || energyHandler != null)
 			{

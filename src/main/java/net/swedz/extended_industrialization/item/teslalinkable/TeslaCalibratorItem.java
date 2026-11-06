@@ -4,7 +4,7 @@ import aztech.modern_industrialization.machines.MachineBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
@@ -50,7 +50,7 @@ public final class TeslaCalibratorItem extends Item
 					receiver.setNetwork(key);
 					machine.setChanged();
 					machine.sync();
-					player.displayClientMessage(EI.text().teslaCalibratorLinkSuccess(), true);
+					player.sendOverlayMessage(EI.text().teslaCalibratorLinkSuccess());
 				}
 			}
 		}
@@ -72,9 +72,9 @@ public final class TeslaCalibratorItem extends Item
 				if(!client)
 				{
 					itemStack.set(EIComponents.SELECTED_TESLA_NETWORK, new SelectedTeslaNetwork(transmitter.getPosition(), context.getLevel().getBlockState(context.getClickedPos()).getBlock()));
-					player.displayClientMessage(EI.text().teslaCalibratorSelected(), true);
+					player.sendOverlayMessage(EI.text().teslaCalibratorSelected());
 				}
-				return InteractionResult.sidedSuccess(client);
+				return InteractionResult.SUCCESS;
 			}
 			else if(!player.isShiftKeyDown() &&
 					hitBlockEntity instanceof MachineBlockEntity machine &&
@@ -88,27 +88,27 @@ public final class TeslaCalibratorItem extends Item
 						receiver.setNetwork(key);
 						machine.setChanged();
 						machine.sync();
-						player.displayClientMessage(EI.text().teslaCalibratorLinkSuccess(), true);
+						player.sendOverlayMessage(EI.text().teslaCalibratorLinkSuccess());
 					}
 					else
 					{
-						player.displayClientMessage(EI.text().teslaCalibratorLinkFailedNoSelection(), true);
+						player.sendOverlayMessage(EI.text().teslaCalibratorLinkFailedNoSelection());
 					}
 				}
-				return InteractionResult.sidedSuccess(client);
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return InteractionResult.PASS;
 	}
 	
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand)
+	public InteractionResult use(Level level, Player player, InteractionHand usedHand)
 	{
 		if(player.isShiftKeyDown())
 		{
 			player.getItemInHand(usedHand).remove(EIComponents.SELECTED_TESLA_NETWORK);
-			player.displayClientMessage(EI.text().teslaCalibratorClear(), true);
-			return InteractionResultHolder.sidedSuccess(player.getItemInHand(usedHand), level.isClientSide());
+			player.sendOverlayMessage(EI.text().teslaCalibratorClear());
+			return InteractionResult.SUCCESS;
 		}
 		return super.use(level, player, usedHand);
 	}

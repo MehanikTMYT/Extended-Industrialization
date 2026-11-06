@@ -14,7 +14,7 @@ public final class ForceHideTeslaComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		if(forceHide)
 		{
@@ -23,8 +23,8 @@ public final class ForceHideTeslaComponent implements MachineComponent
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		forceHide = tag.getBoolean("force_hide_tesla");
+		forceHide = tag.getBooleanOr("force_hide_tesla", false);
 	}
 }

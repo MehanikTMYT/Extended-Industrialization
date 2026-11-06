@@ -1,0 +1,810 @@
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/handler/ChainerItemHandler.java:4: error: package aztech.modern_industrialization.thirdparty.fabrictransfer.api.bridge does not exist
+import aztech.modern_industrialization.thirdparty.fabrictransfer.api.bridge.SlotItemHandler;
+                                                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/client/nanosuit/NanoArmorModel.java:3: error: cannot find symbol
+import net.minecraft.client.model.HumanoidArmorModel;
+                                 ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EI.java:36: error: package net.swedz.tesseract.neoforge.compat.guideme.tags does not exist
+import net.swedz.tesseract.neoforge.compat.guideme.tags.TesseractGuideMETags;
+                                                       ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/compat/continuity/ContinuityModelUnwrapper.java:4: error: cannot find symbol
+import net.minecraft.client.resources.model.BakedModel;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:9: error: cannot find symbol
+import aztech.modern_industrialization.fluid.MIFluidType;
+                                            ^
+  symbol:   class MIFluidType
+  location: package aztech.modern_industrialization.fluid
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:85: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:85: error: cannot find symbol
+	public static final class FakedMIFluidType extends MIFluidType
+	                                                   ^
+  symbol:   class MIFluidType
+  location: class MIFluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:91: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:91: error: cannot find symbol
+		public FakedMIFluidType(String namespace, DeferredBlock<MIFluidBlock> fluidBlock, Properties properties)
+		                                                                                  ^
+  symbol:   class Properties
+  location: class FakedMIFluidType
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EILootModifiers.java:5: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:126: error: cannot find symbol
+		if(this.isSupportedBlock(stack, state) && this.canUse(stack) && !state.is(ToolMaterial.NETHERITE.getIncorrectBlocksForDrops()))
+		                                                                                                ^
+  symbol:   method getIncorrectBlocksForDrops()
+  location: variable NETHERITE of type ToolMaterial
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:140: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:140: error: cannot find symbol
+				return ToolMaterial.DIAMOND.getSpeed();
+				                           ^
+  symbol:   method getSpeed()
+  location: variable DIAMOND of type ToolMaterial
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:188: error: hurtEnemy(ItemStack,LivingEntity,LivingEntity) in SteamChainsawItem cannot override hurtEnemy(ItemStack,LivingEntity,LivingEntity) in Item
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:188: error: hurtEnemy(ItemStack,LivingEntity,LivingEntity) in SteamChainsawItem cannot override hurtEnemy(ItemStack,LivingEntity,LivingEntity) in Item
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	               ^
+  return type boolean is not compatible with void
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:187: error: method does not override or implement a method from a supertype
+	@Override
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:187: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:224: error: cannot find symbol
+				user.displayClientMessage(
+				    ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:224: error: cannot find symbol
+				user.displayClientMessage(
+				    ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable user of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:260: error: incompatible types: Level cannot be converted to ServerLevel
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:260: error: incompatible types: Level cannot be converted to ServerLevel
+						.forEach((drop) -> shearable.spawnShearedDrop(level, blockPos, drop));
+						                                              ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:277: error: cannot find symbol
+			player.playNotifySound(SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1f, 1f);
+			      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:277: error: cannot find symbol
+			player.playNotifySound(SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1f, 1f);
+			      ^
+  symbol:   method playNotifySound(SoundEvent,SoundSource,float,float)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:281: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:281: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:328: error: cannot find symbol
+				if(burnt.hasCraftingRemainingItem())
+				        ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:328: error: cannot find symbol
+				if(burnt.hasCraftingRemainingItem())
+				        ^
+  symbol:   method hasCraftingRemainingItem()
+  location: variable burnt of type ItemStack
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:330: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:330: error: cannot find symbol
+					new ContainerItem.ItemHandler(stack, this)
+					                 ^
+  symbol:   class ItemHandler
+  location: interface ContainerItem
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:331: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:331: error: cannot find symbol
+							.insertItem(0, burnt.getCraftingRemainingItem(), false, true, true);
+							                    ^
+  symbol:   method getCraftingRemainingItem()
+  location: variable burnt of type ItemStack
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:339: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:339: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:427: error: cannot find symbol
+		var otherStorage = fillSource.getCapability(Capabilities.FluidHandler.ITEM);
+		                                                        ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:427: error: cannot find symbol
+		var otherStorage = fillSource.getCapability(Capabilities.FluidHandler.ITEM);
+		                                                        ^
+  symbol:   variable FluidHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:450: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:450: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:487: error: constructor AxeItem in class AxeItem cannot be applied to given types;
+			super(material, properties);
+			^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/SteamChainsawItem.java:487: error: constructor AxeItem in class AxeItem cannot be applied to given types;
+			super(material, properties);
+			^
+  required: ToolMaterial,float,float,Properties
+  found:    ToolMaterial,Properties
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:53: error: cannot find symbol
+					player.displayClientMessage(EI.text().teslaCalibratorLinkSuccess(), true);
+					      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:75: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:75: error: cannot find symbol
+					player.displayClientMessage(EI.text().teslaCalibratorSelected(), true);
+					      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:91: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:91: error: cannot find symbol
+						player.displayClientMessage(EI.text().teslaCalibratorLinkSuccess(), true);
+						      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:95: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:95: error: cannot find symbol
+						player.displayClientMessage(EI.text().teslaCalibratorLinkFailedNoSelection(), true);
+						      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:110: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:110: error: cannot find symbol
+			player.displayClientMessage(EI.text().teslaCalibratorClear(), true);
+			      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:116: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaCalibratorItem.java:116: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:44: error: cannot find symbol
+					player.displayClientMessage(EI.text().teslaHandheldSelected(), true);
+					      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:44: error: cannot find symbol
+					player.displayClientMessage(EI.text().teslaHandheldSelected(), true);
+					      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:58: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:58: error: cannot find symbol
+			player.displayClientMessage(EI.text().teslaHandheldClear(), true);
+			      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:64: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/teslalinkable/TeslaHandheldReceiverItem.java:64: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfig.java:72: error: cannot find symbol
+				target.getLevel().blockUpdated(target.getBlockPos(), Blocks.AIR);
+				                 ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfig.java:72: error: cannot find symbol
+				target.getLevel().blockUpdated(target.getBlockPos(), Blocks.AIR);
+				                 ^
+  symbol:   method blockUpdated(BlockPos,Block)
+  location: class Level
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:51: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:51: error: cannot find symbol
+						player.displayClientMessage(EI.text().machineConfigCardApplySuccess(), true);
+						      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:55: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:55: error: cannot find symbol
+						player.displayClientMessage(EI.text().machineConfigCardApplyFailed(), true);
+						      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:79: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:79: error: cannot find symbol
+						player.displayClientMessage(EI.text().machineConfigCardSave(), true);
+						      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:90: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:90: error: cannot find symbol
+								player.displayClientMessage(EI.text().machineConfigCardApplySuccess(), true);
+								      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:94: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:94: error: cannot find symbol
+								player.displayClientMessage(EI.text().machineConfigCardApplyFailed(), true);
+								      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:111: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:111: error: cannot find symbol
+			player.displayClientMessage(EI.text().machineConfigCardClear(), true);
+			      ^
+  symbol:   method displayClientMessage(MutableComponent,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:117: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/machineconfig/MachineConfigCardItem.java:117: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:114: error: cannot find symbol
+						ItemAbilities.DEFAULT_PICKAXE_ACTIONS,
+						             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:114: error: cannot find symbol
+						ItemAbilities.DEFAULT_PICKAXE_ACTIONS,
+						             ^
+  symbol:   variable DEFAULT_PICKAXE_ACTIONS
+  location: class ItemAbilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:121: error: constructor Tool in record Tool cannot be applied to given types;
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:121: error: constructor Tool in record Tool cannot be applied to given types;
+				() -> new Tool(
+				      ^
+  required: List<Rule>,float,int,boolean
+  found:    List<Object>,int,int
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:143: error: incompatible types: no instance(s) of type variable(s) E exist so that List<E> conforms to HolderSet<Block>
+								Tool.Rule.minesAndDrops(
+								         ^
+  where E is a type-variable:
+    E extends Object declared in method <E>of(E)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:159: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:159: error: cannot find symbol
+						ItemAbilities.DEFAULT_SWORD_ACTIONS
+						             ^
+  symbol:   variable DEFAULT_SWORD_ACTIONS
+  location: class ItemAbilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:167: error: incompatible types: no instance(s) of type variable(s) E exist so that List<E> conforms to HolderSet<Block>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:167: error: incompatible types: no instance(s) of type variable(s) E exist so that List<E> conforms to HolderSet<Block>
+								Tool.Rule.minesAndDrops(
+								         ^
+  where E is a type-variable:
+    E extends Object declared in method <E>of(E)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:183: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:183: error: cannot find symbol
+						ItemAbilities.DEFAULT_PICKAXE_ACTIONS,
+						             ^
+  symbol:   variable DEFAULT_PICKAXE_ACTIONS
+  location: class ItemAbilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:187: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:187: error: cannot find symbol
+						ItemAbilities.DEFAULT_SWORD_ACTIONS
+						             ^
+  symbol:   variable DEFAULT_SWORD_ACTIONS
+  location: class ItemAbilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:195: error: incompatible types: no instance(s) of type variable(s) E exist so that List<E> conforms to HolderSet<Block>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:195: error: incompatible types: no instance(s) of type variable(s) E exist so that List<E> conforms to HolderSet<Block>
+								Tool.Rule.minesAndDrops(
+								         ^
+  where E is a type-variable:
+    E extends Object declared in method <E>of(E)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:458: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:458: error: cannot find symbol
+				player.displayClientMessage(activated ? EI.text().electricTool3By3ToggledOn() : EI.text().electricTool3By3ToggledOff(), true);
+				      ^
+  symbol:   method displayClientMessage(activated [...]Off(),boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:483: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:483: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:531: warning: [removal] ItemHandlerHelper in net.neoforged.neoforge.items has been deprecated and marked for removal
+			totalDrops.forEach((drop) -> ItemHandlerHelper.giveItemToPlayer(player, drop));
+			                             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:593: error: method onDestroyedByPlayer in interface IBlockExtension cannot be applied to given types;
+					if(!event.isCanceled() && minedBlock.onDestroyedByPlayer(minedState, level, minedPos, player, true, minedState.getFluidState()))
+					                                    ^
+  required: BlockState,Level,BlockPos,Player,ItemStack,boolean,FluidState
+  found:    BlockState,Level,BlockPos,Player,boolean,FluidState
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:593: error: incompatible types: boolean cannot be converted to ItemStack
+					if(!event.isCanceled() && minedBlock.onDestroyedByPlayer(minedState, level, minedPos, player, true, minedState.getFluidState()))
+					                                                                                              ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:703: error: hurtEnemy(ItemStack,LivingEntity,LivingEntity) in ElectricToolItem cannot override hurtEnemy(ItemStack,LivingEntity,LivingEntity) in Item
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:703: error: hurtEnemy(ItemStack,LivingEntity,LivingEntity) in ElectricToolItem cannot override hurtEnemy(ItemStack,LivingEntity,LivingEntity) in Item
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	               ^
+  return type boolean is not compatible with void
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:702: error: method does not override or implement a method from a supertype
+	@Override
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:702: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:712: error: cannot find symbol
+			   !state.is(ToolMaterial.NETHERITE.getIncorrectBlocksForDrops());
+			                                   ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:712: error: cannot find symbol
+			   !state.is(ToolMaterial.NETHERITE.getIncorrectBlocksForDrops());
+			                                   ^
+  symbol:   method getIncorrectBlocksForDrops()
+  location: variable NETHERITE of type ToolMaterial
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:857: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:857: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:907: error: cannot find symbol
+				player.displayClientMessage(mode.text().switched(), true);
+				      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:907: error: cannot find symbol
+				player.displayClientMessage(mode.text().switched(), true);
+				      ^
+  symbol:   method displayClientMessage(Component,boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:918: error: no suitable method found for addCooldown(ElectricToolItem,int)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:918: error: no suitable method found for addCooldown(ElectricToolItem,int)
+				player.getCooldowns().addCooldown(this, 20);
+				                     ^
+    method ItemCooldowns.addCooldown(ItemStack,int) is not applicable
+      (argument mismatch; ElectricToolItem cannot be converted to ItemStack)
+    method ItemCooldowns.addCooldown(Identifier,int) is not applicable
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:979: error: incompatible types: Level cannot be converted to ServerLevel
+						.forEach((drop) -> shearable.spawnShearedDrop(level, blockPos, drop));
+						                                              ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:991: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:991: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:1030: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:1030: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:1036: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:1036: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitNightVisionAbility.java:46: error: cannot find symbol
+		player.displayClientMessage(activated ? EI.text().nanoSuitNightVisionToggledOn() : EI.text().nanoSuitNightVisionToggledOff(), true);
+		      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitNightVisionAbility.java:46: error: cannot find symbol
+		player.displayClientMessage(activated ? EI.text().nanoSuitNightVisionToggledOn() : EI.text().nanoSuitNightVisionToggledOff(), true);
+		      ^
+  symbol:   method displayClientMessage(activated [...]Off(),boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitSpeedAbility.java:66: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitSpeedAbility.java:66: error: cannot find symbol
+		player.displayClientMessage(activated ? EI.text().nanoSuitSpeedToggledOn() : EI.text().nanoSuitSpeedToggledOff(), true);
+		      ^
+  symbol:   method displayClientMessage(activated [...]Off(),boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitStepAbility.java:65: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/ability/NanoSuitStepAbility.java:65: error: cannot find symbol
+		player.displayClientMessage(activated ? EI.text().nanoSuitStepToggledOn() : EI.text().nanoSuitStepToggledOff(), true);
+		      ^
+  symbol:   method displayClientMessage(activated [...]Off(),boolean)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricArmorItem.java:46: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricArmorItem.java:46: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:132: error: method getEquipmentSlot in interface IItemExtension cannot be applied to given types;
+					EquipmentSlotGroup.bySlot(this.getEquipmentSlot())
+					                              ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:132: error: method getEquipmentSlot in interface IItemExtension cannot be applied to given types;
+					EquipmentSlotGroup.bySlot(this.getEquipmentSlot())
+					                              ^
+  required: ItemStack
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:219: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:230: error: method getDescriptionId in class Item cannot be applied to given types;
+		return super.getDescriptionId(stack);
+		            ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:230: error: method getDescriptionId in class Item cannot be applied to given types;
+		return super.getDescriptionId(stack);
+		            ^
+  required: no arguments
+  found:    ItemStack
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/nanosuit/NanoSuitArmorItem.java:233: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:90: warning: [removal] IItemHandler in net.neoforged.neoforge.items has been deprecated and marked for removal
+	private Pair<ItemStack, IItemHandler> extractCannedFood(Player player)
+	                        ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:103: error: cannot find symbol
+			var capability = stack.getCapability(Capabilities.ItemHandler.ITEM);
+			                                                 ^
+  symbol:   variable ItemHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:145: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:145: error: cannot find symbol
+				player.getEatingSound(stack),
+				      ^
+  symbol:   method getEatingSound(ItemStack)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:150: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:150: error: cannot find symbol
+		player.addEatEffect(food);
+		      ^
+  symbol:   method addEatEffect(FoodProperties)
+  location: variable player of type Player
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:154: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:154: error: cannot find symbol
+		var container = food.usingConvertsTo();
+		                    ^
+  symbol:   method usingConvertsTo()
+  location: variable food of type FoodProperties
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:164: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:164: error: cannot find symbol
+		var food = stack.getFoodProperties(player);
+		                ^
+  symbol:   method getFoodProperties(Player)
+  location: variable stack of type ItemStack
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:168: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/RobotAutoFeederItem.java:168: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:12: error: SteamChainsawTooltipComponent is not abstract and does not override abstract method getHeight(Font) in ClientTooltipComponent
+public final class SteamChainsawTooltipComponent implements ClientTooltipComponent
+             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:12: error: SteamChainsawTooltipComponent is not abstract and does not override abstract method getHeight(Font) in ClientTooltipComponent
+public final class SteamChainsawTooltipComponent implements ClientTooltipComponent
+             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:21: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:21: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:33: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/tooltip/SteamChainsawTooltipComponent.java:33: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/entity/NanoSaberSweepEntity.java:163: error: cannot find symbol
+			this.checkInsideBlocks();
+			    ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/part/MIMaterialParts.java:8: error: cannot find symbol
+ MaterialPart PLATE = net.swedz.tesseract.neoforge.material.builtin.part.MaterialParts.PLATE;
+                                                                                      ^
+  symbol:   variable PLATE
+  location: interface MaterialParts
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:459: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/solar/SolarSunlightComponent.java:20: error: cannot find symbol
+		return machine.getLevel().getDayTime() % 24000;
+		                         ^
+  symbol:   method getDayTime()
+  location: class Level
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/UniversalTransformerMachineBlockEntity.java:159: error: incompatible types: possible lossy conversion from long to int
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/TransformerTierComponent.java:60: error: cannot find symbol
+		tag.put(this.nbtKey(), stack.saveOptional(registries));
+		                                          ^
+  symbol:   variable registries
+  location: class TransformerTierComponent
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/TransformerTierComponent.java:66: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/TransformerTierComponent.java:66: error: cannot find symbol
+		this.setCasingInternal(ItemStack.parseOptional(tag.lookup(), tag.getCompound(this.nbtKey())));
+		                                                                ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:87: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:87: error: cannot find symbol
+			int color = ColorHelper.getVibrantColor(item.getDyeColor());
+			                                            ^
+  symbol:   method getDyeColor()
+  location: variable item of type DyeItem
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:105: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:105: error: cannot find symbol
+		tag.put("tesla_color", colorTag);
+		   ^
+  symbol:   method put(String,CompoundTag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:113: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:113: error: cannot find symbol
+		if(tag.contains("tesla_color", Tag.TAG_COMPOUND))
+		      ^
+  symbol:   method contains(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:115: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/AestheticTeslaCoilComponent.java:115: error: cannot find symbol
+			var colorTag = tag.getCompound("tesla_color");
+			                  ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/TeslaNetworkPart.java:27: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/TeslaNetworkPart.java:27: error: cannot find symbol
+		return proxy.getServer().getTeslaNetworks().get(this.getNetworkKey());
+		                        ^
+  symbol:   method getTeslaNetworks()
+  location: class MinecraftServer
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:188: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:188: error: cannot find symbol
+			WorldPos.CODEC.encodeStart(NbtOps.INSTANCE, key).result().ifPresent((t) -> tag.put("network_key", t));
+			                                                                              ^
+  symbol:   method put(String,Tag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:197: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:197: error: cannot find symbol
+		if(tag.contains("network_key", Tag.TAG_COMPOUND))
+		      ^
+  symbol:   method contains(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:199: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:199: error: cannot find symbol
+			var keyTag = tag.getCompound("network_key");
+			                ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:213: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:213: error: cannot find symbol
+		if(tag.contains("network_key", Tag.TAG_COMPOUND))
+		      ^
+  symbol:   method contains(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:215: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/tesla/network/receiver/TeslaReceiverComponent.java:215: error: cannot find symbol
+			var keyTag = tag.getCompound("network_key");
+			                ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaReceiverHatchBlockEntity.java:281: error: method load in class MachineBlockEntity cannot be applied to given types;
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/ChainerComponent.java:145: error: cannot find symbol
+		if(tag.contains("fail_position", CompoundTag.TAG_LONG))
+		      ^
+  symbol:   method contains(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/ChainerLinks.java:56: warning: [removal] IItemHandler in net.neoforged.neoforge.items has been deprecated and marked for removal
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/ChainerLinks.java:177: error: constructor ChunkPos in record ChunkPos cannot be applied to given types;
+			chunks.add(new ChunkPos(block));
+			           ^
+  required: int,int
+  found:    BlockPos
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/handler/ChainerItemHandler.java:49: error: cannot find symbol
+				else if(handler instanceof SlotItemHandler slotItemHandler &&
+				                           ^
+  symbol:   class SlotItemHandler
+  location: class ChainerItemHandler
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/handler/ChainerItemHandler.java:79: warning: [removal] getStackInSlot(int) in IItemHandler has been deprecated and marked for removal
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/solar/electric/SolarGeneratorComponent.java:79: error: cannot find symbol
+			boolean usedDistilledWater = this.getSlotWater().extractDirect(FluidResource.of(EIFluids.DISTILLED_WATER.asFluid()), 1, transaction) > 0;
+			                                                ^
+  symbol:   method extractDirect(FluidResource,int,Transaction)
+  location: class ConfigurableFluidStack
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/craft/processingarray/ProcessingArrayMachineComponent.java:53: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/craft/processingarray/ProcessingArrayMachineComponent.java:53: error: cannot find symbol
+		tag.put("machinesStack", machines.saveOptional(registries));
+		                                               ^
+  symbol:   variable registries
+  location: class ProcessingArrayMachineComponent
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/craft/processingarray/ProcessingArrayMachineComponent.java:59: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/craft/processingarray/ProcessingArrayMachineComponent.java:59: error: cannot find symbol
+		machines = ItemStack.parseOptional(tag.lookup(), tag.getCompound("machinesStack"));
+		                                                    ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datamap/TeslaTowerTierData.java:25: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:245: error: cannot find symbol
+		tag.put("harvesting_handlers", harvestingHandlersCache);
+		   ^
+  symbol:   method put(String,CompoundTag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:259: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:259: error: cannot find symbol
+			tag.put("tasks", tasksTag);
+			   ^
+  symbol:   method put(String,CompoundTag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:273: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:273: error: cannot find symbol
+		var harvestingHandlersCache = tag.getCompound("harvesting_handlers");
+		                                 ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:279: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/FarmerComponent.java:279: error: cannot find symbol
+		var tasksTag = tag.getCompound("tasks");
+		                  ^
+  symbol:   method getCompound(String)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/PlantableConfigurableItemStack.java:33: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/PlantableConfigurableItemStack.java:33: error: cannot find symbol
+		return (stack.isPlayerLocked() || stack.isMachineLocked()) && stack.getResource().isBlank() ?
+		                                                                                 ^
+  symbol:   method isBlank()
+  location: class ItemResource
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/beacon/ElectricBeaconShapeMatcher.java:41: error: constructor ChunkPos in record ChunkPos cannot be applied to given types;
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconBeamComponent.java:85: error: cannot find symbol
+				if(state.getLightBlock(level, pos) >= 15 && !state.is(Blocks.BEDROCK))
+				        ^
+  symbol:   method getLightBlock(Level,BlockPos)
+  location: variable state of type BlockState
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconBeamComponent.java:115: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconBeamComponent.java:115: error: cannot find symbol
+		tag.put("beam_sections", beamSectionsTag);
+		   ^
+  symbol:   method put(String,ListTag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconBeamComponent.java:122: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconBeamComponent.java:122: error: cannot find symbol
+		var beamSectionsTag = tag.getList("beam_sections", Tag.TAG_INT_ARRAY);
+		                         ^
+  symbol:   method getList(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:140: error: method get in class DataComponentPatch cannot be applied to given types;
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:140: error: method get in class DataComponentPatch cannot be applied to given types;
+			var potionContentsOptional = stack.getResource().getComponentsPatch().get(DataComponents.POTION_CONTENTS);
+			                                                                     ^
+  required: DataComponentGetter,DataComponentType<? extends T>
+  found:    DataComponentType<PotionContents>
+  reason: cannot infer type-variable(s) T
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:220: error: cannot find symbol
+			effectTag.putString("effect", effect.effect().getKey().location().toString());
+			                                                      ^
+  symbol:   method location()
+  location: class ResourceKey<MobEffect>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:224: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:224: error: cannot find symbol
+		tag.put("beacon_effects", effectsTag);
+		   ^
+  symbol:   method put(String,ListTag)
+  location: variable tag of type ValueOutput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:234: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/beacon/BeaconEffectComponent.java:234: error: cannot find symbol
+		var effectsTag = tag.getList("beacon_effects", Tag.TAG_COMPOUND);
+		                    ^
+  symbol:   method getList(String,byte)
+  location: variable tag of type ValueInput
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/LargeElectricFurnaceBlockEntity.java:145: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/fluidharvesting/wastecollector/WasteCollectorBehavior.java:52: error: incompatible types: possible lossy conversion from long to int
+		fluidStack.increment(manureToCollect);
+		                     ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/fluidharvesting/honeyextractor/HoneyExtractorBehavior.java:61: error: incompatible types: possible lossy conversion from long to int
+			fluidStack.increment(honeyToCollect);
+			                     ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/fluidharvesting/honeyextractor/HoneyExtractorBehavior.java:61: error: incompatible types: possible lossy conversion from long to int
+			fluidStack.increment(honeyToCollect);
+			                     ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/TaggedLinkable.java:28: error: cannot find symbol
+			var itemHandler = context.level().getCapability(Capabilities.ItemHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			                                                            ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/TaggedLinkable.java:28: error: cannot find symbol
+			var itemHandler = context.level().getCapability(Capabilities.ItemHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			                                                            ^
+  symbol:   variable ItemHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/TaggedLinkable.java:29: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/TaggedLinkable.java:29: error: cannot find symbol
+			var fluidHandler = context.level().getCapability(Capabilities.FluidHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			                                                             ^
+  symbol:   variable FluidHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/MachineBlockLinkable.java:121: warning: [removal] IItemHandler in net.neoforged.neoforge.items has been deprecated and marked for removal
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/MachineBlockLinkable.java:121: error: cannot find symbol
+			IItemHandler itemHandler = context.level().getCapability(Capabilities.ItemHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			                                                                     ^
+  symbol:   variable ItemHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/MachineBlockLinkable.java:122: warning: [removal] IFluidHandler in net.neoforged.neoforge.fluids.capability has been deprecated and marked for removal
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/chainer/link/linkable/MachineBlockLinkable.java:122: error: cannot find symbol
+			IFluidHandler fluidHandler = context.level().getCapability(Capabilities.FluidHandler.BLOCK, context.pos(), context.blockState(), context.blockEntity(), null);
+			                                                                       ^
+  symbol:   variable FluidHandler
+  location: class Capabilities
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/harvesting/harvestable/TreeHarvestable.java:85: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/harvesting/harvestable/TreeHarvestable.java:85: error: cannot find symbol
+		for(String key : treesTag.getAllKeys())
+		                         ^
+  symbol:   method getAllKeys()
+  location: variable treesTag of type Optional<CompoundTag>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/harvesting/harvestable/TreeHarvestable.java:88: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/harvesting/harvestable/TreeHarvestable.java:88: error: cannot find symbol
+			var blocks = Arrays.stream(treesTag.getLongArray(key)).mapToObj(BlockPos::of).toList();
+			                                   ^
+  symbol:   method getLongArray(String)
+  location: variable treesTag of type Optional<CompoundTag>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/HarvestingFarmerTask.java:199: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/HarvestingFarmerTask.java:199: error: cannot find symbol
+				level.blockUpdated(pos, oldState.getBlock());
+				     ^
+  symbol:   method blockUpdated(BlockPos,Block)
+  location: variable level of type Level
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/FertilizingFarmerTask.java:130: error: incompatible types: Optional<Integer> cannot be converted to int
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/FertilizingFarmerTask.java:130: error: incompatible types: Optional<Integer> cannot be converted to int
+		fertilizerTickRate = tag.getInt("fertilizer_tick_rate");
+		                               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/FertilizingFarmerTask.java:131: error: incompatible types: Optional<Integer> cannot be converted to int
+		fertilizerTicks = tag.getInt("fertilizer_ticks");
+		                            ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/component/farmer/task/task/FertilizingFarmerTask.java:131: error: incompatible types: Optional<Integer> cannot be converted to int
+		fertilizerTicks = tag.getInt("fertilizer_ticks");
+		                            ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/guicomponent/universaltransformer/UniversalTransformerSlotsClient.java:103: error: no suitable method found for blit(Identifier,int,int,int,int,int,int)
+				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y(), textureX, 0, box.w(), box.h() - 4);
+				        ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/part/MIMaterialParts.java:7: error: cannot find symbol
+ MaterialPart ROD = net.swedz.tesseract.neoforge.material.builtin.part.MaterialParts.ROD;
+                                                                                    ^
+  symbol:   variable ROD
+  location: interface MaterialParts
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/part/MIMaterialParts.java:12: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/part/MIMaterialParts.java:12: error: cannot find symbol
+ static MaterialPart part(String id, String english) { return new MaterialPart(MI.id(id), english).itemModelBuilder(CommonModelBuilders::generated); }
+                                                                                                  ^
+  symbol:   method itemModelBuilder(CommonMode[...]rated)
+  location: class MaterialPart
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/material/EIMaterials.java:27: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/recipe/MIMachineMaterialRecipeContext.java:151: error: cannot find symbol
+		MaterialPart output = TINY_DUST;
+		                      ^
+  symbol:   variable TINY_DUST
+  location: class MIMachineMaterialRecipeContext
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/commands/EICommands.java:26: error: cannot find symbol
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EI.java:193: error: cannot find symbol
+		TesseractGuideMETags.includeIn(guide);
+		^
+  symbol:   variable TesseractGuideMETags
+  location: class EI
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EIKeybinds.java:58: error: no suitable constructor found for KeyMapping(String,KeyConflictContext,Type,int,String)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/material/MIMaterials.java:17: error: cannot find symbol
+   .addNative(INGOT, NUGGET, DUST, TINY_DUST, PLATE, ROD, RING, WIRE, CABLE, CURVED_PLATE);
+                                   ^
+  symbol:   variable TINY_DUST
+  location: interface MIMaterials
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:23: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:23: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+public class MIFluidHolder extends FluidHolder<MIFluid, MIFluidHolder.FakedMIFluidType, MIFluidBlock, MIBucketItem> implements FluidLike
+                                                                     ^
+  where FT is a type-variable:
+    FT extends FluidType declared in class FluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:37: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:37: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+				registerFluids, (holder) -> new MIFluid(
+				                 ^
+  where FT is a type-variable:
+    FT extends FluidType declared in class FluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:40: error: incompatible types: bad return type in lambda expression
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:40: error: incompatible types: bad return type in lambda expression
+						() -> holder.registerableFluidType().getOrThrow(),
+						                                               ^
+    FakedMIFluidType cannot be converted to FluidType
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:43: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+				registerFluidTypes, (holder) ->
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:43: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+				registerFluidTypes, (holder) ->
+				                     ^
+  where FT is a type-variable:
+    FT extends FluidType declared in class FluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:53: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:53: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+				registerBlocks, (__, ___) -> new MIFluidBlock(properties.color()),
+				                 ^
+  where FT is a type-variable:
+    FT extends FluidType declared in class FluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:53: error: constructor MIFluidBlock in class MIFluidBlock cannot be applied to given types;
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:53: error: constructor MIFluidBlock in class MIFluidBlock cannot be applied to given types;
+				registerBlocks, (__, ___) -> new MIFluidBlock(properties.color()),
+				                             ^
+  required: Properties,int
+  found:    int
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:54: error: type argument FakedMIFluidType is not within bounds of type-variable FT
+				registerItems, (holder, p) -> new MIBucketItem(holder.registerableFluid().getOrThrow(), properties.color(), p),
+				                ^
+  where FT is a type-variable:
+    FT extends FluidType declared in class FluidHolder
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:98: error: method does not override or implement a method from a supertype
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:98: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:105: error: method does not override or implement a method from a supertype
+				@Override
+				^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:105: error: method does not override or implement a method from a supertype
+				@Override
+				^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:115: error: method does not override or implement a method from a supertype
+				@Override
+				^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:115: error: method does not override or implement a method from a supertype
+				@Override
+				^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:118: error: cannot find symbol
+					return IClientFluidTypeExtensions.of(Fluids.WATER).getFlowingTexture();
+					                                                  ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/port/fluid/MIFluidHolder.java:118: error: cannot find symbol
+					return IClientFluidTypeExtensions.of(Fluids.WATER).getFlowingTexture();
+					                                                  ^
+  symbol:   method getFlowingTexture()
+  location: interface IClientFluidTypeExtensions
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EILootModifiers.java:34: error: cannot find symbol

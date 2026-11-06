@@ -1,60 +1,61 @@
 plugins {
-	id 'java-library'
-	id 'idea'
-	id 'maven-publish'
-	id 'net.neoforged.moddev' version '7.1.38' // userdev
-	id 'net.swedz.deploy-inator' version '1.0.1'
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
 }
-
-configurations {
-	runtimeClasspath.extendsFrom localImplementation
-	compileClasspath.extendsFrom localImplementation
-	
-	localRuntimeOnly
-	runtimeClasspath.extendsFrom localRuntimeOnly
-}
-
-version = (System.getenv("MOD_VERSION") ?: "0.0.0-local") + "-${minecraft_version}"
+version = "0.0.0-port.1+26.1.2"
 group = mod_group_id
-base {
-	archivesName = artifact_name
-}
-
-logger.lifecycle("${mod_name} version ${version}")
-
-apply from: 'dependencies.gradle'
-
-tasks.named('jar') {
-	from "LICENSE"
-}
-
-task sourceJar(type: Jar) {
-	archiveClassifier.set("sources")
-	from sourceSets.main.allJava
-	from "LICENSE"
-}
-
-apply from: 'deploy.gradle'
-
-apply from: 'neoforge.gradle'
-
+base { archivesName = artifact_name }
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
+repositories {
+    maven { url = uri('/root/build-farm/build-farm/m2/repository') }
+    mavenCentral()
+    maven { url = 'https://maven.appliedenergistics.org' }
+    maven { url = 'https://modmaven.dev' }
+}
+dependencies {
+    implementation "net.neoforged:neoforge:${neoforge_version}"
+    implementation("aztech:Modern-Industrialization:${modern_industrialization_version}") { transitive = false }
+    implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
+    compileOnly "net.swedz:tesseract-api:1.0.2"
+    compileOnly 'org.appliedenergistics:appliedenergistics2:26.1.12-SNAPSHOT:api'
+    runtimeOnly 'org.appliedenergistics:appliedenergistics2:26.1.12-SNAPSHOT'
+    implementation("org.appliedenergistics:guideme:${guideme_version}") { transitive = false }
+    implementation "dev.emi:emi-neoforge:${emi_version}"
+}
+runs {
+    configureEach { modSource project.sourceSets.main }
+    client {}
+    server { argument '--nogui' }
+    clientData {
+        argument '--mod'; argument mod_id
+        argument '--all'
+        argument '--output'; argument file('src/generated/resources').absolutePath
+        argument '--existing'; argument file('src/main/resources').absolutePath
+    }
+    serverData {
+        argument '--mod'; argument mod_id
+        argument '--all'
+        argument '--output'; argument file('.port-tools/server-data').absolutePath
+    }
+}
+sourceSets.main.resources.srcDir 'src/generated/resources'
 tasks.withType(JavaCompile).configureEach {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xmaxerrs', '2000']
 }
-
-idea {
-	module {
-		downloadSources = true
-		downloadJavadoc = true
-	}
+tasks.withType(ProcessResources).configureEach {
+    def props = project.properties.findAll { k, v -> k.endsWith('_range') || k.startsWith('mod_') || k in ['minecraft_version', 'neoforge_version'] } + [mod_version: project.version.toString()]
+    inputs.properties(props)
+    filesMatching('META-INF/neoforge.mods.toml') { expand props }
+    duplicatesStrategy = 'exclude'
+    exclude '.cache'
 }
+jar { from 'LICENSE' }
+java.withSourcesJar()
+tasks.named('sourcesJar') { from 'LICENSE' }
+publishing { publications { mavenJava(MavenPublication) { from components.java; artifactId = project.artifact_name } } }
 
-processResources {
-	duplicatesStrategy = 'exclude'
+accessTransformers { file('src/main/resources/extended_industrialization.accesstransformer.cfg') }
 
-	exclude(".cache")
-}
+

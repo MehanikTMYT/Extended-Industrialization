@@ -46,9 +46,9 @@ public final class EIBlocks
 		Registry.init(bus);
 	}
 	
-	public static final BlockHolder<Block> MACHINE_CHAINER_RELAY = create("machine_chainer_relay", "Machine Chainer Relay", Block::new, BlockItem::new, EISortOrder.MACHINES).withProperties((p) -> p.mapColor(MapColor.METAL).destroyTime(4f).requiresCorrectToolForDrops()).tag(TagHelper.getMiningLevelTag(1)).tag(EITags.Blocks.MACHINE_CHAINER_RELAY).withLootTable(CommonLootTableBuilders::self).withModel(CommonModelBuilders::blockstateOnly).register();
+	public static final BlockHolder<Block> MACHINE_CHAINER_RELAY = create("machine_chainer_relay", "Machine Chainer Relay", Block::new, BlockItem::new, EISortOrder.MACHINES).withProperties((p) -> p.mapColor(MapColor.METAL).destroyTime(4f).requiresCorrectToolForDrops()).tag(TagHelper.getMiningLevelTag(1)).tag(EITags.Blocks.MACHINE_CHAINER_RELAY).withLootTable(CommonLootTableBuilders::self).register();
 	
-	public static final BlockHolder<Block> STEEL_PLATED_BRICKS = createSimple("steel_plated_bricks", "Steel Plated Bricks", EISortOrder.CASINGS, MapColor.METAL, 5f, 6f).withModel(CommonModelBuilders::blockCubeAll).register();
+	public static final BlockHolder<Block> STEEL_PLATED_BRICKS = createSimple("steel_plated_bricks", "Steel Plated Bricks", EISortOrder.CASINGS, MapColor.METAL, 5f, 6f).register();
 	
 	public static Set<BlockHolder> values()
 	{

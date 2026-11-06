@@ -1,7 +1,7 @@
 package net.swedz.extended_industrialization.machines.component.fluidharvesting.wastecollector;
 
 import aztech.modern_industrialization.machines.MachineBlockEntity;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.fluid.FluidVariant;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
@@ -48,7 +48,7 @@ public final class WasteCollectorBehavior extends FluidHarvestingBehavior
 		
 		long manureToCollect = Math.min((long) this.getOutputMultiplier() * MANURE_PER_ANIMAL * animalsFound, fluidStack.getRemainingSpace());
 		
-		fluidStack.setKey(FluidVariant.of(EIFluids.MANURE.asFluid()));
+		fluidStack.setKey(FluidResource.of(EIFluids.MANURE.asFluid()));
 		fluidStack.increment(manureToCollect);
 	}
 	

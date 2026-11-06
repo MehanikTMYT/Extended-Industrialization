@@ -1,7 +1,7 @@
 package net.swedz.extended_industrialization.item.nanosuit.decoration;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.EIComponents;
@@ -19,9 +19,9 @@ public final class MeowNanoDecoration implements NanoSuitDecoration
 	}
 	
 	@Override
-	public ArmorItem.Type armorType()
+	public ArmorType armorType()
 	{
-		return ArmorItem.Type.HELMET;
+		return ArmorType.HELMET;
 	}
 	
 	@Override

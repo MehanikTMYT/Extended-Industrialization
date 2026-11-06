@@ -7,7 +7,7 @@ import aztech.modern_industrialization.machines.components.DropableComponent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -55,15 +55,15 @@ public final class TransformerTierComponent implements MachineComponent.ServerOn
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.put(this.nbtKey(), stack.saveOptional(registries));
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		this.setCasingInternal(ItemStack.parseOptional(registries, tag.getCompound(this.nbtKey())));
+		this.setCasingInternal(ItemStack.parseOptional(tag.lookup(), tag.getCompound(this.nbtKey())));
 	}
 	
 	@Override
@@ -75,7 +75,7 @@ public final class TransformerTierComponent implements MachineComponent.ServerOn
 	@SuppressWarnings("deprecation")
 	private void playCasingPlaceSound(MachineBlockEntity blockEntity)
 	{
-		ResourceLocation blockKey = tier.itemKey;
+		Identifier blockKey = tier.itemKey;
 		if(blockKey == null)
 		{
 			return;
@@ -95,7 +95,7 @@ public final class TransformerTierComponent implements MachineComponent.ServerOn
 		this.setCasingInternal(stack);
 		blockEntity.setChanged();
 		blockEntity.sync();
-		blockEntity.getLevel().updateNeighborsAt(blockEntity.getBlockPos(), Blocks.AIR);
+		blockEntity.getLevel().updateNeighborsAt(blockEntity.getBlockPos(), Blocks.AIR, null);
 		this.playCasingPlaceSound(blockEntity);
 	}
 	

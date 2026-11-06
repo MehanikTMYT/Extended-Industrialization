@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization.machines.component.farmer.task.task
 
 import aztech.modern_industrialization.util.Simulation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.swedz.extended_industrialization.machines.component.farmer.FarmerComponent;
 import net.swedz.extended_industrialization.machines.component.farmer.block.FarmerBlock;
@@ -30,12 +30,12 @@ public final class HydratingFarmerTask extends FarmerTask
 			var dirt = tile.dirt();
 			var pos = dirt.pos();
 			var state = dirt.state(level);
-			if(state.getBlock() instanceof FarmBlock)
+			if(state.getBlock() instanceof FarmlandBlock)
 			{
-				int moisture = state.getValue(FarmBlock.MOISTURE);
+				int moisture = state.getValue(FarmlandBlock.MOISTURE);
 				if(moisture < 7 && FarmerComponent.consumeWater(inventory, Simulation.ACT))
 				{
-					var newState = state.setValue(FarmBlock.MOISTURE, 7);
+					var newState = state.setValue(FarmlandBlock.MOISTURE, 7);
 					dirt.setBlock(level, newState, 2);
 					
 					if(operations.operate())

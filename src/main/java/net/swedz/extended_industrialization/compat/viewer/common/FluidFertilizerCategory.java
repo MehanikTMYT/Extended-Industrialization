@@ -1,11 +1,11 @@
 package net.swedz.extended_industrialization.compat.viewer.common;
 
 import aztech.modern_industrialization.client.compat.viewer.abstraction.ViewerCategory;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.fluid.FluidVariant;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.material.Fluid;
 import net.swedz.extended_industrialization.EI;
@@ -23,7 +23,7 @@ public final class FluidFertilizerCategory extends ViewerCategory<Fluid>
 	}
 	
 	@Override
-	public ResourceLocation getRecipeId(Fluid fluid)
+	public Identifier getRecipeId(Fluid fluid)
 	{
 		var key = BuiltInRegistries.FLUID.getKey(fluid);
 		return EI.id("/fluid_fertilizer/%s/%s".formatted(key.getNamespace(), key.getPath()));
@@ -50,7 +50,7 @@ public final class FluidFertilizerCategory extends ViewerCategory<Fluid>
 	@Override
 	public void buildLayout(Fluid recipe, LayoutBuilder builder)
 	{
-		builder.inputSlot(15, 15).variant(FluidVariant.of(recipe));
+		builder.inputSlot(15, 15).variant(FluidResource.of(recipe));
 	}
 	
 	@Override

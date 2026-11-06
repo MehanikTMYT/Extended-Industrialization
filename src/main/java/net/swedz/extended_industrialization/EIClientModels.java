@@ -68,9 +68,10 @@ public final class EIClientModels
 		NANO_ARMOR_DECORATIONS.add(new WingNanoSuitDecorationModel(context.bakeLayer(WingNanoSuitDecorationModel.LAYER)));
 		NANO_ARMOR_DECORATIONS.add(new MeowNanoSuitDecorationModel(context.bakeLayer(MeowNanoSuitDecorationModel.LAYER)));
 		NANO_ARMOR_DECORATIONS = Collections.unmodifiableList(NANO_ARMOR_DECORATIONS);
+		NanoArmorLayer.init(context.getEquipmentAssets());
 		addGlobalLayer(
 				event,
-				(r) -> new NanoArmorLayer<>(r, NANO_ARMOR_INNER, NANO_ARMOR_OUTER, NANO_ARMOR_DECORATIONS, context.getModelManager()),
+				(r) -> new NanoArmorLayer<>(r, NANO_ARMOR_INNER, NANO_ARMOR_OUTER, NANO_ARMOR_DECORATIONS),
 				(r) -> r.getModel() instanceof HumanoidModel<?>
 		);
 	}

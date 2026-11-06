@@ -3,9 +3,9 @@ package net.swedz.extended_industrialization.material;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.EISortOrder;
 import net.swedz.extended_industrialization.EITags;
-import net.swedz.tesseract.neoforge.compat.mi.material.MIMaterials;
-import net.swedz.tesseract.neoforge.compat.mi.material.part.MIMaterialParts;
-import net.swedz.tesseract.neoforge.compat.mi.material.recipe.MIMachineMaterialRecipeContext;
+import net.swedz.extended_industrialization.port.material.MIMaterials;
+import net.swedz.extended_industrialization.port.material.part.MIMaterialParts;
+import net.swedz.extended_industrialization.port.material.recipe.MIMachineMaterialRecipeContext;
 import net.swedz.tesseract.neoforge.material.Material;
 import net.swedz.tesseract.neoforge.material.builtin.recipe.VanillaMaterialRecipeContext;
 import net.swedz.tesseract.neoforge.material.part.MaterialPart;
@@ -15,8 +15,8 @@ import net.swedz.tesseract.neoforge.registry.common.CommonModelBuilders;
 
 import static aztech.modern_industrialization.machines.init.MIMachineRecipeTypes.*;
 import static net.swedz.extended_industrialization.EIMachines.RecipeTypes.*;
-import static net.swedz.tesseract.neoforge.compat.mi.material.part.MIMaterialParts.*;
-import static net.swedz.tesseract.neoforge.compat.mi.material.property.MIMaterialProperties.*;
+import static net.swedz.extended_industrialization.port.material.part.MIMaterialParts.*;
+import static net.swedz.extended_industrialization.port.material.property.MIMaterialProperties.*;
 
 public interface EIMaterials
 {
@@ -56,7 +56,7 @@ public interface EIMaterials
 				.add("rod_to_ring_bending", (c) -> c.machine("ring", BENDING_MACHINE, 2, (int) (200 * c.get(TIME_FACTOR)) / 2, ROD, 1, RING, 1))
 				.add("polished_machine_casing", (c) -> c.machine(ASSEMBLER, 8, 10 * 20, Parts.POLISHED_MACHINE_CASING, 1, (b) -> b.addPartInput(PLATE, 3).addPartInput(CURVED_PLATE, 6)))
 				.add("tesla_top_load", (c) -> c.machine("tesla_top_load", PACKER, 8, 5 * 20, CURVED_PLATE, 8, Parts.TESLA_TOP_LOAD, 1))
-				.add("tesla_winding", (c) -> c.machine(ASSEMBLER, 8, 5 * 20, Parts.TESLA_WINDING, 1, (b) -> b.addPartInput(CABLE, 8).addItemInput(EITags.itemCommon("plates/stainless_steel"), 4)));
+				.add("tesla_winding", (c) -> c.machine(ASSEMBLER, 8, 5 * 20, Parts.TESLA_WINDING, 1, (b) -> b.addPartInput(CABLE, 8).itemIn(EITags.itemCommon("plates/stainless_steel"), 4)));
 	}
 	
 	Material SILVER = MIMaterials.SILVER.as(EIMaterialRegistry.get())

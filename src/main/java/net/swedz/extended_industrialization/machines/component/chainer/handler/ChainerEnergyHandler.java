@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.chainer.handler;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import com.google.common.collect.Lists;
@@ -44,47 +47,47 @@ public final class ChainerEnergyHandler extends ChainerHandler<MIEnergyStorage, 
 	}
 	
 	@Override
-	public long receive(long maxReceive, boolean simulate)
+	public int insert(int maxReceive, TransactionContext transaction)
 	{
 		if(!chainerLinks.doesAllowOperation() || !insertable)
 		{
 			return 0;
 		}
-		maxReceive = Math.min(maxReceive, maxTransfer.get());
-		return TransferHelper.distributeLong((wrapper, amount, opSimulate) -> wrapper.handler().receive(amount, opSimulate), wrappers, maxReceive, simulate);
+		maxReceive = (int) Math.min(maxReceive, maxTransfer.get());
+		return EnergyTransfers.distribute((wrapper, amount, tx) -> wrapper.handler().insert(amount, tx), wrappers, maxReceive, transaction);
 	}
 	
 	@Override
-	public long extract(long maxExtract, boolean simulate)
+	public int extract(int maxExtract, TransactionContext transaction)
 	{
 		if(!chainerLinks.doesAllowOperation() || insertable)
 		{
 			return 0;
 		}
-		maxExtract = Math.min(maxExtract, maxTransfer.get());
-		return TransferHelper.distributeLong((wrapper, amount, opSimulate) -> wrapper.handler().extract(amount, opSimulate), wrappers, maxExtract, simulate);
+		maxExtract = (int) Math.min(maxExtract, maxTransfer.get());
+		return EnergyTransfers.distribute((wrapper, amount, tx) -> wrapper.handler().extract(amount, tx), wrappers, maxExtract, transaction);
 	}
 	
 	@Override
-	public long getAmount()
+	public long getAmountAsLong()
 	{
-		return wrappers.stream().mapToLong((w) -> w.handler().getAmount()).sum();
+		return wrappers.stream().mapToLong((w) -> w.handler().getAmountAsLong()).sum();
 	}
 	
 	@Override
-	public long getCapacity()
+	public long getCapacityAsLong()
 	{
-		return wrappers.stream().mapToLong((w) -> w.handler().getCapacity()).sum();
+		return wrappers.stream().mapToLong((w) -> w.handler().getCapacityAsLong()).sum();
 	}
 	
 	@Override
-	public boolean canExtract()
+	public boolean supportsExtraction()
 	{
 		return !insertable;
 	}
 	
 	@Override
-	public boolean canReceive()
+	public boolean supportsInsertion()
 	{
 		return insertable;
 	}

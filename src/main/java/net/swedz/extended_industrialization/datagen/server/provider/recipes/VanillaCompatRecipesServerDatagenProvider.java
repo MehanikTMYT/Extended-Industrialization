@@ -12,20 +12,20 @@ import net.swedz.extended_industrialization.EITags;
 
 public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public VanillaCompatRecipesServerDatagenProvider(GatherDataEvent event)
+	public VanillaCompatRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static void addHoneyWaxingRecipe(Item from, Item to, RecipeOutput output)
+	private void addHoneyWaxingRecipe(Item from, Item to, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"vanilla_recipes/mixer/waxing_with_honey", BuiltInRegistries.ITEM.getKey(from).getPath(), MIMachineRecipeTypes.MIXER,
 				2, 5 * 20,
 				(r) -> r
-						.addFluidInput(EITags.Fluids.HONEY, 1)
-						.addItemInput(from, 1)
-						.addItemOutput(to, 1),
+						.fluidIn(EITags.Fluids.HONEY, 1)
+						.itemIn(from, 1)
+						.itemOut(to, 1),
 				output
 		);
 	}
@@ -37,8 +37,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/blast_furnace", "honey_from_block", MIMachineRecipeTypes.BLAST_FURNACE,
 				2, 10 * 20,
 				(r) -> r
-						.addItemInput(Items.HONEY_BLOCK, 1)
-						.addFluidOutput(EIFluids.HONEY, 1000),
+						.itemIn(Items.HONEY_BLOCK, 1)
+						.fluidOut(EIFluids.HONEY, 1000),
 				output
 		);
 		
@@ -46,8 +46,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/blast_furnace", "crystallized_honey", MIMachineRecipeTypes.BLAST_FURNACE,
 				2, 10 * 20,
 				(r) -> r
-						.addFluidInput(EITags.Fluids.HONEY, 250)
-						.addItemOutput(EIItems.CRYSTALLIZED_HONEY, 3),
+						.fluidIn(EITags.Fluids.HONEY, 250)
+						.itemOut(EIItems.CRYSTALLIZED_HONEY, 3),
 				output
 		);
 		
@@ -55,8 +55,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/blast_furnace", "netherite_dust_to_ingot", MIMachineRecipeTypes.BLAST_FURNACE,
 				32, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("dusts/netherite"), 1)
-						.addItemOutput(Items.NETHERITE_INGOT, 1),
+						.itemIn(EITags.itemCommon("dusts/netherite"), 1)
+						.itemOut(Items.NETHERITE_INGOT, 1),
 				output
 		);
 		
@@ -64,8 +64,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/blast_furnace", "blazing_essence", MIMachineRecipeTypes.BLAST_FURNACE,
 				2, 10 * 20,
 				(r) -> r
-						.addItemInput(Items.BLAZE_POWDER, 1)
-						.addFluidOutput(EIFluids.BLAZING_ESSENCE, 20),
+						.itemIn(Items.BLAZE_POWDER, 1)
+						.fluidOut(EIFluids.BLAZING_ESSENCE, 20),
 				output
 		);
 		
@@ -73,8 +73,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/macerator", "crystallized_honey_to_sugar", MIMachineRecipeTypes.MACERATOR,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(EIItems.CRYSTALLIZED_HONEY, 1)
-						.addItemOutput(Items.SUGAR, 3),
+						.itemIn(EIItems.CRYSTALLIZED_HONEY, 1)
+						.itemOut(Items.SUGAR, 3),
 				output
 		);
 		
@@ -82,8 +82,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/macerator", "netherite_ingot_to_dust", MIMachineRecipeTypes.MACERATOR,
 				2, 40 * 20,
 				(r) -> r
-						.addItemInput(Items.NETHERITE_INGOT, 1)
-						.addItemOutput(EIItems.NETHERITE_DUST, 1),
+						.itemIn(Items.NETHERITE_INGOT, 1)
+						.itemOut(EIItems.NETHERITE_DUST, 1),
 				output
 		);
 		
@@ -91,8 +91,8 @@ public final class VanillaCompatRecipesServerDatagenProvider extends RecipesServ
 				"vanilla_recipes/vacuum_freezer", "honey_block", MIMachineRecipeTypes.VACUUM_FREEZER,
 				16, 10 * 20,
 				(r) -> r
-						.addFluidInput(EITags.Fluids.HONEY, 1000)
-						.addItemOutput(Items.HONEY_BLOCK, 1),
+						.fluidIn(EITags.Fluids.HONEY, 1000)
+						.itemOut(Items.HONEY_BLOCK, 1),
 				output
 		);
 		

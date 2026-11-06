@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -85,7 +85,7 @@ public final class EITags
 	
 	public static TagKey<Item> itemCommon(String path)
 	{
-		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", path));
+		return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", path));
 	}
 	
 	public static TagKey<Fluid> fluid(String path)
@@ -95,7 +95,7 @@ public final class EITags
 	
 	public static TagKey<Fluid> fluidCommon(String path)
 	{
-		return TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("c", path));
+		return TagKey.create(Registries.FLUID, Identifier.fromNamespaceAndPath("c", path));
 	}
 	
 	public static TagKey<Block> block(String path)
@@ -105,7 +105,7 @@ public final class EITags
 	
 	public static TagKey<Block> blockCommon(String path)
 	{
-		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", path));
+		return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", path));
 	}
 	
 	public static TagKey<DimensionType> dimensionType(String path)

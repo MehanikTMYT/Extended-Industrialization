@@ -12,7 +12,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -46,12 +46,12 @@ public record RainbowDataComponent(boolean value, boolean showInTooltip) impleme
 			if(!stack.is(ItemTags.DYEABLE) &&
 			   !stack.is(EITags.Items.RAINBOW_DYEABLE))
 			{
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+				return InteractionResult.PASS;
 			}
 			else if(!stack.has(DataComponents.DYED_COLOR) &&
 					!stack.has(EIComponents.RAINBOW))
 			{
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+				return InteractionResult.PASS;
 			}
 			else
 			{
@@ -62,7 +62,7 @@ public record RainbowDataComponent(boolean value, boolean showInTooltip) impleme
 					player.awardStat(Stats.CLEAN_ARMOR);
 					LayeredCauldronBlock.lowerFillLevel(state, level, pos);
 				}
-				return ItemInteractionResult.sidedSuccess(level.isClientSide());
+				return InteractionResult.SUCCESS;
 			}
 		});
 	}

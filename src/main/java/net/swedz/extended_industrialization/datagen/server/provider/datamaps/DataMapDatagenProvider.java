@@ -4,7 +4,7 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 public final class DataMapDatagenProvider extends DataMapProvider
 {
-	public DataMapDatagenProvider(GatherDataEvent event)
+	public DataMapDatagenProvider(GatherDataEvent.Client event)
 	{
 		super(event.getGenerator().getPackOutput(), event.getLookupProvider());
 	}
@@ -66,7 +66,7 @@ public final class DataMapDatagenProvider extends DataMapProvider
 		);
 	}
 	
-	private void addFarmerSimpleTallCropSize(ResourceLocation block, int maxHeight)
+	private void addFarmerSimpleTallCropSize(Identifier block, int maxHeight)
 	{
 		this.builder(EIDataMaps.FARMER_SIMPLE_TALL_CROP_SIZE).add(block, new FarmerSimpleTallCropSize(maxHeight), false);
 	}

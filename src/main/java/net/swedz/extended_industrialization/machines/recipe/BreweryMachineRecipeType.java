@@ -2,12 +2,11 @@ package net.swedz.extended_industrialization.machines.recipe;
 
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.ProxyableMachineRecipeType;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
 import com.google.common.collect.Lists;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
@@ -30,7 +29,7 @@ import java.util.function.Consumer;
 
 public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 {
-	private static String id(ResourceLocation location)
+	private static String id(Identifier location)
 	{
 		return "%s/%s".formatted(location.getNamespace(), location.getPath());
 	}
@@ -52,34 +51,34 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 	
 	private static String id(Ingredient ingredient)
 	{
-		return id(ingredient.getItems()[0]);
+		return idItem(ingredient.getValues().stream().findFirst().orElseThrow());
 	}
 	
 	private static String idPotion(Holder<Potion> potion)
 	{
-		return id(potion.getKey().location());
+		return id(potion.unwrapKey().orElseThrow().location());
 	}
 	
-	public BreweryMachineRecipeType(ResourceLocation id)
+	public BreweryMachineRecipeType(Identifier id)
 	{
 		super(id);
 	}
 	
-	private RecipeHolder<MachineRecipe> generate(ResourceLocation id, Ingredient inputIngredient, Ingredient reagentIngredient, ItemStack outputStack)
+	private RecipeHolder<MachineRecipe> generate(Identifier id, Ingredient inputIngredient, Ingredient reagentIngredient, ItemStack outputStack)
 	{
 		var recipe = new MIMachineRecipeBuilder(this, 4, 5 * 20);
 		
 		recipe.addCondition(new RuntimeGeneratedFlagProcessCondition());
 		
-		recipe.addItemInput(inputIngredient, 4, 1f);
-		recipe.addItemInput(reagentIngredient, 1, 1f);
-		recipe.addFluidInput(EIFluids.BLAZING_ESSENCE, 1);
-		recipe.addItemOutput(ItemVariant.of(outputStack), 4, 1f);
+		recipe.itemIn(inputIngredient, 4, 1f);
+		recipe.itemIn(reagentIngredient, 1, 1f);
+		recipe.fluidIn(EIFluids.BLAZING_ESSENCE, 1);
+		recipe.itemOut(outputStack.getItem(), 4, 1f);
 		
-		return new RecipeHolder<>(id, (MachineRecipe) recipe.convert());
+		return new RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id), (MachineRecipe) recipe.convert());
 	}
 	
-	private RecipeHolder<MachineRecipe> generate(ResourceLocation id, ItemStack inputStack, Ingredient reagentIngredient, ItemStack outputStack)
+	private RecipeHolder<MachineRecipe> generate(Identifier id, ItemStack inputStack, Ingredient reagentIngredient, ItemStack outputStack)
 	{
 		return this.generate(id, DataComponentIngredient.of(false, inputStack), reagentIngredient, outputStack);
 	}
@@ -108,11 +107,11 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 		
 		for(var allowedContainer : potionBrewing.containers)
 		{
-			for(var stack : allowedContainer.getItems())
+			for(var stack : allowedContainer.items().map(ItemStack::new).toList())
 			{
 				for(var mix : potionBrewing.potionMixes)
 				{
-					if(mix.ingredient().getItems().length > 0)
+					if(mix.ingredient().getValues().size() > 0)
 					{
 						recipes.add(this.generateMix(stack, mix));
 					}
@@ -147,7 +146,7 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 		
 		for(var mix : potionBrewing.containerMixes)
 		{
-			if(mix.ingredient().getItems().length > 0)
+			if(mix.ingredient().getValues().size() > 0)
 			{
 				Consumer<Holder<Potion>> recipeGen = (entry) ->
 				{
@@ -202,10 +201,12 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 	{
 		List<RecipeHolder<MachineRecipe>> recipes = Lists.newArrayList();
 		
-		for(var inputStack : brewingRecipe.getInput().getItems())
+		for(var inputHolder : brewingRecipe.getInput().items().toList())
 		{
+			var inputStack = new ItemStack(inputHolder.value());
 			var reagentIngredient = brewingRecipe.getIngredient();
-			var outputStack = brewingRecipe.getOutput(inputStack, reagentIngredient.getItems()[0]);
+			var reagentStack = reagentIngredient.items().findFirst().map(ItemStack::new).orElse(ItemStack.EMPTY);
+			var outputStack = brewingRecipe.getOutput(inputStack, reagentStack);
 			recipes.add(this.generateModded(inputStack, reagentIngredient, outputStack));
 		}
 		

@@ -5,7 +5,7 @@ import aztech.modern_industrialization.client.machines.guicomponents.ProgressBar
 import aztech.modern_industrialization.client.util.RenderHelper;
 import aztech.modern_industrialization.machines.guicomponents.ProgressBar;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.swedz.extended_industrialization.item.SteamChainsawItem;
 
@@ -31,7 +31,7 @@ public final class SteamChainsawTooltipComponent implements ClientTooltipCompone
 	}
 	
 	@Override
-	public void renderImage(Font font, int x, int y, GuiGraphics guiGraphics)
+	public void renderImage(Font font, int x, int y, GuiGraphicsExtractor guiGraphics)
 	{
 		guiGraphics.blit(MachineScreen.SLOT_ATLAS, x, y, 0, 0, 18, 18, 256, 256);
 		

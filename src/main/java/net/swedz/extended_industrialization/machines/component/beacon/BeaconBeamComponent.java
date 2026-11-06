@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -76,7 +76,7 @@ public final class BeaconBeamComponent implements MachineComponent.ClientOnly
 				}
 				else
 				{
-					currentSection = new Section(FastColor.ARGB32.average(currentSection.color(), colorMultiplier));
+					currentSection = new Section(ARGB.average(currentSection.color(), colorMultiplier));
 					sections.add(currentSection);
 				}
 			}
@@ -105,7 +105,7 @@ public final class BeaconBeamComponent implements MachineComponent.ClientOnly
 	}
 	
 	@Override
-	public void writeClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeClientNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		var beamSectionsTag = new ListTag();
 		for(var section : beamSections)
@@ -116,7 +116,7 @@ public final class BeaconBeamComponent implements MachineComponent.ClientOnly
 	}
 	
 	@Override
-	public void readClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
 		List<Section> sections = Lists.newArrayList();
 		var beamSectionsTag = tag.getList("beam_sections", Tag.TAG_INT_ARRAY);

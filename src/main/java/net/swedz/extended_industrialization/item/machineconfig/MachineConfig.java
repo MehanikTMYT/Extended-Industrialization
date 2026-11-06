@@ -69,7 +69,7 @@ public record MachineConfig(
 			if(simulation.isActing())
 			{
 				target.invalidateCapabilities();
-				target.getLevel().blockUpdated(target.getBlockPos(), Blocks.AIR);
+				target.getLevel().updateNeighborsAt(target.getBlockPos(), Blocks.AIR, null);
 				target.setChanged();
 				if(!target.getLevel().isClientSide())
 				{

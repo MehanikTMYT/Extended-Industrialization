@@ -1,6 +1,6 @@
 package net.swedz.extended_industrialization.datagen.server.provider.recipes;
 
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.TagKey;
@@ -21,51 +21,51 @@ import net.swedz.extended_industrialization.EITags;
 
 public final class CanningMachineRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public CanningMachineRecipesServerDatagenProvider(GatherDataEvent event)
+	public CanningMachineRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static void addFillingAndEmptyingRecipes(String id, FluidStack fluidStack, Item emptyItem, Ingredient fullItemAsInput, ItemStack fullItemAsOutput, RecipeOutput output)
+	private void addFillingAndEmptyingRecipes(String id, FluidStack fluidStack, Item emptyItem, Ingredient fullItemAsInput, ItemStack fullItemAsOutput, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"canning_machine/filling", id, EIMachines.RecipeTypes.CANNING_MACHINE,
 				2, 5 * 20,
 				(r) -> r
-						.addFluidInput(fluidStack.getFluid(), fluidStack.getAmount())
-						.addItemInput(emptyItem, 1)
-						.addItemOutput(ItemVariant.of(fullItemAsOutput), 1, 1f),
+						.fluidIn(fluidStack.getFluid(), fluidStack.getAmount())
+						.itemIn(emptyItem, 1)
+						.itemOut(ItemResource.of(fullItemAsOutput), 1, 1f),
 				output
 		);
 		addMachineRecipe(
 				"canning_machine/emptying", id, EIMachines.RecipeTypes.CANNING_MACHINE,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(fullItemAsInput, 1, 1f)
-						.addItemOutput(emptyItem, 1)
-						.addFluidOutput(fluidStack.getFluid(), fluidStack.getAmount()),
+						.itemIn(fullItemAsInput, 1, 1f)
+						.itemOut(emptyItem, 1)
+						.fluidOut(fluidStack.getFluid(), fluidStack.getAmount()),
 				output
 		);
 	}
 	
-	private static void addFillingAndEmptyingRecipes(String id, TagKey<Fluid> fluidTag, FluidStack fluidStack, Item emptyItem, Item fullItem, RecipeOutput output)
+	private void addFillingAndEmptyingRecipes(String id, TagKey<Fluid> fluidTag, FluidStack fluidStack, Item emptyItem, Item fullItem, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"canning_machine/filling", id, EIMachines.RecipeTypes.CANNING_MACHINE,
 				2, 5 * 20,
 				(r) -> r
-						.addFluidInput(fluidTag, fluidStack.getAmount())
-						.addItemInput(emptyItem, 1)
-						.addItemOutput(fullItem, 1),
+						.fluidIn(fluidTag, fluidStack.getAmount())
+						.itemIn(emptyItem, 1)
+						.itemOut(fullItem, 1),
 				output
 		);
 		addMachineRecipe(
 				"canning_machine/emptying", id, EIMachines.RecipeTypes.CANNING_MACHINE,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(fullItem, 1)
-						.addItemOutput(emptyItem, 1)
-						.addFluidOutput(fluidStack.getFluid(), fluidStack.getAmount()),
+						.itemIn(fullItem, 1)
+						.itemOut(emptyItem, 1)
+						.fluidOut(fluidStack.getFluid(), fluidStack.getAmount()),
 				output
 		);
 	}

@@ -1,7 +1,6 @@
 package net.swedz.extended_industrialization.entity;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -213,7 +212,7 @@ public final class NanoSaberSweepEntity extends Projectile
 	}
 	
 	@Override
-	public boolean hurt(DamageSource source, float amount)
+	public boolean hurtServer(net.minecraft.server.level.ServerLevel level, DamageSource source, float damage)
 	{
 		return false;
 	}
@@ -258,7 +257,7 @@ public final class NanoSaberSweepEntity extends Projectile
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundTag tag)
+	public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		super.addAdditionalSaveData(tag);
 		
@@ -269,13 +268,13 @@ public final class NanoSaberSweepEntity extends Projectile
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundTag tag)
+	public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput tag)
 	{
 		super.readAdditionalSaveData(tag);
 		
-		ticks = tag.getLong("Ticks");
-		this.setColor(tag.getInt("Color"));
-		this.setRainbow(tag.getBoolean("Rainbow"));
-		this.setPower(tag.getFloat("Power"));
+		ticks = tag.getLongOr("Ticks", 0);
+		this.setColor(tag.getIntOr("Color", 0));
+		this.setRainbow(tag.getBooleanOr("Rainbow", false));
+		this.setPower(tag.getFloatOr("Power", 0));
 	}
 }

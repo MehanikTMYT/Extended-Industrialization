@@ -1,0 +1,5 @@
+tasks.register('showCompileClasspath') {
+    doLast {
+        configurations.compileClasspath.each { f -> println f.absolutePath }
+    }
+}

@@ -25,7 +25,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.swedz.extended_industrialization.EI;
@@ -219,7 +219,7 @@ public final class ElectricBeaconMachineBlockEntity extends BasicMultiblockMachi
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())

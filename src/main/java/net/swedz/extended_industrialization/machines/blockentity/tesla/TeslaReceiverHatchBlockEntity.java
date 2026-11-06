@@ -19,11 +19,11 @@ import aztech.modern_industrialization.machines.multiblocks.HatchType;
 import aztech.modern_industrialization.machines.multiblocks.HatchTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -58,7 +58,7 @@ public final class TeslaReceiverHatchBlockEntity extends HatchBlockEntity implem
 	
 	private final TeslaReceiverComponent receiver;
 	
-	public TeslaReceiverHatchBlockEntity(BEP bep, ResourceLocation id, CableTier tier)
+	public TeslaReceiverHatchBlockEntity(BEP bep, Identifier id, CableTier tier)
 	{
 		super(
 				bep,
@@ -134,7 +134,7 @@ public final class TeslaReceiverHatchBlockEntity extends HatchBlockEntity implem
 	}
 	
 	@Override
-	public ResourceLocation getTeslaModelLocation()
+	public Identifier getTeslaModelLocation()
 	{
 		return EI.id("tesla/tesla_hatch");
 	}
@@ -244,7 +244,7 @@ public final class TeslaReceiverHatchBlockEntity extends HatchBlockEntity implem
 		}
 	}
 	
-	private ItemInteractionResult tryReplaceHatch(Player player, InteractionHand hand, Direction face)
+	private InteractionResult tryReplaceHatch(Player player, InteractionHand hand, Direction face)
 	{
 		var stack = player.getItemInHand(hand);
 		var item = stack.getItem();
@@ -299,14 +299,14 @@ public final class TeslaReceiverHatchBlockEntity extends HatchBlockEntity implem
 			
 			stack.consume(1, player);
 			
-			return ItemInteractionResult.sidedSuccess(player.level().isClientSide());
+			return InteractionResult.SUCCESS;
 		}
 		
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())

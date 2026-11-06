@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import com.google.common.collect.Lists;
@@ -130,13 +133,13 @@ public final class TeslaNetwork implements MIEnergyStorage, TeslaTransferLimits.
 	}
 	
 	@Override
-	public boolean canExtract()
+	public boolean supportsExtraction()
 	{
 		return this.hasTransmitter();
 	}
 	
 	@Override
-	public boolean canReceive()
+	public boolean supportsInsertion()
 	{
 		return true;
 	}
@@ -150,7 +153,7 @@ public final class TeslaNetwork implements MIEnergyStorage, TeslaTransferLimits.
 	}
 	
 	@Override
-	public long receive(long maxReceive, boolean simulate)
+	public int insert(int maxReceive, TransactionContext transaction)
 	{
 		if(!this.isTransmitterLoaded())
 		{
@@ -164,11 +167,11 @@ public final class TeslaNetwork implements MIEnergyStorage, TeslaTransferLimits.
 		}
 		
 		var buckets = TransferHelper.organizeBuckets(receivers, TeslaReceiver::getPriority);
-		long amountReceived = 0;
-		long remaining = maxReceive;
+		int amountReceived = 0;
+		int remaining = maxReceive;
 		for(var bucket : buckets)
 		{
-			long received = TransferHelper.distributeLong(TeslaReceiver::receiveEnergy, this.cleanBucket(bucket), remaining, simulate);
+			int received = EnergyTransfers.distribute(TeslaReceiver::receiveEnergy, this.cleanBucket(bucket), remaining, transaction);
 			amountReceived += received;
 			remaining -= received;
 		}
@@ -176,19 +179,19 @@ public final class TeslaNetwork implements MIEnergyStorage, TeslaTransferLimits.
 	}
 	
 	@Override
-	public long extract(long maxExtract, boolean simulate)
+	public int extract(int maxExtract, TransactionContext transaction)
 	{
-		return this.getTransmitter().extractEnergy(maxExtract, simulate);
+		return this.getTransmitter().extractEnergy(maxExtract, transaction);
 	}
 	
 	@Override
-	public long getAmount()
+	public long getAmountAsLong()
 	{
 		return receivers.stream().mapToLong(TeslaReceiver::getStoredEnergy).sum();
 	}
 	
 	@Override
-	public long getCapacity()
+	public long getCapacityAsLong()
 	{
 		return receivers.stream().mapToLong(TeslaReceiver::getEnergyCapacity).sum();
 	}

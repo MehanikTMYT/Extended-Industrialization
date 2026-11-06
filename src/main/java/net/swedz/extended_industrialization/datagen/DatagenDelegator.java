@@ -8,7 +8,7 @@ import net.swedz.extended_industrialization.datagen.server.DatagenDelegatorServe
 public final class DatagenDelegator
 {
 	@SubscribeEvent
-	public void gatherData(GatherDataEvent event)
+	public void gatherData(GatherDataEvent.Client event)
 	{
 		DatagenDelegatorClient.configure(event);
 		DatagenDelegatorServer.configure(event);

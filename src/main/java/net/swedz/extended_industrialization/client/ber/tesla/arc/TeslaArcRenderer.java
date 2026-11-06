@@ -21,7 +21,13 @@ public final class TeslaArcRenderer
 								 List<TeslaArcPoint> points, Function<Float, Float> widthFunction,
 								 float r, float g, float b, float a)
 	{
-		var pose = matrices.last().pose();
+		renderArcPose(matrices.last().pose(), consumer, points, widthFunction, r, g, b, a);
+	}
+	
+	public static void renderArcPose(org.joml.Matrix4fc pose, VertexConsumer consumer,
+									  List<TeslaArcPoint> points, Function<Float, Float> widthFunction,
+									  float r, float g, float b, float a)
+	{
 		
 		if(points.size() < 2)
 		{

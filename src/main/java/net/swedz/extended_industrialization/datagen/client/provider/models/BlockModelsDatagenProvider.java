@@ -8,9 +8,9 @@ import net.swedz.tesseract.neoforge.registry.holder.BlockHolder;
 
 public final class BlockModelsDatagenProvider extends BlockStateProvider
 {
-	public BlockModelsDatagenProvider(GatherDataEvent event)
+	public BlockModelsDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), EI.ID);
 	}
 	
 	@Override

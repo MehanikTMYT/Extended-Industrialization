@@ -8,7 +8,7 @@ import guideme.Guide;
 import guideme.scene.element.SceneElementTagCompiler;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -54,9 +54,9 @@ public final class EI
 	public static final String ID   = "extended_industrialization";
 	public static final String NAME = "Extended Industrialization";
 	
-	public static ResourceLocation id(String name)
+	public static Identifier id(String name)
 	{
-		return ResourceLocation.fromNamespaceAndPath(ID, name);
+		return Identifier.fromNamespaceAndPath(ID, name);
 	}
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(NAME);

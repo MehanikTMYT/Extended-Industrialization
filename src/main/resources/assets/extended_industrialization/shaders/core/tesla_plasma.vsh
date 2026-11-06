@@ -1,21 +1,18 @@
-#version 150
+#version 330
 
-#moj_import <projection.glsl>
+#moj_import <minecraft:dynamictransforms.glsl>
+#moj_import <minecraft:projection.glsl>
 
 in vec3 Position;
 in vec4 Color;
 in vec2 UV0;
-
-uniform mat4 ModelViewMat;
-uniform mat4 ProjMat;
-uniform mat4 TextureMat;
 
 out vec2 texCoord0;
 out vec4 vertexColor;
 
 void main()
 {
-	gl_Position = ProjMat * ModelViewMat * vec4(Position, 1);
-	texCoord0 = (TextureMat * vec4(UV0, 0, 1)).xy;
+	gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
+	texCoord0 = UV0;
 	vertexColor = Color;
 }

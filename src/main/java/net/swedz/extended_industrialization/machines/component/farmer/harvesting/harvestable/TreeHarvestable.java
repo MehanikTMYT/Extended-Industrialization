@@ -12,7 +12,7 @@ import net.swedz.extended_industrialization.machines.component.farmer.harvesting
 import net.swedz.extended_industrialization.machines.component.farmer.harvesting.LootTableHarvestableBehavior;
 import net.swedz.tesseract.neoforge.event.treegrowth.TreeGrowthEvent;
 
-import java.util.Arrays;
+import com.mojang.serialization.Codec;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -67,25 +67,33 @@ public final class TreeHarvestable implements LootTableHarvestableBehavior
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		var treesTag = new CompoundTag();
+		var treeList = tag.childrenList("trees");
 		for(FarmerTree tree : trees.values())
 		{
-			long[] list = tree.blocks().stream().mapToLong(BlockPos::asLong).toArray();
-			treesTag.putLongArray(Long.toString(tree.origin().asLong()), list);
+			var child = treeList.addChild();
+			child.putLong("origin", tree.origin().asLong());
+			var blocks = child.list("blocks", Codec.LONG);
+			for(BlockPos block : tree.blocks())
+			{
+				blocks.add(block.asLong());
+			}
 		}
-		tag.put("trees", treesTag);
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
-		var treesTag = tag.getCompound("trees");
-		for(String key : treesTag.getAllKeys())
+		for(var child : tag.childrenListOrEmpty("trees"))
 		{
-			var base = BlockPos.of(Long.parseLong(key));
-			var blocks = Arrays.stream(treesTag.getLongArray(key)).mapToObj(BlockPos::of).toList();
+			var origin = child.getLong("origin");
+			if(origin.isEmpty())
+			{
+				continue;
+			}
+			var base = BlockPos.of(origin.get());
+			var blocks = child.listOrEmpty("blocks", Codec.LONG).stream().map(BlockPos::of).toList();
 			trees.put(base, new FarmerTree(base, blocks));
 		}
 	}

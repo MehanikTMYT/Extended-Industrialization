@@ -1,78 +1,110 @@
 package net.swedz.extended_industrialization.client.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.renderable.BakedModelRenderable;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.EIClientSheets;
+import net.swedz.extended_industrialization.EIStandaloneModels;
 import net.swedz.extended_industrialization.component.RainbowDataComponent;
 import net.swedz.extended_industrialization.entity.NanoSaberSweepEntity;
-import org.joml.Vector4f;
 
-public final class NanoSaberSweepEntityRenderer extends EntityRenderer<NanoSaberSweepEntity>
+import java.util.ArrayList;
+import java.util.List;
+
+public final class NanoSaberSweepEntityRenderer extends EntityRenderer<NanoSaberSweepEntity, NanoSaberSweepEntityRenderer.RenderState>
 {
-	private final RandomSource random;
+	public static final class RenderState extends EntityRenderState
+	{
+		public int color;
+		public boolean rainbow;
+		public double mx, my, mz;
+		public final List<BakedQuad> quads = new ArrayList<>();
+	}
 	
 	public NanoSaberSweepEntityRenderer(EntityRendererProvider.Context context)
 	{
 		super(context);
-		random = RandomSource.create();
 	}
 	
 	@Override
-	public ResourceLocation getTextureLocation(NanoSaberSweepEntity nanoSaberSweepEntity)
+	public RenderState createRenderState()
 	{
-		throw new UnsupportedOperationException();
+		return new RenderState();
 	}
 	
 	@Override
-	public void render(NanoSaberSweepEntity entity, float entityYaw, float partialTick, PoseStack matrices, MultiBufferSource bufferSource, int packedLight)
+	public void extractRenderState(NanoSaberSweepEntity entity, RenderState state, float partialTicks)
 	{
-		var modelManager = Minecraft.getInstance().getModelManager();
-		var model = modelManager.getModel(ModelResourceLocation.standalone(EI.id("entity/nano_saber_sweep")));
+		super.extractRenderState(entity, state, partialTicks);
+		
+		state.color = entity.isRainbow() ? RainbowDataComponent.getCurrentRainbowColor() : (entity.getColor() | 0xFF000000);
+		state.rainbow = entity.isRainbow();
+		var movement = entity.getDeltaMovement();
+		state.mx = movement.x();
+		state.my = movement.y();
+		state.mz = movement.z();
+		
+		state.quads.clear();
+		var model = Minecraft.getInstance().getModelManager().getStandaloneModel(EIStandaloneModels.NANO_SABER_SWEEP);
+		if(model != null)
+		{
+			List<BlockStateModelPart> parts = new ArrayList<>();
+			model.collectParts(RandomSource.create(42), parts);
+			for(var part : parts)
+			{
+				state.quads.addAll(part.getQuads(null));
+				for(var direction : net.minecraft.core.Direction.values())
+				{
+					state.quads.addAll(part.getQuads(direction));
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void submit(RenderState state, PoseStack matrices, SubmitNodeCollector collector, CameraRenderState camera)
+	{
+		if(state.quads.isEmpty())
+		{
+			return;
+		}
 		
 		matrices.pushPose();
 		
-		var movement = entity.getDeltaMovement().normalize();
-		float yaw = (float) Math.atan2(movement.x(), movement.z());
-		float pitch = (float) Math.asin(-movement.y());
-		matrices.mulPose(Axis.YP.rotation(yaw));
-		matrices.mulPose(Axis.XP.rotation(pitch));
-		matrices.mulPose(Axis.YP.rotationDegrees(180));
+		var movement = new net.minecraft.world.phys.Vec3(state.mx, state.my, state.mz);
+		if(movement.lengthSqr() > 1.0E-8)
+		{
+			movement = movement.normalize();
+			float yaw = (float) Math.atan2(movement.x(), movement.z());
+			float pitch = (float) Math.asin(-movement.y());
+			matrices.mulPose(Axis.YP.rotation(yaw));
+			matrices.mulPose(Axis.XP.rotation(pitch));
+			matrices.mulPose(Axis.YP.rotationDegrees(180));
+		}
 		
-		int color = entity.isRainbow() ?
-				RainbowDataComponent.getCurrentRainbowColor() :
-				(entity.getColor() | 0xFF000000);
-		float red = FastColor.ARGB32.red(color) / 255f;
-		float green = FastColor.ARGB32.green(color) / 255f;
-		float blue = FastColor.ARGB32.blue(color) / 255f;
-		
-		BakedModelRenderable.of(model).render(
-				matrices, bufferSource,
-				(__) -> RenderType.entityCutout(EIClientSheets.NANO_SABER_SWEEP),
-				LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, partialTick,
-				new BakedModelRenderable.Context(
-						null,
-						new Direction[1],
-						random,
-						42L,
-						ModelData.EMPTY,
-						new Vector4f(red, green, blue, 1)
-				)
-		);
+		int color = state.color;
+		var instance = new QuadInstance();
+		instance.setColor(color);
+		instance.setLightCoords(LightTexture.FULL_BRIGHT);
+		var renderType = RenderTypes.entityCutout(EIClientSheets.NANO_SABER_SWEEP);
+		for(var quad : state.quads)
+		{
+			collector.submitCustomGeometry(matrices, renderType, (pose, buffer) -> buffer.putBakedQuad(pose, quad, instance));
+		}
 		
 		matrices.popPose();
 	}

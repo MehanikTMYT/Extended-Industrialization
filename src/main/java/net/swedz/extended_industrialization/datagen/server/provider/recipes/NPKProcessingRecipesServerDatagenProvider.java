@@ -14,35 +14,35 @@ import net.swedz.extended_industrialization.EITags;
 
 public final class NPKProcessingRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public NPKProcessingRecipesServerDatagenProvider(GatherDataEvent event)
+	public NPKProcessingRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static void addPotassiumChlorideRecipe(String id, ItemLike item, int amount, RecipeOutput output)
+	private void addPotassiumChlorideRecipe(String id, ItemLike item, int amount, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"npk_processing", "potassium_chloride_from_%s".formatted(id), MIMachineRecipeTypes.CHEMICAL_REACTOR,
 				8, 5 * 20,
 				(r) -> r
-						.addItemInput(item, amount)
-						.addFluidInput(Fluids.WATER, 500)
-						.addFluidInput(MIFluids.HYDROCHLORIC_ACID, 100)
-						.addFluidOutput(EIFluids.POTASSIUM_CHLORIDE, 200),
+						.itemIn(item, amount)
+						.fluidIn(Fluids.WATER, 500)
+						.fluidIn(MIFluids.HYDROCHLORIC_ACID, 100)
+						.fluidOut(EIFluids.POTASSIUM_CHLORIDE, 200),
 				output
 		);
 	}
 	
-	private static void addPotassiumChlorideRecipe(String id, TagKey<Item> itemTag, int amount, RecipeOutput output)
+	private void addPotassiumChlorideRecipe(String id, TagKey<Item> itemTag, int amount, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"npk_processing", "potassium_chloride_from_%s".formatted(id), MIMachineRecipeTypes.CHEMICAL_REACTOR,
 				8, 5 * 20,
 				(r) -> r
-						.addItemInput(itemTag, amount)
-						.addFluidInput(Fluids.WATER, 500)
-						.addFluidInput(MIFluids.HYDROCHLORIC_ACID, 100)
-						.addFluidOutput(EIFluids.POTASSIUM_CHLORIDE, 200),
+						.itemIn(itemTag, amount)
+						.fluidIn(Fluids.WATER, 500)
+						.fluidIn(MIFluids.HYDROCHLORIC_ACID, 100)
+						.fluidOut(EIFluids.POTASSIUM_CHLORIDE, 200),
 				output
 		);
 	}
@@ -54,9 +54,9 @@ public final class NPKProcessingRecipesServerDatagenProvider extends RecipesServ
 				"npk_processing", "phosphoric_acid", MIMachineRecipeTypes.CHEMICAL_REACTOR,
 				8, 5 * 20,
 				(r) -> r
-						.addItemInput(Items.BONE_MEAL, 1)
-						.addFluidInput(MIFluids.SULFURIC_ACID, 50)
-						.addFluidOutput(EIFluids.PHOSPHORIC_ACID, 250),
+						.itemIn(Items.BONE_MEAL, 1)
+						.fluidIn(MIFluids.SULFURIC_ACID, 50)
+						.fluidOut(EIFluids.PHOSPHORIC_ACID, 250),
 				output
 		);
 		
@@ -69,11 +69,11 @@ public final class NPKProcessingRecipesServerDatagenProvider extends RecipesServ
 				"npk_processing", "potassium_hydroxide", MIMachineRecipeTypes.CHEMICAL_REACTOR,
 				8, 10 * 20,
 				(r) -> r
-						.addFluidInput(EIFluids.POTASSIUM_CHLORIDE, 1000)
-						.addFluidInput(MIFluids.HYDROGEN, 500)
-						.addFluidInput(MIFluids.OXYGEN, 500)
-						.addFluidOutput(EIFluids.POTASSIUM_HYDROXIDE, 2000)
-						.addFluidOutput(MIFluids.CHLORINE, 250),
+						.fluidIn(EIFluids.POTASSIUM_CHLORIDE, 1000)
+						.fluidIn(MIFluids.HYDROGEN, 500)
+						.fluidIn(MIFluids.OXYGEN, 500)
+						.fluidOut(EIFluids.POTASSIUM_HYDROXIDE, 2000)
+						.fluidOut(MIFluids.CHLORINE, 250),
 				output
 		);
 		
@@ -81,11 +81,11 @@ public final class NPKProcessingRecipesServerDatagenProvider extends RecipesServ
 				"npk_processing", "npk", MIMachineRecipeTypes.CHEMICAL_REACTOR,
 				8, 15 * 20,
 				(r) -> r
-						.addFluidInput(MIFluids.NITROGEN, 1000)
-						.addFluidInput(EIFluids.PHOSPHORIC_ACID, 1000)
-						.addFluidInput(EIFluids.POTASSIUM_HYDROXIDE, 1000)
-						.addFluidOutput(EIFluids.NPK_FERTILIZER, 2500)
-						.addFluidOutput(Fluids.WATER, 500),
+						.fluidIn(MIFluids.NITROGEN, 1000)
+						.fluidIn(EIFluids.PHOSPHORIC_ACID, 1000)
+						.fluidIn(EIFluids.POTASSIUM_HYDROXIDE, 1000)
+						.fluidOut(EIFluids.NPK_FERTILIZER, 2500)
+						.fluidOut(Fluids.WATER, 500),
 				output
 		);
 	}

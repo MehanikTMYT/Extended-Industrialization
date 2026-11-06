@@ -9,9 +9,9 @@ import net.swedz.extended_industrialization.EIMachines;
 
 public final class ComposterRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public ComposterRecipesServerDatagenProvider(GatherDataEvent event)
+	public ComposterRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
 	@Override
@@ -21,10 +21,10 @@ public final class ComposterRecipesServerDatagenProvider extends RecipesServerDa
 				"composter/fertilizer", "composted_manure", EIMachines.RecipeTypes.COMPOSTER,
 				4, 5 * 20,
 				(r) -> r
-						.addFluidInput(EIFluids.MANURE, 150)
-						.addItemInput(Items.BONE_MEAL, 1)
-						.addItemInput(EIItems.MULCH, 1)
-						.addFluidOutput(EIFluids.COMPOSTED_MANURE, 200),
+						.fluidIn(EIFluids.MANURE, 150)
+						.itemIn(Items.BONE_MEAL, 1)
+						.itemIn(EIItems.MULCH, 1)
+						.fluidOut(EIFluids.COMPOSTED_MANURE, 200),
 				output
 		);
 	}

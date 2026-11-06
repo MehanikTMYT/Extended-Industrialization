@@ -62,11 +62,11 @@ public abstract class FarmerTask
 	
 	protected abstract boolean run();
 	
-	public void writeNbt(CompoundTag tag)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
-	public void readNbt(CompoundTag tag, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 	}
 }

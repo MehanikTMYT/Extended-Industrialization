@@ -16,9 +16,9 @@ public final class AutoSmeltLootModifier extends LootModifier
 	public static final MapCodec<AutoSmeltLootModifier> CODEC = RecordCodecBuilder.mapCodec((instance) ->
 			LootModifier.codecStart(instance).apply(instance, AutoSmeltLootModifier::new));
 	
-	public AutoSmeltLootModifier(LootItemCondition[] conditions)
+	public AutoSmeltLootModifier(LootItemCondition[] conditions, int priority)
 	{
-		super(conditions);
+		super(conditions, priority);
 	}
 	
 	/**
@@ -33,10 +33,11 @@ public final class AutoSmeltLootModifier extends LootModifier
 	 */
 	private static ItemStack smelt(ItemStack stack, LootContext context)
 	{
-		var recipe = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), context.getLevel());
+		var input = new SingleRecipeInput(stack);
+		var recipe = context.getLevel().recipeAccess().getRecipeFor(RecipeType.SMELTING, input, context.getLevel());
 		if(recipe.isPresent())
 		{
-			var result = recipe.get().value().getResultItem(context.getLevel().registryAccess());
+			var result = recipe.get().value().assemble(input);
 			if(!result.isEmpty())
 			{
 				return result.copyWithCount(stack.getCount() * result.getCount());

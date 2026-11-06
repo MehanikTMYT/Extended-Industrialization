@@ -1,62 +1,83 @@
 package net.swedz.extended_industrialization.client.ber.tesla;
 
 import aztech.modern_industrialization.MITags;
-import aztech.modern_industrialization.client.util.RenderHelper;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexSorting;
+import com.mojang.blaze3d.vertex.QuadInstance;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import aztech.modern_industrialization.client.util.RenderHelper;
+import net.minecraft.util.ARGB;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.renderable.BakedModelRenderable;
-import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
+import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 import net.swedz.extended_industrialization.EI;
-import net.swedz.extended_industrialization.EIClient;
-import net.swedz.extended_industrialization.EIClientRenderTypes;
 import net.swedz.extended_industrialization.EIComponents;
 import net.swedz.extended_industrialization.client.ber.tesla.arc.TeslaArcPoint;
 import net.swedz.extended_industrialization.client.ber.tesla.arc.TeslaArcRenderer;
 import net.swedz.extended_industrialization.client.ber.tesla.behavior.TeslaArcInstance;
 import net.swedz.extended_industrialization.client.ber.tesla.behavior.TeslaBehavior;
 import net.swedz.extended_industrialization.client.model.tesla.TeslaBakedModel;
-import net.swedz.extended_industrialization.compat.continuity.ContinuityModelUnwrapper;
+import net.swedz.extended_industrialization.client.model.tesla.TeslaClientModels;
 import net.swedz.extended_industrialization.machines.blockentity.tesla.TeslaParticleGeneratorMachineBlockEntity;
 import net.swedz.extended_industrialization.machines.component.tesla.network.TeslaNetworkPart;
-import net.swedz.tesseract.neoforge.api.WorldPos;
-import net.swedz.tesseract.neoforge.helper.CubeOverlayRenderHelper;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 @EventBusSubscriber(modid = EI.ID, value = Dist.CLIENT)
 public final class TeslaPartRenderer
 {
-	private static final Set<BlockPos>                  HIGHLIGHT_QUEUE          = Sets.newHashSet();
-	private static final MultiBufferSource.BufferSource IMMEDIATE                = MultiBufferSource.immediate(new ByteBufferBuilder(128));
-	private static final VertexSorting                  HIGHLIGHT_VERTEX_SORTING = RenderHelper.reverseVertexSorting(VertexSorting.DISTANCE_TO_ORIGIN);
+	private TeslaPartRenderer()
+	{
+	}
 	
-	private static void renderHighlight(MachineBlockEntity machine, float partialTick, PoseStack matrices, MultiBufferSource buffer, int light, int overlay)
+	// ---------- Held network key / wrench helpers ----------
+	
+	public static Optional<Identifier> getHeldNetworkKey()
+	{
+		var player = Minecraft.getInstance().player;
+		if(player == null)
+		{
+			return Optional.empty();
+		}
+		return player.getMainHandItem().has(EIComponents.SELECTED_TESLA_NETWORK) ? Optional.of(player.getMainHandItem().get(EIComponents.SELECTED_TESLA_NETWORK).key()) :
+				(player.getOffhandItem().has(EIComponents.SELECTED_TESLA_NETWORK) ? Optional.of(player.getOffhandItem().get(EIComponents.SELECTED_TESLA_NETWORK).key()) : Optional.empty());
+	}
+	
+	public static boolean isHoldingWrench()
+	{
+		var player = Minecraft.getInstance().player;
+		if(player == null)
+		{
+			return false;
+		}
+		return player.getMainHandItem().is(MITags.WRENCHES) ||
+			   player.getOffhandItem().is(MITags.WRENCHES);
+	}
+	
+	// ---------- Linked network highlight (level renderer pass) ----------
+	
+	private static final Set<BlockPos> LINKED_HIGHLIGHTS = Sets.newConcurrentHashSet();
+	private static final Set<BlockPos> WRENCH_HIGHLIGHTS = Sets.newConcurrentHashSet();
+	private static final ContextKey<Set<BlockPos>> LINKED_HIGHLIGHT_KEY = new ContextKey<>(EI.id("tesla_linked_highlights"));
+	private static final ContextKey<Set<BlockPos>> WRENCH_HIGHLIGHT_KEY = new ContextKey<>(EI.id("tesla_wrench_highlights"));
+	
+	public static void extractHighlight(MachineBlockEntity machine)
 	{
 		var player = Minecraft.getInstance().player;
 		var pos = machine.getBlockPos();
@@ -69,7 +90,7 @@ public final class TeslaPartRenderer
 				   part.getNetworkKey().equals(networkKey) &&
 				   player.distanceToSqr(pos.getCenter()) <= Mth.square(EIClient.config().teslaLinkedOverlayRenderDistance()))
 				{
-					HIGHLIGHT_QUEUE.add(pos);
+					LINKED_HIGHLIGHTS.add(pos);
 				}
 			});
 		}
@@ -77,74 +98,48 @@ public final class TeslaPartRenderer
 		{
 			if(isHoldingWrench())
 			{
-				matrices.pushPose();
-				matrices.translate(-0.005, -0.005, -0.005);
-				matrices.scale(1.01f, 1.01f, 1.01f);
-				CubeOverlayRenderHelper.render(matrices, buffer, 1f, 1f, 1f, overlay);
-				matrices.popPose();
+				WRENCH_HIGHLIGHTS.add(pos);
 			}
 		}
 	}
 	
-	private static Optional<WorldPos> getHeldNetworkKey()
-	{
-		var player = Minecraft.getInstance().player;
-		if(player == null)
-		{
-			return Optional.empty();
-		}
-		return player.getMainHandItem().has(EIComponents.SELECTED_TESLA_NETWORK) ? Optional.of(player.getMainHandItem().get(EIComponents.SELECTED_TESLA_NETWORK).key()) :
-				(player.getOffhandItem().has(EIComponents.SELECTED_TESLA_NETWORK) ? Optional.of(player.getOffhandItem().get(EIComponents.SELECTED_TESLA_NETWORK).key()) : Optional.empty());
-	}
-	
-	private static boolean isHoldingWrench()
-	{
-		var player = Minecraft.getInstance().player;
-		if(player == null)
-		{
-			return false;
-		}
-		return player.getMainHandItem().is(MITags.WRENCHES) ||
-			   player.getOffhandItem().is(MITags.WRENCHES);
-	}
-	
 	@SubscribeEvent
-	private static void onRender(RenderLevelStageEvent event)
+	private static void onSubmitCustomGeometry(SubmitCustomGeometryEvent event)
 	{
-		if(event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL && !HIGHLIGHT_QUEUE.isEmpty())
+		var camera = event.getLevelRenderState().cameraRenderState.pos;
+		var pose = event.getPoseStack();
+		var collector = event.getSubmitNodeCollector();
+		try
 		{
-			RenderSystem.clear(256, Minecraft.ON_OSX);
-			var matrices = event.getPoseStack();
-			matrices.pushPose();
-			matrices.mulPose(event.getModelViewMatrix());
-			
-			for(var pos : HIGHLIGHT_QUEUE)
+			for(var pos : LINKED_HIGHLIGHTS)
 			{
-				matrices.pushPose();
-				var cameraPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-				double x = (double) pos.getX() - cameraPos.x;
-				double y = (double) pos.getY() - cameraPos.y;
-				double z = (double) pos.getZ() - cameraPos.z;
-				matrices.translate(x, y, z);
-				matrices.translate(-0.005, -0.005, -0.005);
-				matrices.scale(1.01f, 1.01f, 1.01f);
-				CubeOverlayRenderHelper.render(matrices, IMMEDIATE, 111f / 256, 111f / 256, 1f, OverlayTexture.NO_OVERLAY);
-				matrices.popPose();
+				pose.pushPose();
+				pose.translate(pos.getX() - camera.x - 0.005, pos.getY() - camera.y - 0.005, pos.getZ() - camera.z - 0.005);
+				pose.scale(1.01f, 1.01f, 1.01f);
+				RenderHelper.drawCube(pose, collector, 0xFF6F6FFF);
+				pose.popPose();
 			}
-			
-			matrices.popPose();
-			RenderSystem.backupProjectionMatrix();
-			RenderSystem.setProjectionMatrix(RenderSystem.getProjectionMatrix(), HIGHLIGHT_VERTEX_SORTING);
-			IMMEDIATE.endBatch();
-			RenderSystem.restoreProjectionMatrix();
-			HIGHLIGHT_QUEUE.clear();
+			for(var pos : WRENCH_HIGHLIGHTS)
+			{
+				pose.pushPose();
+				pose.translate(pos.getX() - camera.x - 0.005, pos.getY() - camera.y - 0.005, pos.getZ() - camera.z - 0.005);
+				pose.scale(1.01f, 1.01f, 1.01f);
+				RenderHelper.drawCube(pose, collector, 0xFFFFFFFF);
+				pose.popPose();
+			}
+		}
+		finally
+		{
+			LINKED_HIGHLIGHTS.clear();
+			WRENCH_HIGHLIGHTS.clear();
 		}
 	}
 	
-	private static final Map<BlockPos, TeslaArcInstance> TESLA_ARCS = Maps.newConcurrentMap();
+	// ---------- Arc instances ----------
 	
-	@SubscribeEvent
-	private static void onLevelUnload(LevelEvent.Unload event)
+	private static final java.util.Map<BlockPos, TeslaArcInstance> TESLA_ARCS = Maps.newConcurrentMap();
+	
+	public static void onLevelUnload()
 	{
 		TESLA_ARCS.clear();
 	}
@@ -176,96 +171,92 @@ public final class TeslaPartRenderer
 		return null;
 	}
 	
-	private static TeslaBakedModel getTeslaModel(ResourceLocation location)
+	public static TeslaBakedModel getTeslaModel(Identifier location)
 	{
-		var modelManager = Minecraft.getInstance().getModelManager();
-		var model = modelManager.getModel(ModelResourceLocation.standalone(location));
-		model = ContinuityModelUnwrapper.unwrap(model);
-		if(model instanceof TeslaBakedModel teslaModel)
-		{
-			return teslaModel;
-		}
-		EI.LOGGER.warn("Model {} should have been a TeslaBakedModel, but was {}", location, model.getClass());
-		return null;
+		return TeslaClientModels.get(location);
 	}
 	
-	private static void renderArcBounds(MachineBlockEntity machine, TeslaBakedModel tesla, PoseStack matrices, MultiBufferSource buffer)
+	// ---------- BER extract/submit hooks ----------
+	
+	public record ExtractedArc(List<TeslaArcPoint> points, float alpha)
 	{
-		var arcs = tesla.arcs();
-		if(arcs != null && (arcs.hasRandomBounds() || arcs.attachesToNearbyEntities()) && Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes())
-		{
-			matrices.pushPose();
-			
-			var consumer = buffer.getBuffer(RenderType.lines());
-			
-			var position = machine.getBlockPos().getCenter();
-			var direction = machine.orientation.facingDirection;
-			
-			if(arcs.hasRandomBounds())
-			{
-				var box = arcs.worldIncludeBounds(position, direction).move(position.scale(-1)).move(0.5, 0.5, 0.5);
-				LevelRenderer.renderLineBox(matrices, consumer, box, 0.75f, 1, 0.75f, 1);
-				
-				box = arcs.worldExcludeBounds(position, direction).move(position.scale(-1)).move(0.5, 0.5, 0.5);
-				LevelRenderer.renderLineBox(matrices, consumer, box, 1, 0.75f, 0.75f, 1);
-			}
-			if(arcs.attachesToNearbyEntities())
-			{
-				var box = arcs.worldNearbyEntitiesBounds(position, direction).move(position.scale(-1)).move(0.5, 0.5, 0.5);
-				LevelRenderer.renderLineBox(matrices, consumer, box, 0.75f, 0.75f, 1, 1);
-			}
-			
-			matrices.popPose();
-		}
 	}
 	
-	private static void renderArcs(MachineBlockEntity machine, TeslaBakedModel tesla, Vector3f color, float partialTick, PoseStack matrices, MultiBufferSource buffer, int light, int overlay)
+	public static void extract(MachineBlockEntity machine, boolean shouldTeslaRender, Vector3f color, float partialTick, List<ExtractedArc> arcsOut, boolean plasmaOut)
 	{
+		if(!EIClient.config().renderTeslaAnimations() || !(machine instanceof TeslaBehavior behavior))
+		{
+			return;
+		}
+		int renderDistance = EIClient.config().teslaAnimationsRenderDistance();
+		if(renderDistance != 0 && !Minecraft.getInstance().player.position().closerThan(machine.getBlockPos().getCenter(), renderDistance))
+		{
+			return;
+		}
+		var tesla = getTeslaModel(behavior.getTeslaModelLocation());
+		if(tesla == null)
+		{
+			return;
+		}
 		var arcs = tesla.arcs();
-		if(arcs != null)
+		if(arcs != null && shouldTeslaRender)
 		{
 			var arcInstance = getArcInstance(machine.getBlockPos());
-			if(arcInstance == null)
+			if(arcInstance != null)
 			{
-				return;
-			}
-			for(var trail : arcInstance.getTrails())
-			{
-				List<TeslaArcPoint> points = trail.points();
-				if(points.size() < 2)
+				for(var trail : arcInstance.getTrails())
 				{
-					continue;
-				}
-				boolean instant = arcs.duration() == 0;
-				float alpha = 0.9f;
-				if(!instant)
-				{
-					int ticks = points.getFirst().timeActive();
-					int halfPoints = points.size() / 2;
-					if(ticks == 0 || ticks == 1)
+					List<TeslaArcPoint> points = trail.points();
+					if(points.size() < 2)
 					{
-						points = points.subList(0, (int) (halfPoints * partialTick) + (ticks == 1 ? halfPoints : 0));
+						continue;
 					}
-					alpha *= (ticks == 0 ? partialTick : (ticks == arcs.duration() ? (1 - partialTick) : 1));
+					boolean instant = arcs.duration() == 0;
+					float alpha = 0.9f;
+					if(!instant)
+					{
+						int ticks = points.getFirst().timeActive();
+						int halfPoints = points.size() / 2;
+						if(ticks == 0 || ticks == 1)
+						{
+							points = points.subList(0, (int) (halfPoints * partialTick) + (ticks == 1 ? halfPoints : 0));
+						}
+						alpha *= (ticks == 0 ? partialTick : (ticks == arcs.duration() ? (1 - partialTick) : 1));
+					}
+					arcsOut.add(new ExtractedArc(List.copyOf(points), alpha));
 				}
-				
-				matrices.pushPose();
-				
-				var consumer = buffer.getBuffer(EIClientRenderTypes.TESLA_ARC);
-				TeslaArcRenderer.renderArc(
-						matrices, consumer, points, (i) -> (1 - i) * arcs.widthScale(),
-						color.x(), color.y(), color.z(), alpha
-				);
-				
-				matrices.popPose();
 			}
 		}
 	}
 	
-	private static void renderPlasma(MachineBlockEntity machine, TeslaBakedModel tesla, Vector3f color, float partialTick, PoseStack matrices, MultiBufferSource buffer, int light, int overlay)
+	public static void submit(MachineBlockEntity machine, boolean shouldTeslaRender, Vector3f color, float partialTick,
+							  com.mojang.blaze3d.vertex.PoseStack matrices, SubmitNodeCollector collector, CameraRenderState camera,
+							  List<ExtractedArc> arcs, boolean renderPlasma)
 	{
+		var tesla = getTeslaModel(((TeslaBehavior) machine).getTeslaModelLocation());
+		if(tesla == null)
+		{
+			return;
+		}
+		var modelArcs = tesla.arcs();
+		
+		// Arcs
+		if(modelArcs != null && shouldTeslaRender)
+		{
+			for(var extracted : arcs)
+			{
+				final var points = extracted.points();
+				final float alpha = extracted.alpha();
+				collector.submitCustomGeometry(matrices, EIClientRenderTypes.TESLA_ARC, (pose, buffer) ->
+						TeslaArcRenderer.renderArcPose(pose.pose(), buffer, points, (i) -> (1 - i) * modelArcs.widthScale(),
+								color.x(), color.y(), color.z(), alpha)
+				);
+			}
+		}
+		
+		// Plasma
 		var plasma = tesla.plasma();
-		if(plasma != null)
+		if(plasma != null && shouldTeslaRender && renderPlasma)
 		{
 			matrices.pushPose();
 			
@@ -279,44 +270,20 @@ public final class TeslaPartRenderer
 			
 			float textureScale = plasma.textureScale();
 			float speed = plasma.speed();
-			BakedModelRenderable.of(tesla).render(
-					matrices, buffer,
-					(texture) -> EIClientRenderTypes.TESLA_PLASMA.apply(textureScale, speed),
-					light, overlay, partialTick,
-					new BakedModelRenderable.Context(
-							null,
-							new Direction[1],
-							RandomSource.create(),
-							1835364215L,
-							ModelData.EMPTY,
-							new Vector4f(color.x(), color.y(), color.z(), 0.8f)
-					)
-			);
+			var quads = tesla.quads();
+			var plasmaColor = ARGB.color((int) (0.8f * 255), (int) (color.x() * 255), (int) (color.y() * 255), (int) (color.z() * 255));
+			collector.submitCustomGeometry(matrices, EIClientRenderTypes.TESLA_PLASMA.apply(textureScale, speed), (pose, buffer) ->
+			{
+				var instance = new QuadInstance();
+				instance.setColor(plasmaColor);
+				for(var quad : quads.getAll())
+				{
+					buffer.putBakedQuad(pose, quad, instance);
+				}
+			});
 			
 			matrices.popPose();
 		}
 	}
 	
-	static void render(MachineBlockEntity machine, float partialTick, PoseStack matrices, MultiBufferSource buffer, int light, int overlay)
-	{
-		renderHighlight(machine, partialTick, matrices, buffer, light, overlay);
-		if(EIClient.config().renderTeslaAnimations() && machine instanceof TeslaBehavior behavior)
-		{
-			int renderDistance = EIClient.config().teslaAnimationsRenderDistance();
-			if(renderDistance == 0 || Minecraft.getInstance().player.position().closerThan(machine.getBlockPos().getCenter(), renderDistance))
-			{
-				var tesla = getTeslaModel(behavior.getTeslaModelLocation());
-				if(tesla != null)
-				{
-					var color = behavior.getTeslaColor();
-					renderArcBounds(machine, tesla, matrices, buffer);
-					if(behavior.shouldTeslaRender())
-					{
-						renderArcs(machine, tesla, color, partialTick, matrices, buffer, light, overlay);
-						renderPlasma(machine, tesla, color, partialTick, matrices, buffer, light, overlay);
-					}
-				}
-			}
-		}
-	}
 }

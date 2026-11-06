@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.swedz.tesseract.neoforge.registry.MIFluidProperties;
 import net.swedz.tesseract.neoforge.registry.holder.FluidHolder;
-import net.swedz.tesseract.neoforge.registry.holder.MIFluidHolder;
+import net.swedz.extended_industrialization.port.fluid.MIFluidHolder;
 
 import java.util.Set;
 

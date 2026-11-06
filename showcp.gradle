@@ -1,0 +1,9 @@
+allprojects {
+    tasks.register('showCompileClasspath') {
+        doLast {
+            def conf = configurations.findByName('compileClasspath')
+            if (conf == null) { println "NO compileClasspath"; return }
+            conf.each { f -> println f.absolutePath }
+        }
+    }
+}

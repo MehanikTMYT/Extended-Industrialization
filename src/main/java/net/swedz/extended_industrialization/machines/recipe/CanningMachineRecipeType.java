@@ -5,7 +5,7 @@ import aztech.modern_industrialization.machines.recipe.ProxyableMachineRecipeTyp
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +26,7 @@ import java.util.Set;
 
 public final class CanningMachineRecipeType extends ProxyableMachineRecipeType
 {
-	public CanningMachineRecipeType(ResourceLocation id)
+	public CanningMachineRecipeType(Identifier id)
 	{
 		super(id);
 	}
@@ -39,28 +39,29 @@ public final class CanningMachineRecipeType extends ProxyableMachineRecipeType
 		var recipe = new MIMachineRecipeBuilder(this, 2, 5 * 20);
 		
 		int count = (int) Math.ceil(food.nutrition() / 2D);
-		recipe.addItemInput(EIItems.TIN_CAN, count);
-		recipe.addItemInput(foodItem, 1);
-		recipe.addItemOutput(EIItems.CANNED_FOOD, count);
+		recipe.itemIn(EIItems.TIN_CAN, count);
+		recipe.itemIn(foodItem, 1);
+		recipe.itemOut(EIItems.CANNED_FOOD, count);
 		var remainingItemStack = ItemStack.EMPTY;
-		if(food.usingConvertsTo().isPresent())
+		if(foodItem.components().has(net.minecraft.core.component.DataComponents.USE_REMAINDER))
 		{
-			remainingItemStack = food.usingConvertsTo().get();
+			remainingItemStack = foodItem.components().get(net.minecraft.core.component.DataComponents.USE_REMAINDER).convertInto().create();
 		}
 		else
 		{
 			var foodItemStack = foodItem.getDefaultInstance();
-			if(foodItemStack.hasCraftingRemainingItem())
+			var remainder = foodItemStack.getItem().getCraftingRemainder();
+			if(remainder != null)
 			{
-				remainingItemStack = foodItemStack.getCraftingRemainingItem();
+				remainingItemStack = remainder.create();
 			}
 		}
 		if(!remainingItemStack.isEmpty())
 		{
-			recipe.addItemOutput(remainingItemStack.getItem(), remainingItemStack.getCount());
+			recipe.itemOut(remainingItemStack.getItem(), remainingItemStack.getCount());
 		}
 		
-		return new RecipeHolder<>(id, (MachineRecipe) recipe.convert());
+		return new RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id), (MachineRecipe) recipe.convert());
 	}
 	
 	private List<RecipeHolder<MachineRecipe>> buildCannedFood()
@@ -72,10 +73,10 @@ public final class CanningMachineRecipeType extends ProxyableMachineRecipeType
 			if(!RegistryHelper.holder(BuiltInRegistries.ITEM, item).is(EITags.GeneratedRecipesBlacklist.CANNING_FOOD))
 			{
 				var itemStack = item.getDefaultInstance();
-				var foodProperties = item.getFoodProperties(itemStack, null);
+				var foodProperties = itemStack.get(net.minecraft.core.component.DataComponents.FOOD);
 				if(foodProperties != null && foodProperties.nutrition() > 0)
 				{
-					var food = item.getFoodProperties(item.getDefaultInstance(), null);
+					var food = itemStack.get(net.minecraft.core.component.DataComponents.FOOD);
 					recipes.add(this.generateCannedFood(item, food));
 				}
 			}
@@ -84,30 +85,30 @@ public final class CanningMachineRecipeType extends ProxyableMachineRecipeType
 		return recipes;
 	}
 	
-	private RecipeHolder<MachineRecipe> generateFillingBucket(FluidStack fluidStack, ResourceLocation itemId, Item fullItem, Item emptyItem)
+	private RecipeHolder<MachineRecipe> generateFillingBucket(FluidStack fluidStack, Identifier itemId, Item fullItem, Item emptyItem)
 	{
 		var id = EI.id("/canning_machine/generated/filling/%s/%s".formatted(itemId.getNamespace(), itemId.getPath()));
 		
 		var recipe = new MIMachineRecipeBuilder(this, 2, 5 * 20);
 		
-		recipe.addFluidInput(fluidStack.getFluid(), fluidStack.getAmount());
-		recipe.addItemInput(emptyItem, 1);
-		recipe.addItemOutput(fullItem, 1);
+		recipe.fluidIn(fluidStack.getFluid(), fluidStack.getAmount());
+		recipe.itemIn(emptyItem, 1);
+		recipe.itemOut(fullItem, 1);
 		
-		return new RecipeHolder<>(id, (MachineRecipe) recipe.convert());
+		return new RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id), (MachineRecipe) recipe.convert());
 	}
 	
-	private RecipeHolder<MachineRecipe> generateEmptyingBucket(FluidStack fluidStack, ResourceLocation itemId, Item fullItem, Item emptyItem)
+	private RecipeHolder<MachineRecipe> generateEmptyingBucket(FluidStack fluidStack, Identifier itemId, Item fullItem, Item emptyItem)
 	{
 		var id = EI.id("/canning_machine/generated/emptying/%s/%s".formatted(itemId.getNamespace(), itemId.getPath()));
 		
 		var recipe = new MIMachineRecipeBuilder(this, 2, 5 * 20);
 		
-		recipe.addItemInput(fullItem, 1);
-		recipe.addItemOutput(emptyItem, 1);
-		recipe.addFluidOutput(fluidStack.getFluid(), fluidStack.getAmount());
+		recipe.itemIn(fullItem, 1);
+		recipe.itemOut(emptyItem, 1);
+		recipe.fluidOut(fluidStack.getFluid(), fluidStack.getAmount());
 		
-		return new RecipeHolder<>(id, (MachineRecipe) recipe.convert());
+		return new RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id), (MachineRecipe) recipe.convert());
 	}
 	
 	private List<RecipeHolder<MachineRecipe>> buildBucket()
@@ -124,8 +125,8 @@ public final class CanningMachineRecipeType extends ProxyableMachineRecipeType
 				if(fullItem != Items.AIR)
 				{
 					var fullItemStack = fullItem.getDefaultInstance();
-					var emptyItemStack = fullItemStack.getCraftingRemainingItem();
-					var emptyItem = emptyItemStack.isEmpty() ? Items.BUCKET : emptyItemStack.getItem();
+					var emptyItemStack = fullItemStack.getItem().getCraftingRemainder();
+					var emptyItem = emptyItemStack == null ? Items.BUCKET : emptyItemStack.create().getItem();
 					
 					var itemId = BuiltInRegistries.ITEM.getKey(fullItem);
 					var fluidStack = new FluidStack(processedFluid, 1000);

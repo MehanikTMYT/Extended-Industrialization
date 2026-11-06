@@ -2,28 +2,24 @@ package net.swedz.extended_industrialization.client.nanosuit.decorations;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.client.nanosuit.NanoArmorLayer;
 import net.swedz.extended_industrialization.item.nanosuit.NanoSuitArmorItem;
 import net.swedz.extended_industrialization.item.nanosuit.decoration.NanoSuitDecoration;
 
-import java.util.List;
 
-public final class WingNanoSuitDecorationModel<T extends LivingEntity> extends NanoSuitDecorationModel<T>
+public final class WingNanoSuitDecorationModel extends NanoSuitDecorationModel
 {
 	public static final ModelLayerLocation LAYER = new ModelLayerLocation(EI.id("nano_armor"), "wing");
 	
@@ -73,7 +69,7 @@ public final class WingNanoSuitDecorationModel<T extends LivingEntity> extends N
 		return root;
 	}
 	
-	private static ResourceLocation getTexture(int layerIndex)
+	private static Identifier getTexture(int layerIndex)
 	{
 		return EI.id("textures/models/armor/nano_decorations/wing%s.png".formatted(layerIndex == 1 ? "_overlay" : ""));
 	}

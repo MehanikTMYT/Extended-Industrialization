@@ -26,7 +26,7 @@ public final class LanguageDatagenProvider extends LanguageProvider
 		INSTANCES.add(instance);
 	}
 	
-	public LanguageDatagenProvider(GatherDataEvent event)
+	public LanguageDatagenProvider(GatherDataEvent.Client event)
 	{
 		super(event.getGenerator().getPackOutput(), EI.ID, "en_us");
 	}

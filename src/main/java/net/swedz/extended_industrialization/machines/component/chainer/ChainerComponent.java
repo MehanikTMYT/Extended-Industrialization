@@ -132,19 +132,19 @@ public final class ChainerComponent implements MachineComponent, ChainerElement
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putInt("connected_machines", links.count());
 		links.failPosition().ifPresent((pos) -> tag.putLong("fail_position", pos.asLong()));
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		links.count(tag.getInt("connected_machines"));
+		links.count(tag.getIntOr("connected_machines", 0));
 		if(tag.contains("fail_position", CompoundTag.TAG_LONG))
 		{
-			links.failPosition(BlockPos.of(tag.getLong("fail_position")));
+			links.failPosition(BlockPos.of(tag.getLongOr("fail_position", 0L)));
 		}
 		else
 		{

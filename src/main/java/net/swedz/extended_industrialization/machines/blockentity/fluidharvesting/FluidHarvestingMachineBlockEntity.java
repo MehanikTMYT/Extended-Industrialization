@@ -13,7 +13,7 @@ import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Tickable;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.machines.component.fluidharvesting.FluidHarvestingBehavior;
 import net.swedz.extended_industrialization.machines.component.fluidharvesting.FluidHarvestingBehaviorCreator;
 import net.swedz.tesseract.neoforge.compat.mi.api.MachineTierHolder;
@@ -36,7 +36,7 @@ public abstract class FluidHarvestingMachineBlockEntity extends MachineBlockEnti
 	
 	protected int pumpingTicks;
 	
-	public FluidHarvestingMachineBlockEntity(BEP bep, ResourceLocation blockName, MachineTier tier, long euCost, FluidHarvestingBehaviorCreator behaviorCreator)
+	public FluidHarvestingMachineBlockEntity(BEP bep, Identifier blockName, MachineTier tier, long euCost, FluidHarvestingBehaviorCreator behaviorCreator)
 	{
 		super(
 				bep,
@@ -60,15 +60,15 @@ public abstract class FluidHarvestingMachineBlockEntity extends MachineBlockEnti
 		this.registerComponents(isActiveComponent, new MachineComponent()
 		{
 			@Override
-			public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
-			{
+			public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
+	{
 				tag.putInt("pumpingTicks", pumpingTicks);
 			}
 			
 			@Override
-			public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
-			{
-				pumpingTicks = tag.getInt("pumpingTicks");
+			public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
+	{
+				pumpingTicks = tag.getIntOr("pumpingTicks", 0);
 			}
 		});
 	}
@@ -95,7 +95,7 @@ public abstract class FluidHarvestingMachineBlockEntity extends MachineBlockEnti
 	@Override
 	public void tick()
 	{
-		if(level.isClientSide)
+		if(level.isClientSide())
 		{
 			return;
 		}

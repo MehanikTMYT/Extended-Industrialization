@@ -16,12 +16,12 @@ import aztech.modern_industrialization.machines.guicomponents.EnergyBar;
 import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
 import aztech.modern_industrialization.machines.helper.EnergyHelper;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import aztech.modern_industrialization.util.Simulation;
 import aztech.modern_industrialization.util.Tickable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.swedz.extended_industrialization.EI;
@@ -120,9 +120,9 @@ public final class UniversalTransformerMachineBlockEntity extends MachineBlockEn
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
-		var energyItem = player.getItemInHand(hand).getCapability(EnergyApi.ITEM);
+		var energyItem = net.neoforged.neoforge.transfer.access.ItemAccess.forPlayerInteraction(player, hand).getCapability(EnergyApi.ITEM);
 		int stackSize = player.getItemInHand(hand).getCount();
 		if(energyItem != null)
 		{
@@ -134,7 +134,7 @@ public final class UniversalTransformerMachineBlockEntity extends MachineBlockEn
 				{
 					try (var transaction = Transaction.openRoot())
 					{
-						long inserted = energyItem.receive(energy.getEu() / stackSize, false);
+						long inserted = energyItem.insert((int)Math.min(Integer.MAX_VALUE, energy.getEu() / stackSize), transaction);
 						
 						if(inserted == 0)
 						{
@@ -169,7 +169,7 @@ public final class UniversalTransformerMachineBlockEntity extends MachineBlockEn
 					}
 				}
 			}
-			return ItemInteractionResult.sidedSuccess(player.level().isClientSide());
+			return InteractionResult.SUCCESS;
 		}
 		return super.useItemOn(player, hand, face);
 	}

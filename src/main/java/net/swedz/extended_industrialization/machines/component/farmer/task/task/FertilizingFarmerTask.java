@@ -118,16 +118,16 @@ public final class FertilizingFarmerTask extends FarmerTask
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putInt("fertilizer_tick_rate", fertilizerTickRate);
 		tag.putInt("fertilizer_ticks", fertilizerTicks);
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		fertilizerTickRate = tag.getInt("fertilizer_tick_rate");
-		fertilizerTicks = tag.getInt("fertilizer_ticks");
+		fertilizerTickRate = tag.getIntOr("fertilizer_tick_rate", 0);
+		fertilizerTicks = tag.getIntOr("fertilizer_ticks", 0);
 	}
 }

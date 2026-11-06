@@ -14,7 +14,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -48,7 +49,7 @@ public final class NanoSuitArmorItem extends ElectricArmorItem implements ArmorT
 	private final boolean                   quantum;
 	
 	public NanoSuitArmorItem(
-			Holder<ArmorMaterial> material, Type type, Properties properties,
+			ArmorMaterial material, ArmorType type, Properties properties,
 			Optional<NanoSuitAbility> ability, boolean quantum
 	)
 	{
@@ -128,7 +129,7 @@ public final class NanoSuitArmorItem extends ElectricArmorItem implements ArmorT
 							1,
 							AttributeModifier.Operation.ADD_VALUE
 					),
-					EquipmentSlotGroup.bySlot(this.getEquipmentSlot())
+					EquipmentSlotGroup.bySlot(type.getSlot())
 			);
 		}
 		return modifiers;
@@ -216,28 +217,28 @@ public final class NanoSuitArmorItem extends ElectricArmorItem implements ArmorT
 	}
 	
 	@Override
-	public String getDescriptionId(ItemStack stack)
+	public net.minecraft.network.chat.Component getName(ItemStack stack)
 	{
 		for(var decoration : this.decorations(stack))
 		{
 			String descriptionId = decoration.getDescriptionId(this, stack);
 			if(descriptionId != null)
 			{
-				return descriptionId;
+				return net.minecraft.network.chat.Component.translatable(descriptionId);
 			}
 		}
-		return super.getDescriptionId(stack);
+		return super.getName(stack);
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flag)
 	{
 		for(var decoration : this.decorations(stack))
 		{
-			decoration.getTooltipLines(this, stack).ifPresent(tooltip::addAll);
+			decoration.getTooltipLines(this, stack).ifPresent((lines) -> lines.forEach(tooltip));
 		}
 		
 		ability.flatMap((a) -> a.getTooltipLines(this, stack))
-				.ifPresent(tooltip::addAll);
+				.ifPresent((lines) -> lines.forEach(tooltip));
 	}
 }

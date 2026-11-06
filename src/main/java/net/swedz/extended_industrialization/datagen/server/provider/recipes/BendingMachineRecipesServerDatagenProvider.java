@@ -14,12 +14,12 @@ import static aztech.modern_industrialization.materials.property.MaterialPropert
 
 public final class BendingMachineRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public BendingMachineRecipesServerDatagenProvider(GatherDataEvent event)
+	public BendingMachineRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static void addBendingMachineRecipes(String name, Material material, PartTemplate from, PartTemplate to, RecipeOutput output)
+	private void addBendingMachineRecipes(String name, Material material, PartTemplate from, PartTemplate to, RecipeOutput output)
 	{
 		if(hasPart(material, from) && hasPart(material, to))
 		{
@@ -27,8 +27,8 @@ public final class BendingMachineRecipesServerDatagenProvider extends RecipesSer
 					material, name, EIMachines.RecipeTypes.BENDING_MACHINE,
 					2, (int) ((200 * material.get(HARDNESS).timeFactor) / 2),
 					(r) -> r
-							.addItemInput(material.getPart(from).getTaggedIngredient(), 1, 1)
-							.addItemOutput(material.getPart(to), 1),
+							.itemIn(material.getPart(from).asIngredient(items), 1, 1)
+							.itemOut(material.getPart(to), 1),
 					output
 			);
 		}

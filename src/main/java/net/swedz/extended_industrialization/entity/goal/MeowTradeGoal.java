@@ -6,7 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -45,14 +45,18 @@ public final class MeowTradeGoal extends Goal
 				ItemEntity.class,
 				cat.getBoundingBox().inflate(1, 1, 1),
 				(item) ->
-						item.getOwner() != null && item.getOwner().getUUID().equals(cat.getOwnerUUID()) &&
+						item.getOwner() != null && cat.getOwnerReference() != null && item.getOwner().getUUID().equals(cat.getOwnerReference().getUUID()) &&
 						this.isNanoHelmet(item.getItem())
 		);
 	}
 	
 	private Player findOwnerNearby()
 	{
-		var owner = cat.level().getPlayerByUUID(cat.getOwnerUUID());
+		if(cat.getOwnerReference() == null)
+		{
+			return null;
+		}
+		var owner = cat.level().getPlayerByUUID(cat.getOwnerReference().getUUID());
 		return owner != null && owner.isAlive() && owner.distanceTo(cat) <= 10 ? owner : null;
 	}
 	
@@ -125,7 +129,7 @@ public final class MeowTradeGoal extends Goal
 				item.discard();
 				cat.onItemPickup(item);
 				cat.playSound(SoundEvents.ITEM_PICKUP, 1, 1);
-				cat.playSound(SoundEvents.CAT_PURR, 1, 1);
+				cat.playSound(cat.getSoundSet().purrSound().value(), 1, 1);
 			}
 		}
 		else
@@ -146,7 +150,7 @@ public final class MeowTradeGoal extends Goal
 				{
 					if(!turn)
 					{
-						cat.playSound(SoundEvents.CAT_PURR, 1, 1);
+						cat.playSound(cat.getSoundSet().purrSound().value(), 1, 1);
 						turn = true;
 					}
 					cat.getLookControl().setLookAt(owner);
@@ -186,7 +190,7 @@ public final class MeowTradeGoal extends Goal
 			stack.set(EIComponents.MEOW, true);
 			BehaviorUtils.throwItem(cat, stack, pos.add(0, 2, 0));
 			
-			cat.playSound(SoundEvents.CAT_PURREOW, 1, 1);
+			cat.playSound(cat.getSoundSet().purreowSound().value(), 1, 1);
 		}
 	}
 }

@@ -2,15 +2,16 @@ package net.swedz.extended_industrialization.machines.component.chainer.link;
 
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import net.minecraft.core.BlockPos;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.Optional;
 
 public record LinkResult(
 		boolean isSuccess,
-		Optional<IItemHandler> itemHandler,
-		Optional<IFluidHandler> fluidHandler,
+		Optional<ResourceHandler<ItemResource>> itemHandler,
+		Optional<ResourceHandler<FluidResource>> fluidHandler,
 		Optional<MIEnergyStorage> energyHandler,
 		boolean invalidatesEverything,
 		Optional<BlockPos> failPosition
@@ -33,7 +34,7 @@ public record LinkResult(
 		return fail(invalidatesEverything, null);
 	}
 	
-	public static LinkResult success(IItemHandler itemHandler, IFluidHandler fluidHandler, MIEnergyStorage energyHandler)
+	public static LinkResult success(ResourceHandler<ItemResource> itemHandler, ResourceHandler<FluidResource> fluidHandler, MIEnergyStorage energyHandler)
 	{
 		return new LinkResult(
 				true,

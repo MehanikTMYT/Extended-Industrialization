@@ -7,10 +7,12 @@ import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.blockentities.multiblocks.LargeTankMultiblockBlockEntity;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
@@ -29,7 +31,12 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterMaterialAtlasesEvent;
+import net.minecraft.client.renderer.block.FluidModel;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.client.resources.model.sprite.AtlasManager;
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
+import net.neoforged.neoforge.client.event.RegisterTextureAtlasesEvent;
+import net.neoforged.neoforge.client.fluid.FluidTintSources;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.swedz.extended_industrialization.client.NanoGravichestplateHudRenderer;
@@ -39,7 +46,6 @@ import net.swedz.extended_industrialization.client.ber.tesla.TeslaPartMultiblock
 import net.swedz.extended_industrialization.client.ber.tesla.TeslaPartSingleBlockRenderer;
 import net.swedz.extended_industrialization.client.ber.tesla.behavior.TeslaBehavior;
 import net.swedz.extended_industrialization.client.entity.NanoSaberSweepEntityRenderer;
-import net.swedz.extended_industrialization.client.model.chainer.MachineChainerUnbakedModel;
 import net.swedz.extended_industrialization.client.model.tesla.TeslaParticleGeneratorModel;
 import net.swedz.extended_industrialization.client.model.tesla.TeslaUnbakedModel;
 import net.swedz.extended_industrialization.item.ElectricToolItem;
@@ -48,6 +54,7 @@ import net.swedz.extended_industrialization.item.tooltip.SteamChainsawTooltipCom
 import net.swedz.extended_industrialization.machines.blockentity.MachineChainerMachineBlockEntity;
 import net.swedz.extended_industrialization.machines.blockentity.multiblock.beacon.ElectricBeaconMachineBlockEntity;
 import net.swedz.extended_industrialization.network.packet.ModifyElectricToolSpeedPacket;
+import org.lwjgl.glfw.GLFW;
 import net.swedz.tesseract.api.Assert;
 import net.swedz.tesseract.config.ConfigManager;
 import net.swedz.tesseract.neoforge.config.ModConfigFileAccess;
@@ -77,7 +84,7 @@ public final class EIClient
 		
 		NeoForge.EVENT_BUS.addListener(InputEvent.MouseScrollingEvent.class, (event) ->
 		{
-			if(Screen.hasAltDown())
+			if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_ALT))
 			{
 				var player = Minecraft.getInstance().player;
 				var stack = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -120,32 +127,8 @@ public final class EIClient
 	}
 	
 	@SubscribeEvent
-	private static void onRegisterColorItems(RegisterColorHandlersEvent.Item event)
+	private static void registerModelLoaders(ModelEvent.RegisterLoaders event)
 	{
-		event.register(
-				(stack, color) -> color > 0 ? -1 : DyedItemColor.getOrDefault(stack, ((DynamicDyedItem) stack.getItem()).getDefaultDyeColor()),
-				EIItems.NANO_SABER,
-				EIItems.ULTIMATE_LASER_DRILL,
-				EIItems.NANO_HELMET,
-				EIItems.NANO_CHESTPLATE,
-				EIItems.NANO_GRAVICHESTPLATE,
-				EIItems.NANO_LEGGINGS,
-				EIItems.NANO_BOOTS,
-				EIItems.NANO_QUANTUM_HELMET,
-				EIItems.NANO_QUANTUM_CHESTPLATE,
-				EIItems.NANO_QUANTUM_LEGGINGS,
-				EIItems.NANO_QUANTUM_BOOTS
-		);
-		event.register(
-				(stack, color) -> color == 0 || color == 2 ? DyedItemColor.getOrDefault(stack, ((DynamicDyedItem) stack.getItem()).getDefaultDyeColor()) : -1,
-				EIItems.NANO_QUANTUM_SABER
-		);
-	}
-	
-	@SubscribeEvent
-	private static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event)
-	{
-		event.register(MachineChainerUnbakedModel.LOADER_ID, MachineChainerUnbakedModel.LOADER);
 		event.register(TeslaUnbakedModel.LOADER_ID, TeslaUnbakedModel.LOADER);
 		event.register(TeslaParticleGeneratorModel.LOADER_ID, TeslaParticleGeneratorModel.LOADER);
 	}
@@ -164,18 +147,18 @@ public final class EIClient
 					
 					BlockEntityRendererProvider provider = switch (blockEntity)
 					{
-						case ElectricBeaconMachineBlockEntity __ -> ElectricBeaconBlockEntityRenderer::new;
-						case MachineChainerMachineBlockEntity __ -> MachineChainerHighlightRenderer::new;
+						case ElectricBeaconMachineBlockEntity __ -> (BlockEntityRendererProvider) ElectricBeaconBlockEntityRenderer::new;
+						case MachineChainerMachineBlockEntity __ -> (BlockEntityRendererProvider) MachineChainerHighlightRenderer::new;
 						case TeslaBehavior __ -> switch (blockEntity)
 						{
-							case MultiblockMachineBlockEntity ___ -> TeslaPartMultiblockRenderer::new;
-							default -> TeslaPartSingleBlockRenderer::new;
+							case MultiblockMachineBlockEntity ___ -> (BlockEntityRendererProvider) TeslaPartMultiblockRenderer::new;
+							default -> (BlockEntityRendererProvider) TeslaPartSingleBlockRenderer::new;
 						};
-						case LargeTankMultiblockBlockEntity __ -> MultiblockTankBER::new;
-						case MultiblockMachineBlockEntity __ -> MultiblockMachineBER::new;
-						default -> MachineBlockEntityRenderer::new;
+						case LargeTankMultiblockBlockEntity __ -> (BlockEntityRendererProvider) MultiblockTankBER::new;
+						case MultiblockMachineBlockEntity __ -> (BlockEntityRendererProvider) MultiblockMachineBER::new;
+						default -> (BlockEntityRendererProvider) MachineBlockEntityRenderer::new;
 					};
-					BlockEntityRenderers.register(type, provider);
+					BlockEntityRenderers.register(cast(type), provider);
 				}
 				catch (Exception ex)
 				{
@@ -185,10 +168,16 @@ public final class EIClient
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	private static <T extends BlockEntity> BlockEntityType<T> cast(BlockEntityType<?> type)
+	{
+		return (BlockEntityType<T>) type;
+	}
+	
 	@SubscribeEvent
 	private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
 	{
-		event.registerEntityRenderer(EIEntities.NANO_SABER_SWEEP.get(), NanoSaberSweepEntityRenderer::new);
+		event.registerEntityRenderer(EIEntities.NANO_SABER_SWEEP.get(), (EntityRendererProvider<NanoSaberSweepEntity, ?>) NanoSaberSweepEntityRenderer::new);
 	}
 	
 	@SubscribeEvent
@@ -204,24 +193,26 @@ public final class EIClient
 	}
 	
 	@SubscribeEvent
-	private static void registerAdditionalModels(ModelEvent.RegisterAdditional event)
+	private static void registerStandaloneModels(ModelEvent.RegisterStandalone event)
 	{
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/lethal_tesla_coil")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_coil")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_particle_generator/small")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_particle_generator/medium")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_particle_generator/large")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_particle_generator/extreme")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_particle_generator/immense")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_hatch")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_receiver")));
-		event.register(ModelResourceLocation.standalone(EI.id("tesla/tesla_tower")));
-		event.register(ModelResourceLocation.standalone(EI.id("entity/nano_saber_sweep")));
+		EIStandaloneModels.register(event);
 	}
 	
 	@SubscribeEvent
-	private static void registerAtlases(RegisterMaterialAtlasesEvent event)
+	private static void registerAtlases(RegisterTextureAtlasesEvent event)
 	{
-		event.register(EIClientSheets.NANO_SABER_SWEEP, EI.id("nano_saber_sweep"));
+		event.register(new AtlasManager.AtlasConfig(EIClientSheets.NANO_SABER_SWEEP, EI.id("nano_saber_sweep"), false));
+	}
+	
+	@SubscribeEvent
+	private static void registerFluidModels(RegisterFluidModelsEvent event)
+	{
+		var still = new Material(Identifier.withDefaultNamespace("block/water_still"));
+		var flowing = new Material(Identifier.withDefaultNamespace("block/water_flow"));
+		for(var holder : EIFluids.values())
+		{
+			var model = new FluidModel.Unbaked(still, flowing, null, FluidTintSources.constant(((MIFluidHolder) holder).properties().color()), null);
+			event.register(model, holder::asFluid);
+		}
 	}
 }

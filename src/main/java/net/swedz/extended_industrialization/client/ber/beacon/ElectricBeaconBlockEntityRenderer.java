@@ -1,12 +1,19 @@
 package net.swedz.extended_industrialization.client.ber.beacon;
 
+import aztech.modern_industrialization.client.machines.MachineRenderState;
 import aztech.modern_industrialization.client.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.world.phys.Vec3;
 import net.swedz.extended_industrialization.machines.blockentity.multiblock.beacon.ElectricBeaconMachineBlockEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ElectricBeaconBlockEntityRenderer extends MultiblockMachineBER
 {
@@ -15,42 +22,66 @@ public final class ElectricBeaconBlockEntityRenderer extends MultiblockMachineBE
 		super(context);
 	}
 	
-	@Override
-	public void render(MultiblockMachineBlockEntity machine, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay)
+	private static final class BeaconRenderState extends MachineRenderState
 	{
-		super.render(machine, partialTick, poseStack, bufferSource, light, overlay);
-		
+		final List<BeaconRenderer.BeaconRenderState.Section> sections = new ArrayList<>();
+		float animationTime;
+		boolean active;
+	}
+	
+	@Override
+	public MachineRenderState createRenderState()
+	{
+		return new BeaconRenderState();
+	}
+	
+	@Override
+	public void extractRenderState(MultiblockMachineBlockEntity machine, MachineRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress)
+	{
+		super.extractRenderState(machine, machineState, partialTicks, cameraPosition, breakProgress);
 		if(!(machine instanceof ElectricBeaconMachineBlockEntity beacon))
 		{
 			throw new UnsupportedOperationException("ElectricBeaconBlockEntityRenderer requires block entity type of ElectricBeaconMachineBlockEntity");
 		}
-		
-		if(!beacon.isActive())
+		var state = (BeaconRenderState) machineState;
+		state.active = beacon.isActive();
+		state.sections.clear();
+		if(state.active && beacon.getLevel() != null)
+		{
+			state.animationTime = Math.floorMod(beacon.getLevel().getGameTime(), 40) + partialTicks;
+			for(var section : beacon.getBeamSections())
+			{
+				state.sections.add(new BeaconRenderer.BeaconRenderState.Section(section.color(), section.height()));
+			}
+		}
+	}
+	
+	@Override
+	public void submit(MachineRenderState machineState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera)
+	{
+		super.submit(machineState, poseStack, submitNodeCollector, camera);
+		var state = (BeaconRenderState) machineState;
+		if(!state.active)
 		{
 			return;
 		}
-		
-		long gameTime = beacon.getLevel().getGameTime();
-		
-		var sections = beacon.getBeamSections();
-		int offsetY = 0;
-		for(int index = 0; index < sections.size(); index++)
+		int beamStart = 0;
+		for(int index = 0; index < state.sections.size(); index++)
 		{
-			var section = sections.get(index);
-			BeaconRenderer.renderBeaconBeam(
+			var section = state.sections.get(index);
+			BeaconRenderer.submitBeaconBeam(
 					poseStack,
-					bufferSource,
+					submitNodeCollector,
 					BeaconRenderer.BEAM_LOCATION,
-					partialTick,
 					1,
-					gameTime,
-					offsetY,
-					index == sections.size() - 1 ? 1024 : section.height(),
+					state.animationTime,
+					beamStart,
+					index == state.sections.size() - 1 ? 1024 : section.height(),
 					section.color(),
 					0.2f,
 					0.25f
 			);
-			offsetY += section.height();
+			beamStart += section.height();
 		}
 	}
 }

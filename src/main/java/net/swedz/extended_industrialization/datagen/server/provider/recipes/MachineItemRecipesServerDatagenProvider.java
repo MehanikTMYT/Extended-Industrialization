@@ -22,31 +22,31 @@ import java.util.function.Consumer;
 
 public final class MachineItemRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public MachineItemRecipesServerDatagenProvider(GatherDataEvent event)
+	public MachineItemRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static String machine(String machine, String tier)
+	private String machine(String machine, String tier)
 	{
 		return "%s:%s".formatted(EI.ID, tier == null ? machine : "%s_%s".formatted(tier, machine));
 	}
 	
-	private static String machineBronze(String machine)
+	private String machineBronze(String machine)
 	{
 		return machine(machine, "bronze");
 	}
 	
-	private static String machineSteel(String machine)
+	private String machineSteel(String machine)
 	{
 		return machine(machine, "steel");
 	}
 	
-	private static void addBasicCraftingMachineRecipes(String machineName, String machineTier, Consumer<ShapedRecipeBuilder> crafting, boolean assembler, RecipeOutput output)
+	private void addBasicCraftingMachineRecipes(String machineName, String machineTier, Consumer<ShapedRecipeBuilder> crafting, boolean assembler, RecipeOutput output)
 	{
 		String recipeId = machineTier == null ? "" : "/%s".formatted(machineTier);
 		
-		ShapedRecipeBuilder builder = new ShapedRecipeBuilder();
+		ShapedRecipeBuilder builder = new ShapedRecipeBuilder(registries);
 		crafting.accept(builder);
 		builder.output(machine(machineName, machineTier), 1);
 		builder.offerTo(output, EI.id("machines/%s/craft%s".formatted(machineName, recipeId)));
@@ -57,39 +57,39 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		}
 	}
 	
-	private static void addBasicCraftingMachineRecipes(String machineName, Consumer<ShapedRecipeBuilder> crafting, boolean assembler, RecipeOutput output)
+	private void addBasicCraftingMachineRecipes(String machineName, Consumer<ShapedRecipeBuilder> crafting, boolean assembler, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machineName, null, crafting, assembler, output);
 	}
 	
-	private static void addBasicCraftingMachineRecipes(String machineName, String machineTier, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addBasicCraftingMachineRecipes(String machineName, String machineTier, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machineName, machineTier, crafting, true, output);
 	}
 	
-	private static void addBasicCraftingMachineRecipes(String machineName, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addBasicCraftingMachineRecipes(String machineName, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machineName, null, crafting, output);
 	}
 	
-	private static void addBronzeMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addBronzeMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machine, "bronze", crafting, output);
 	}
 	
-	private static void addSteelMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addSteelMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machine, "steel", crafting, output);
 	}
 	
-	private static void addElectricMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addElectricMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(machine, "electric", crafting, output);
 	}
 	
-	private static void addSteelUpgradeMachineRecipes(String machine, RecipeOutput output)
+	private void addSteelUpgradeMachineRecipes(String machine, RecipeOutput output)
 	{
-		ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder()
+		ShapelessRecipeBuilder builder = new ShapelessRecipeBuilder(registries)
 				.with(machineBronze(machine))
 				.with(MIItem.STEEL_UPGRADE)
 				.output(machineSteel(machine), 1);
@@ -100,28 +100,28 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		MIMachineRecipeBuilder.fromShapelessToUnpackerAndFlip(builder).offerTo(output, EI.id("machines/%s/unpacker/downgrade_steel".formatted(machine)));
 	}
 	
-	private static void addBronzeAndSteelMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addBronzeAndSteelMachineRecipes(String machine, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
 		addBronzeMachineRecipes(machine, crafting, output);
 		addSteelUpgradeMachineRecipes(machine, output);
 	}
 	
-	private static void addInterchangeableMachinesRecipes(String machineA, String machineB, RecipeOutput output)
+	private void addInterchangeableMachinesRecipes(String machineA, String machineB, RecipeOutput output)
 	{
 		String recipeBId = "from_%s".formatted(machineA);
-		new ShapelessRecipeBuilder()
+		new ShapelessRecipeBuilder(registries)
 				.with(machine(machineA, null))
 				.output(machine(machineB, null), 1)
 				.offerTo(output, EI.id("machines/%s/craft/%s".formatted(machineB, recipeBId)));
 		
 		String recipeAId = "from_%s".formatted(machineB);
-		new ShapelessRecipeBuilder()
+		new ShapelessRecipeBuilder(registries)
 				.with(machine(machineB, null))
 				.output(machine(machineA, null), 1)
 				.offerTo(output, EI.id("machines/%s/craft/%s".formatted(machineA, recipeAId)));
 	}
 	
-	private static void bendingMachine(RecipeOutput output)
+	private void bendingMachine(RecipeOutput output)
 	{
 		addBronzeAndSteelMachineRecipes(
 				"bending_machine",
@@ -150,7 +150,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void composter(RecipeOutput output)
+	private void composter(RecipeOutput output)
 	{
 		addBronzeAndSteelMachineRecipes(
 				"composter",
@@ -181,7 +181,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void solarBoiler(RecipeOutput output)
+	private void solarBoiler(RecipeOutput output)
 	{
 		addBronzeAndSteelMachineRecipes(
 				"solar_boiler",
@@ -209,7 +209,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void alloySmelter(RecipeOutput output)
+	private void alloySmelter(RecipeOutput output)
 	{
 		addSteelMachineRecipes(
 				"alloy_smelter",
@@ -238,7 +238,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void canningMachine(RecipeOutput output)
+	private void canningMachine(RecipeOutput output)
 	{
 		addSteelMachineRecipes(
 				"canning_machine",
@@ -268,7 +268,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void honeyExtractor(RecipeOutput output)
+	private void honeyExtractor(RecipeOutput output)
 	{
 		addSteelMachineRecipes(
 				"honey_extractor",
@@ -299,7 +299,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void farmer(RecipeOutput output)
+	private void farmer(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"farmer", "steam",
@@ -330,7 +330,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void brewery(RecipeOutput output)
+	private void brewery(RecipeOutput output)
 	{
 		addSteelMachineRecipes(
 				"brewery",
@@ -360,7 +360,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void wasteCollector(RecipeOutput output)
+	private void wasteCollector(RecipeOutput output)
 	{
 		addBronzeAndSteelMachineRecipes(
 				"waste_collector",
@@ -389,7 +389,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void processingArray(RecipeOutput output)
+	private void processingArray(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"processing_array",
@@ -405,7 +405,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void largeFurnace(RecipeOutput output)
+	private void largeFurnace(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"large_steam_furnace",
@@ -436,7 +436,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void largeMacerator(RecipeOutput output)
+	private void largeMacerator(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"large_steam_macerator",
@@ -466,7 +466,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void universalTransformer(RecipeOutput output)
+	private void universalTransformer(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"universal_transformer",
@@ -482,16 +482,16 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void machineChainer(RecipeOutput output)
+	private void machineChainer(RecipeOutput output)
 	{
 		new MachineRecipeBuilder(MIMachineRecipeTypes.ASSEMBLER, 8, 10 * 20)
-				.addItemInput(MIBlock.ADVANCED_MACHINE_HULL, 1)
-				.addItemInput(MIItem.LARGE_MOTOR, 2)
-				.addItemInput(MIItem.LARGE_PUMP, 2)
-				.addItemInput(MITags.ITEM_PIPES, 64)
-				.addItemInput(MITags.FLUID_PIPES, 64)
-				.addItemInput("modern_industrialization:electrum_cable", 64)
-				.addItemOutput("extended_industrialization:machine_chainer", 1)
+				.itemIn(MIBlock.ADVANCED_MACHINE_HULL, 1)
+				.itemIn(MIItem.LARGE_MOTOR, 2)
+				.itemIn(MIItem.LARGE_PUMP, 2)
+				.itemIn(MITags.ITEM_PIPES, 64)
+				.itemIn(MITags.FLUID_PIPES, 64)
+				.itemIn("modern_industrialization:electrum_cable", 64)
+				.itemOut("extended_industrialization:machine_chainer", 1)
 				.offerTo(output, "machines/machine_chainer/assembler");
 		
 		addBasicCraftingMachineRecipes(
@@ -508,7 +508,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void solarPanel(RecipeOutput output)
+	private void solarPanel(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"lv_solar_panel",
@@ -556,7 +556,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void largeConfigurableChest(RecipeOutput output)
+	private void largeConfigurableChest(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"large_configurable_chest",
@@ -574,15 +574,15 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 				"machines/large_configurable_chest", "packer", MIMachineRecipeTypes.PACKER,
 				4, 5 * 20,
 				(builder) -> builder
-						.addItemInput("modern_industrialization:configurable_chest", 1)
-						.addItemInput(MIItem.CONVEYOR, 1)
-						.addItemInput("modern_industrialization:configurable_chest", 1)
-						.addItemOutput("%s:large_configurable_chest".formatted(EI.ID), 1),
+						.itemIn("modern_industrialization:configurable_chest", 1)
+						.itemIn(MIItem.CONVEYOR, 1)
+						.itemIn("modern_industrialization:configurable_chest", 1)
+						.itemOut("%s:large_configurable_chest".formatted(EI.ID), 1),
 				output
 		);
 	}
 	
-	private static void tesla(RecipeOutput output)
+	private void tesla(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"tesla_coil",
@@ -653,9 +653,9 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 					"machines/%s_tesla_receiver_hatch".formatted(tier.name), "unpacker", MIMachineRecipeTypes.UNPACKER,
 					2, 10 * 20,
 					(builder) -> builder
-							.addItemInput("%s:%s_tesla_receiver_hatch".formatted(EI.ID, tier.name), 1)
-							.addItemOutput("%s:%s_machine_hull".formatted(MI.ID, casing), 1)
-							.addItemOutput("%s:tesla_receiver".formatted(EI.ID), 1),
+							.itemIn("%s:%s_tesla_receiver_hatch".formatted(EI.ID, tier.name), 1)
+							.itemOut("%s:%s_machine_hull".formatted(MI.ID, casing), 1)
+							.itemOut("%s:tesla_receiver".formatted(EI.ID), 1),
 					output
 			);
 		}
@@ -675,7 +675,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 		);
 	}
 	
-	private static void electricBeacon(RecipeOutput output)
+	private void electricBeacon(RecipeOutput output)
 	{
 		addBasicCraftingMachineRecipes(
 				"electric_beacon",

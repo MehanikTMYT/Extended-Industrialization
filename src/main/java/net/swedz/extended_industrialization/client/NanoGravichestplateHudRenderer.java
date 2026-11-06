@@ -5,7 +5,7 @@ import aztech.modern_industrialization.config.MIClientConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.swedz.extended_industrialization.item.nanosuit.NanoSuitArmorItem;
@@ -13,7 +13,7 @@ import net.swedz.extended_industrialization.item.nanosuit.ability.NanoSuitGravic
 
 public final class NanoGravichestplateHudRenderer
 {
-	public static void render(GuiGraphics graphics, DeltaTracker deltaTracker)
+	public static void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker)
 	{
 		var mc = Minecraft.getInstance();
 		var player = mc.player;

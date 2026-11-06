@@ -1,7 +1,7 @@
 package net.swedz.extended_industrialization.machines.component.fluidharvesting.honeyextractor;
 
 import aztech.modern_industrialization.machines.MachineBlockEntity;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.fluid.FluidVariant;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -57,7 +57,7 @@ public final class HoneyExtractorBehavior extends FluidHarvestingBehavior
 			
 			long honeyToCollect = Math.min((long) this.getOutputMultiplier() * FluidType.BUCKET_VOLUME / 5, fluidStack.getRemainingSpace());
 			
-			fluidStack.setKey(FluidVariant.of(EIFluids.HONEY.asFluid()));
+			fluidStack.setKey(FluidResource.of(EIFluids.HONEY.asFluid()));
 			fluidStack.increment(honeyToCollect);
 		}
 	}

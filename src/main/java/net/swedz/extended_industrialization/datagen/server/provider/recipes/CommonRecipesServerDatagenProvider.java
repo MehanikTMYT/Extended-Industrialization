@@ -15,8 +15,8 @@ import net.swedz.extended_industrialization.EIFluids;
 import net.swedz.extended_industrialization.EIItems;
 import net.swedz.extended_industrialization.EITags;
 import net.swedz.extended_industrialization.material.EIMaterials;
-import net.swedz.tesseract.neoforge.compat.mi.material.MIMaterials;
-import net.swedz.tesseract.neoforge.compat.mi.material.part.MIMaterialParts;
+import net.swedz.extended_industrialization.port.material.MIMaterials;
+import net.swedz.extended_industrialization.port.material.part.MIMaterialParts;
 import net.swedz.tesseract.neoforge.compat.mi.recipe.MIMachineRecipeBuilder;
 import net.swedz.tesseract.neoforge.compat.vanilla.recipe.ShapedRecipeBuilder;
 
@@ -24,14 +24,14 @@ import java.util.function.Consumer;
 
 public final class CommonRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public CommonRecipesServerDatagenProvider(GatherDataEvent event)
+	public CommonRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
-	private static void addBasicCraftingRecipes(String path, String name, boolean assembler, ItemLike result, int resultCount, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
+	private void addBasicCraftingRecipes(String path, String name, boolean assembler, ItemLike result, int resultCount, Consumer<ShapedRecipeBuilder> crafting, RecipeOutput output)
 	{
-		ShapedRecipeBuilder shapedRecipeBuilder = new ShapedRecipeBuilder();
+		ShapedRecipeBuilder shapedRecipeBuilder = new ShapedRecipeBuilder(registries);
 		crafting.accept(shapedRecipeBuilder);
 		shapedRecipeBuilder.output(result, resultCount);
 		shapedRecipeBuilder.offerTo(output, EI.id(path + "/craft/" + name));
@@ -42,7 +42,7 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 		}
 	}
 	
-	private static void components(RecipeOutput output)
+	private void components(RecipeOutput output)
 	{
 		addBasicCraftingRecipes(
 				"component", "netherite_rotary_blade", true,
@@ -72,10 +72,10 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"component/assembler", "steel_combine", MIMachineRecipeTypes.ASSEMBLER,
 				8, 10 * 20,
 				(b) -> b
-						.addItemInput("modern_industrialization:steel_curved_plate", 6)
-						.addItemInput(EITags.itemCommon("rods/steel"), 1)
-						.addFluidInput(MIFluids.SOLDERING_ALLOY, 50)
-						.addItemOutput(EIItems.STEEL_COMBINE, 1),
+						.itemIn("modern_industrialization:steel_curved_plate", 6)
+						.itemIn(EITags.itemCommon("rods/steel"), 1)
+						.fluidIn(MIFluids.SOLDERING_ALLOY, 50)
+						.itemOut(EIItems.STEEL_COMBINE, 1),
 				output
 		);
 		
@@ -90,36 +90,36 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 		);
 	}
 	
-	private static void photovoltaicCells(RecipeOutput output)
+	private void photovoltaicCells(RecipeOutput output)
 	{
 		addMachineRecipe(
 				"photovoltaic_cell", "lv", MIMachineRecipeTypes.PACKER,
 				4, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput(EITags.itemCommon("plates/silver"), 2)
-						.addItemInput("modern_industrialization:rubber_sheet", 2)
-						.addItemOutput(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn(EITags.itemCommon("plates/silver"), 2)
+						.itemIn("modern_industrialization:rubber_sheet", 2)
+						.itemOut(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		addMachineRecipe(
 				"photovoltaic_cell", "lv_synthetic_rubber", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput(EITags.itemCommon("plates/silver"), 2)
-						.addFluidInput(MIFluids.SYNTHETIC_RUBBER, 10)
-						.addItemOutput(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn(EITags.itemCommon("plates/silver"), 2)
+						.fluidIn(MIFluids.SYNTHETIC_RUBBER, 10)
+						.itemOut(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		addMachineRecipe(
 				"photovoltaic_cell", "lv_styrene_rubber", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput(EITags.itemCommon("plates/silver"), 2)
-						.addFluidInput(MIFluids.STYRENE_BUTADIENE_RUBBER, 2)
-						.addItemOutput(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn(EITags.itemCommon("plates/silver"), 2)
+						.fluidIn(MIFluids.STYRENE_BUTADIENE_RUBBER, 2)
+						.itemOut(EIItems.LV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		
@@ -127,24 +127,24 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"photovoltaic_cell", "mv", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput("modern_industrialization:silicon_n_doped_plate", 1)
-						.addItemInput(EITags.itemCommon("plates/silver"), 4)
-						.addItemInput("modern_industrialization:silicon_p_doped_plate", 1)
-						.addFluidInput(MIFluids.SYNTHETIC_RUBBER, 40)
-						.addItemOutput(EIItems.MV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+						.itemIn(EITags.itemCommon("plates/silver"), 4)
+						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+						.fluidIn(MIFluids.SYNTHETIC_RUBBER, 40)
+						.itemOut(EIItems.MV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		addMachineRecipe(
 				"photovoltaic_cell", "mv_styrene_rubber", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput("modern_industrialization:silicon_n_doped_plate", 1)
-						.addItemInput(EITags.itemCommon("plates/silver"), 4)
-						.addItemInput("modern_industrialization:silicon_p_doped_plate", 1)
-						.addFluidInput(MIFluids.STYRENE_BUTADIENE_RUBBER, 8)
-						.addItemOutput(EIItems.MV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+						.itemIn(EITags.itemCommon("plates/silver"), 4)
+						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+						.fluidIn(MIFluids.STYRENE_BUTADIENE_RUBBER, 8)
+						.itemOut(EIItems.MV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		
@@ -152,29 +152,29 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"photovoltaic_cell", "hv", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput("modern_industrialization:silicon_wafer", 2)
-						.addItemInput(EITags.itemCommon("plates/silver"), 8)
-						.addFluidInput(MIFluids.SYNTHETIC_RUBBER, 160)
-						.addFluidInput(MIFluids.POLYETHYLENE, 25)
-						.addItemOutput(EIItems.HV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn("modern_industrialization:silicon_wafer", 2)
+						.itemIn(EITags.itemCommon("plates/silver"), 8)
+						.fluidIn(MIFluids.SYNTHETIC_RUBBER, 160)
+						.fluidIn(MIFluids.POLYETHYLENE, 25)
+						.itemOut(EIItems.HV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 		addMachineRecipe(
 				"photovoltaic_cell", "hv_styrene_rubber", MIMachineRecipeTypes.ASSEMBLER,
 				8, 40 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput("modern_industrialization:silicon_wafer", 2)
-						.addItemInput(EITags.itemCommon("plates/silver"), 8)
-						.addFluidInput(MIFluids.STYRENE_BUTADIENE_RUBBER, 32)
-						.addFluidInput(MIFluids.POLYETHYLENE, 25)
-						.addItemOutput(EIItems.HV_PHOTOVOLTAIC_CELL, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn("modern_industrialization:silicon_wafer", 2)
+						.itemIn(EITags.itemCommon("plates/silver"), 8)
+						.fluidIn(MIFluids.STYRENE_BUTADIENE_RUBBER, 32)
+						.fluidIn(MIFluids.POLYETHYLENE, 25)
+						.itemOut(EIItems.HV_PHOTOVOLTAIC_CELL, 1),
 				output
 		);
 	}
 	
-	private static void nanoSuitPiece(String id, ItemLike baseArmor, int pieces, ItemLike result, Consumer<MIMachineRecipeBuilder> recipeBuilder, RecipeOutput output)
+	private void nanoSuitPiece(String id, ItemLike baseArmor, int pieces, ItemLike result, Consumer<MIMachineRecipeBuilder> recipeBuilder, RecipeOutput output)
 	{
 		addMachineRecipe(
 				"tool", id, MIMachineRecipeTypes.ASSEMBLER,
@@ -182,14 +182,14 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				(builder) ->
 				{
 					builder
-							.addItemInput(baseArmor, 1)
-							.addItemInput(EITags.itemCommon("plates/carbon"), 4 * pieces)
-							.addItemInput(MIItem.ELECTRONIC_CIRCUIT, 4)
-							.addItemInput("modern_industrialization:silicon_battery", 2)
-							.addItemInput(MIItem.LARGE_MOTOR, 4)
-							.addFluidInput(MIFluids.POLYETHYLENE, 4000)
-							.addFluidInput(MIFluids.NYLON, 2000)
-							.addItemOutput(result, 1);
+							.itemIn(baseArmor, 1)
+							.itemIn(EITags.itemCommon("plates/carbon"), 4 * pieces)
+							.itemIn(MIItem.ELECTRONIC_CIRCUIT, 4)
+							.itemIn("modern_industrialization:silicon_battery", 2)
+							.itemIn(MIItem.LARGE_MOTOR, 4)
+							.fluidIn(MIFluids.POLYETHYLENE, 4000)
+							.fluidIn(MIFluids.NYLON, 2000)
+							.itemOut(result, 1);
 					if(recipeBuilder != null)
 					{
 						recipeBuilder.accept(builder);
@@ -199,14 +199,14 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 		);
 	}
 	
-	private static void nanoSuit(RecipeOutput output)
+	private void nanoSuit(RecipeOutput output)
 	{
 		nanoSuitPiece(
 				"nano_suit_helmet",
 				Items.NETHERITE_HELMET, 5, EIItems.NANO_HELMET,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("glass_panes"), 4)
-						.addItemInput(MIItem.REDSTONE_CONTROL_MODULE, 1),
+						.itemIn(EITags.itemCommon("glass_panes"), 4)
+						.itemIn(MIItem.REDSTONE_CONTROL_MODULE, 1),
 				output
 		);
 		nanoSuitPiece(
@@ -218,13 +218,13 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 		nanoSuitPiece(
 				"nano_suit_leggings",
 				Items.NETHERITE_LEGGINGS, 7, EIItems.NANO_LEGGINGS,
-				(r) -> r.addItemInput(MIItem.REDSTONE_CONTROL_MODULE, 1),
+				(r) -> r.itemIn(MIItem.REDSTONE_CONTROL_MODULE, 1),
 				output
 		);
 		nanoSuitPiece(
 				"nano_suit_boots",
 				Items.NETHERITE_BOOTS, 4, EIItems.NANO_BOOTS,
-				(r) -> r.addItemInput(MIItem.REDSTONE_CONTROL_MODULE, 1),
+				(r) -> r.itemIn(MIItem.REDSTONE_CONTROL_MODULE, 1),
 				output
 		);
 		
@@ -232,18 +232,18 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"tool", "nano_suit_gravichestplate_upgrade", MIMachineRecipeTypes.PACKER,
 				32, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_CHESTPLATE, 1)
-						.addItemInput(MIItem.GRAVICHESTPLATE, 1)
-						.addItemOutput(EIItems.NANO_GRAVICHESTPLATE, 1),
+						.itemIn(EIItems.NANO_CHESTPLATE, 1)
+						.itemIn(MIItem.GRAVICHESTPLATE, 1)
+						.itemOut(EIItems.NANO_GRAVICHESTPLATE, 1),
 				output
 		);
 		addMachineRecipe(
 				"tool", "nano_suit_gravichestplate_downgrade", MIMachineRecipeTypes.UNPACKER,
 				32, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_GRAVICHESTPLATE, 1)
-						.addItemOutput(EIItems.NANO_CHESTPLATE, 1)
-						.addItemOutput(MIItem.GRAVICHESTPLATE, 1),
+						.itemIn(EIItems.NANO_GRAVICHESTPLATE, 1)
+						.itemOut(EIItems.NANO_CHESTPLATE, 1)
+						.itemOut(MIItem.GRAVICHESTPLATE, 1),
 				output
 		);
 		
@@ -251,41 +251,41 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"tool", "nano_suit_helmet_quantum_upgrade", MIMachineRecipeTypes.PACKER,
 				1000000, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_HELMET, 1)
-						.addItemInput(MIItem.QUANTUM_UPGRADE, 1)
-						.addItemOutput(EIItems.NANO_QUANTUM_HELMET, 1),
+						.itemIn(EIItems.NANO_HELMET, 1)
+						.itemIn(MIItem.QUANTUM_UPGRADE, 1)
+						.itemOut(EIItems.NANO_QUANTUM_HELMET, 1),
 				output
 		);
 		addMachineRecipe(
 				"tool", "nano_suit_chestplate_quantum_upgrade", MIMachineRecipeTypes.PACKER,
 				1000000, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_CHESTPLATE, 1)
-						.addItemInput(MIItem.QUANTUM_UPGRADE, 1)
-						.addItemOutput(EIItems.NANO_QUANTUM_CHESTPLATE, 1),
+						.itemIn(EIItems.NANO_CHESTPLATE, 1)
+						.itemIn(MIItem.QUANTUM_UPGRADE, 1)
+						.itemOut(EIItems.NANO_QUANTUM_CHESTPLATE, 1),
 				output
 		);
 		addMachineRecipe(
 				"tool", "nano_suit_leggings_quantum_upgrade", MIMachineRecipeTypes.PACKER,
 				1000000, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_LEGGINGS, 1)
-						.addItemInput(MIItem.QUANTUM_UPGRADE, 1)
-						.addItemOutput(EIItems.NANO_QUANTUM_LEGGINGS, 1),
+						.itemIn(EIItems.NANO_LEGGINGS, 1)
+						.itemIn(MIItem.QUANTUM_UPGRADE, 1)
+						.itemOut(EIItems.NANO_QUANTUM_LEGGINGS, 1),
 				output
 		);
 		addMachineRecipe(
 				"tool", "nano_suit_boots_quantum_upgrade", MIMachineRecipeTypes.PACKER,
 				1000000, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_BOOTS, 1)
-						.addItemInput(MIItem.QUANTUM_UPGRADE, 1)
-						.addItemOutput(EIItems.NANO_QUANTUM_BOOTS, 1),
+						.itemIn(EIItems.NANO_BOOTS, 1)
+						.itemIn(MIItem.QUANTUM_UPGRADE, 1)
+						.itemOut(EIItems.NANO_QUANTUM_BOOTS, 1),
 				output
 		);
 	}
 	
-	private static void tesla(RecipeOutput output)
+	private void tesla(RecipeOutput output)
 	{
 		addBasicCraftingRecipes(
 				"tool", "tesla_calibrator", true,
@@ -321,15 +321,15 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"upgrade", "tesla_interdimensional_upgrade", MIMachineRecipeTypes.ASSEMBLER,
 				32, 60 * 20,
 				(r) -> r
-						.addItemInput("%s:superconductor_tesla_winding".formatted(EI.ID), 8)
-						.addItemInput(MIItem.HIGHLY_ADVANCED_UPGRADE, 4)
-						.addItemInput(MIItem.PROCESSING_UNIT, 1)
-						.addFluidInput(MIFluids.POLYVINYL_CHLORIDE, 1000)
-						.addItemOutput(EIItems.TESLA_INTERDIMENSIONAL_UPGRADE, 1),
+						.itemIn("%s:superconductor_tesla_winding".formatted(EI.ID), 8)
+						.itemIn(MIItem.HIGHLY_ADVANCED_UPGRADE, 4)
+						.itemIn(MIItem.PROCESSING_UNIT, 1)
+						.fluidIn(MIFluids.POLYVINYL_CHLORIDE, 1000)
+						.itemOut(EIItems.TESLA_INTERDIMENSIONAL_UPGRADE, 1),
 				output
 		);
 		
-		new ShapedRecipeBuilder()
+		new ShapedRecipeBuilder(registries)
 				.output("%s:tesla_particle_generator".formatted(EI.ID), 1)
 				.define('T', "%s:silver_tesla_top_load".formatted(EI.ID))
 				.define('C', MIItem.ELECTRONIC_CIRCUIT)
@@ -345,9 +345,9 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"mixer", "mulch", MIMachineRecipeTypes.MIXER,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(Items.DIRT, 1)
-						.addItemInput(MIItem.WOOD_PULP, 6)
-						.addItemOutput(EIItems.MULCH, 1),
+						.itemIn(Items.DIRT, 1)
+						.itemIn(MIItem.WOOD_PULP, 6)
+						.itemOut(EIItems.MULCH, 1),
 				output
 		);
 		
@@ -355,8 +355,8 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"macerator", "granite_dust", MIMachineRecipeTypes.MACERATOR,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(Items.GRANITE, 1)
-						.addItemOutput(EIItems.GRANITE_DUST, 4),
+						.itemIn(Items.GRANITE, 1)
+						.itemOut(EIItems.GRANITE_DUST, 4),
 				output
 		);
 		addBasicCraftingRecipes(
@@ -372,8 +372,8 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"packer", "granite_from_dust", MIMachineRecipeTypes.PACKER,
 				2, 5 * 20,
 				(r) -> r
-						.addItemInput(EITags.itemCommon("dusts/granite"), 4)
-						.addItemOutput(Items.GRANITE, 1),
+						.itemIn(EITags.itemCommon("dusts/granite"), 4)
+						.itemOut(Items.GRANITE, 1),
 				output
 		);
 		
@@ -395,8 +395,8 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"distillery", "distilled_water_from_water", MIMachineRecipeTypes.DISTILLERY,
 				8, 10 * 20,
 				(r) -> r
-						.addFluidInput(Fluids.WATER, 1000)
-						.addFluidOutput(EIFluids.DISTILLED_WATER, 500),
+						.fluidIn(Fluids.WATER, 1000)
+						.fluidOut(EIFluids.DISTILLED_WATER, 500),
 				output
 		);
 		
@@ -452,26 +452,26 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"tool", "nano_saber", MIMachineRecipeTypes.ASSEMBLER,
 				8, 10 * 20,
 				(builder) -> builder
-						.addItemInput(Items.NETHERITE_SWORD, 1)
-						.addItemInput(EITags.itemCommon("plates/carbon"), 4)
-						.addItemInput(EITags.itemCommon("plates/stainless_steel"), 12)
-						.addItemInput(MIItem.ELECTRONIC_CIRCUIT, 4)
-						.addItemInput("modern_industrialization:silicon_battery", 2)
-						.addItemInput(Items.NETHER_STAR, 1)
-						.addItemInput(MIItem.LARGE_MOTOR, 2)
-						.addItemInput(MIItem.REDSTONE_CONTROL_MODULE, 1)
-						.addFluidInput(MIFluids.POLYETHYLENE, 4000)
-						.addFluidInput(MIFluids.CRYOFLUID, 1000)
-						.addItemOutput(EIItems.NANO_SABER, 1),
+						.itemIn(Items.NETHERITE_SWORD, 1)
+						.itemIn(EITags.itemCommon("plates/carbon"), 4)
+						.itemIn(EITags.itemCommon("plates/stainless_steel"), 12)
+						.itemIn(MIItem.ELECTRONIC_CIRCUIT, 4)
+						.itemIn("modern_industrialization:silicon_battery", 2)
+						.itemIn(Items.NETHER_STAR, 1)
+						.itemIn(MIItem.LARGE_MOTOR, 2)
+						.itemIn(MIItem.REDSTONE_CONTROL_MODULE, 1)
+						.fluidIn(MIFluids.POLYETHYLENE, 4000)
+						.fluidIn(MIFluids.CRYOFLUID, 1000)
+						.itemOut(EIItems.NANO_SABER, 1),
 				output
 		);
 		addMachineRecipe(
 				"tool", "nano_saber_quantum_upgrade", MIMachineRecipeTypes.PACKER,
 				1000000, 10 * 20,
 				(b) -> b
-						.addItemInput(EIItems.NANO_SABER, 1)
-						.addItemInput(MIItem.QUANTUM_UPGRADE, 1)
-						.addItemOutput(EIItems.NANO_QUANTUM_SABER, 1),
+						.itemIn(EIItems.NANO_SABER, 1)
+						.itemIn(MIItem.QUANTUM_UPGRADE, 1)
+						.itemOut(EIItems.NANO_QUANTUM_SABER, 1),
 				output
 		);
 		
@@ -530,22 +530,22 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 				"assembler", "silk_touch_module", MIMachineRecipeTypes.ASSEMBLER,
 				8, 10 * 20,
 				(r) -> r
-						.addItemInput("#c:plates/stainless_steel", 8)
-						.addItemInput(MIItem.INVAR_ROTARY_BLADE, 2)
-						.addItemInput(MIItem.ROBOT_ARM, 4)
-						.addFluidInput(MIFluids.POLYETHYLENE, 1000)
-						.addItemOutput(EIItems.SILK_TOUCH_MODULE, 1),
+						.itemIn("#c:plates/stainless_steel", 8)
+						.itemIn(MIItem.INVAR_ROTARY_BLADE, 2)
+						.itemIn(MIItem.ROBOT_ARM, 4)
+						.fluidIn(MIFluids.POLYETHYLENE, 1000)
+						.itemOut(EIItems.SILK_TOUCH_MODULE, 1),
 				output
 		);
 		addMachineRecipe(
 				"assembler", "looting_module", MIMachineRecipeTypes.ASSEMBLER,
 				8, 10 * 20,
 				(r) -> r
-						.addItemInput("#c:plates/stainless_steel", 8)
-						.addItemInput(EIItems.NETHERITE_ROTARY_BLADE, 2)
-						.addItemInput(MIItem.ROBOT_ARM, 4)
-						.addFluidInput(MIFluids.POLYETHYLENE, 1000)
-						.addItemOutput(EIItems.LOOTING_MODULE, 1),
+						.itemIn("#c:plates/stainless_steel", 8)
+						.itemIn(EIItems.NETHERITE_ROTARY_BLADE, 2)
+						.itemIn(MIItem.ROBOT_ARM, 4)
+						.fluidIn(MIFluids.POLYETHYLENE, 1000)
+						.itemOut(EIItems.LOOTING_MODULE, 1),
 				output
 		);
 	}

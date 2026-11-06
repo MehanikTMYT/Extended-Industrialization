@@ -8,9 +8,9 @@ import aztech.modern_industrialization.inventory.SlotGroup;
 import aztech.modern_industrialization.machines.gui.GuiComponent;
 import aztech.modern_industrialization.util.Rectangle;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -81,7 +81,7 @@ public final class UniversalTransformerSlotsClient extends GuiComponentClient<Un
 	{
 		return new ClientComponentRenderer()
 		{
-			private final ResourceLocation TRANSFORMER_DIRECTION = EI.id("textures/gui/container/universal_transformer_direction.png");
+			private final Identifier TRANSFORMER_DIRECTION = EI.id("textures/gui/container/universal_transformer_direction.png");
 			
 			private Rectangle getBox(int leftPos, int topPos)
 			{
@@ -95,7 +95,7 @@ public final class UniversalTransformerSlotsClient extends GuiComponentClient<Un
 			}
 			
 			@Override
-			public void renderBackground(GuiGraphics graphics, int leftPos, int topPos)
+			public void extractBackground(GuiGraphicsExtractor graphics, int leftPos, int topPos)
 			{
 				var box = this.getBox(leftPos, topPos);
 				
@@ -107,7 +107,7 @@ public final class UniversalTransformerSlotsClient extends GuiComponentClient<Un
 			}
 			
 			@Override
-			public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int x, int y, int cursorX, int cursorY)
+			public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
 			{
 				if(screen.getFocusedSlot() instanceof SlotTooltip slotTooltip && !screen.getFocusedSlot().hasItem())
 				{

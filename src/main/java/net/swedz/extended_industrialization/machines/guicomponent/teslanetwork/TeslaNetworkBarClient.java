@@ -6,9 +6,9 @@ import aztech.modern_industrialization.client.machines.gui.MachineScreen;
 import aztech.modern_industrialization.client.util.RenderHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.tesseract.neoforge.helper.ComponentHelper;
 
@@ -27,12 +27,12 @@ public final class TeslaNetworkBarClient extends GuiComponentClient<TeslaNetwork
 	{
 		return new ClientComponentRenderer()
 		{
-			private static final ResourceLocation TESLA_NETWORK_BAR = EI.id("textures/gui/container/tesla_network_bar.png");
+			private static final Identifier TESLA_NETWORK_BAR = EI.id("textures/gui/container/tesla_network_bar.png");
 			
 			private final int WIDTH = 18, HEIGHT = 18;
 			
 			@Override
-			public void renderBackground(GuiGraphics graphics, int x, int y)
+			public void extractBackground(GuiGraphicsExtractor graphics, int x, int y)
 			{
 				int iconIndex = data.map(TeslaNetworkBar.Data::iconIndex).orElse(0);
 				graphics.blit(
@@ -43,7 +43,7 @@ public final class TeslaNetworkBarClient extends GuiComponentClient<TeslaNetwork
 			}
 			
 			@Override
-			public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int x, int y, int mouseX, int mouseY)
+			public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int mouseX, int mouseY)
 			{
 				if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), WIDTH, HEIGHT, mouseX - x, mouseY - y))
 				{

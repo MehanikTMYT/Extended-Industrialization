@@ -9,21 +9,18 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.client.nanosuit.NanoArmorLayer;
 import net.swedz.extended_industrialization.item.nanosuit.NanoSuitArmorItem;
 import net.swedz.extended_industrialization.item.nanosuit.decoration.NanoSuitDecoration;
 
-import java.util.List;
 
-public final class MeowNanoSuitDecorationModel<T extends LivingEntity> extends NanoSuitDecorationModel<T>
+public final class MeowNanoSuitDecorationModel extends NanoSuitDecorationModel
 {
 	public static final ModelLayerLocation LAYER = new ModelLayerLocation(EI.id("nano_armor"), "meow");
 	
@@ -182,7 +179,7 @@ public final class MeowNanoSuitDecorationModel<T extends LivingEntity> extends N
 		return root;
 	}
 	
-	private static ResourceLocation getTexture(boolean quantum, int layerIndex)
+	private static Identifier getTexture(boolean quantum, int layerIndex)
 	{
 		return EI.id("textures/models/armor/nano_decorations/meow%s%s.png".formatted(quantum ? "_quantum" : "", layerIndex == 1 ? "_overlay" : ""));
 	}
@@ -193,25 +190,24 @@ public final class MeowNanoSuitDecorationModel<T extends LivingEntity> extends N
 	}
 	
 	@Override
-	public void render(T entity, EquipmentSlot slot, ItemStack stack, NanoSuitArmorItem item,
-					   PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
-					   ArmorMaterial.Layer armorLayer, int armorLayerIndex, int armorLayerColor, boolean armorLayerIsColored)
+	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight,
+					   NanoSuitArmorItem item, ItemStack stack, EquipmentSlot slot)
 	{
-		var texture = getTexture(item.isQuantum(), armorLayerIndex);
-		var renderType = NanoArmorLayer.decorationRenderType(armorLayerIndex, item, texture, armorLayerIsColored);
-		var buffer = bufferSource.getBuffer(renderType);
-		this.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, armorLayerColor);
-	}
-	
-	@Override
-	protected Iterable<ModelPart> headParts()
-	{
-		return List.of(head);
-	}
-	
-	@Override
-	protected Iterable<ModelPart> bodyParts()
-	{
-		return List.of();
+		this.head.visible = false;
+		for(var child : this.head.getChildren().values())
+		{
+			child.visible = true;
+		}
+		for(int layerIndex = 0; layerIndex <= 1; layerIndex++)
+		{
+			var texture = getTexture(item.isQuantum(), layerIndex);
+			var renderType = NanoArmorLayer.decorationRenderType(layerIndex, item, texture, false);
+			submitNodeCollector.submitModelPart(this.head, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, null, -1, null);
+		}
+		this.head.visible = false;
+		for(var child : this.head.getChildren().values())
+		{
+			child.visible = false;
+		}
 	}
 }

@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network.receiver;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
@@ -7,7 +10,6 @@ import aztech.modern_industrialization.machines.MachineComponent;
 import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -113,25 +115,25 @@ public class TeslaReceiverComponent implements MachineComponent, TeslaReceiver
 	}
 	
 	@Override
-	public long receiveEnergy(long maxReceive, boolean simulate)
+	public int receiveEnergy(int maxReceive, TransactionContext transaction)
 	{
 		if(!canOperate.get())
 		{
 			return 0;
 		}
-		return insertable.receive(maxReceive, simulate);
+		return insertable.insert(maxReceive, transaction);
 	}
 	
 	@Override
 	public long getStoredEnergy()
 	{
-		return insertable.getAmount();
+		return insertable.getAmountAsLong();
 	}
 	
 	@Override
 	public long getEnergyCapacity()
 	{
-		return insertable.getCapacity();
+		return insertable.getCapacityAsLong();
 	}
 	
 	public void removeFromNetwork()
@@ -177,46 +179,23 @@ public class TeslaReceiverComponent implements MachineComponent, TeslaReceiver
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		if(this.hasNetwork())
-		{
-			var key = this.getNetworkKey();
-			WorldPos.CODEC.encodeStart(NbtOps.INSTANCE, key).result().ifPresent((t) -> tag.put("network_key", t));
-		}
-		
+		tag.storeNullable("network_key", WorldPos.CODEC, this.hasNetwork() ? this.getNetworkKey() : null);
 		tag.putInt("priority", priority);
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		if(tag.contains("network_key", Tag.TAG_COMPOUND))
-		{
-			var keyTag = tag.getCompound("network_key");
-			this.setNetwork(WorldPos.CODEC.parse(NbtOps.INSTANCE, keyTag).result().orElse(null));
-		}
-		else
-		{
-			this.setNetwork(null);
-		}
-		
-		priority = Mth.clamp(tag.getInt("priority"), -PRIORITY_RANGE, PRIORITY_RANGE);
+		this.setNetwork(tag.read("network_key", WorldPos.CODEC).orElse(null));
+		priority = Mth.clamp(tag.getIntOr("priority", 0), -PRIORITY_RANGE, PRIORITY_RANGE);
 	}
 	
 	@Override
-	public void readClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
-		if(tag.contains("network_key", Tag.TAG_COMPOUND))
-		{
-			var keyTag = tag.getCompound("network_key");
-			networkKey = WorldPos.CODEC.parse(NbtOps.INSTANCE, keyTag).result();
-		}
-		else
-		{
-			networkKey = Optional.empty();
-		}
-		
-		priority = Mth.clamp(tag.getInt("priority"), -PRIORITY_RANGE, PRIORITY_RANGE);
+		networkKey = tag.read("network_key", WorldPos.CODEC);
+		priority = Mth.clamp(tag.getIntOr("priority", 0), -PRIORITY_RANGE, PRIORITY_RANGE);
 	}
 }

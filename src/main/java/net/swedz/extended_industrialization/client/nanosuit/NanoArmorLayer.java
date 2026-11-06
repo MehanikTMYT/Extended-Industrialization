@@ -2,16 +2,17 @@ package net.swedz.extended_industrialization.client.nanosuit;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.extended_industrialization.client.nanosuit.decorations.NanoSuitDecorationModel;
@@ -21,9 +22,9 @@ import java.util.List;
 
 import static net.swedz.extended_industrialization.EIClientRenderTypes.*;
 
-public final class NanoArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends HumanoidArmorLayer<T, M, NanoArmorModel<T>>
+public final class NanoArmorLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M>
 {
-	public static RenderType renderType(boolean useQuantumShader, boolean stars, boolean cull, int layerIndex, NanoSuitArmorItem item, ResourceLocation texture, boolean isColored)
+	public static RenderType renderType(boolean useQuantumShader, boolean stars, boolean cull, int layerIndex, NanoSuitArmorItem item, Identifier texture, boolean isColored)
 	{
 		if(layerIndex == 1 && useQuantumShader && item.isQuantum())
 		{
@@ -35,116 +36,107 @@ public final class NanoArmorLayer<T extends LivingEntity, M extends HumanoidMode
 		}
 	}
 	
-	public static RenderType armorRenderType(int layerIndex, NanoSuitArmorItem item, ResourceLocation texture, boolean isColored)
+	public static RenderType armorRenderType(int layerIndex, NanoSuitArmorItem item, Identifier texture, boolean isColored)
 	{
 		return renderType(true, true, false, layerIndex, item, texture, isColored);
 	}
 	
-	public static RenderType decorationRenderType(int layerIndex, NanoSuitArmorItem item, ResourceLocation texture, boolean isColored)
+	public static RenderType decorationRenderType(int layerIndex, NanoSuitArmorItem item, Identifier texture, boolean isColored)
 	{
 		return renderType(true, false, true, layerIndex, item, texture, isColored);
 	}
 	
+	private static net.minecraft.client.resources.model.EquipmentAssetManager EQUIPMENT_ASSETS;
+	
+	public static void init(net.minecraft.client.resources.model.EquipmentAssetManager equipmentAssets)
+	{
+		EQUIPMENT_ASSETS = equipmentAssets;
+	}
+	
+	private final NanoArmorModel innerModel;
+	private final NanoArmorModel outerModel;
 	private final List<NanoSuitDecorationModel> decorations;
 	
-	public NanoArmorLayer(RenderLayerParent<T, M> renderer, NanoArmorModel<T> innerModel, NanoArmorModel<T> outerModel, List<NanoSuitDecorationModel> decorations, ModelManager modelManager)
+	public NanoArmorLayer(RenderLayerParent<S, M> renderer, NanoArmorModel innerModel, NanoArmorModel outerModel, List<NanoSuitDecorationModel> decorations)
 	{
-		super(renderer, innerModel, outerModel, modelManager);
+		super(renderer);
+		this.innerModel = innerModel;
+		this.outerModel = outerModel;
 		this.decorations = decorations;
 	}
 	
 	@Override
-	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity,
-					   float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch)
+	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S state, float yRot, float xRot)
 	{
 		// This order is intentional, the head needs to render after the chestplate or else the chest becomes invisible behind the visor
-		this.renderArmorPiece(poseStack, bufferSource, entity, EquipmentSlot.CHEST, packedLight, this.getArmorModel(EquipmentSlot.CHEST), limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPiece(poseStack, bufferSource, entity, EquipmentSlot.HEAD, packedLight, this.getArmorModel(EquipmentSlot.HEAD), limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPiece(poseStack, bufferSource, entity, EquipmentSlot.LEGS, packedLight, this.getArmorModel(EquipmentSlot.LEGS), limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPiece(poseStack, bufferSource, entity, EquipmentSlot.FEET, packedLight, this.getArmorModel(EquipmentSlot.FEET), limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
+		this.renderArmorPiece(poseStack, submitNodeCollector, state.chestEquipment, EquipmentSlot.CHEST, packedLight, state, this.outerModel);
+		this.renderArmorPiece(poseStack, submitNodeCollector, state.headEquipment, EquipmentSlot.HEAD, packedLight, state, this.outerModel);
+		this.renderArmorPiece(poseStack, submitNodeCollector, state.legsEquipment, EquipmentSlot.LEGS, packedLight, state, this.innerModel);
+		this.renderArmorPiece(poseStack, submitNodeCollector, state.feetEquipment, EquipmentSlot.FEET, packedLight, state, this.innerModel);
 		
-		this.renderArmorPieceDecorations(poseStack, bufferSource, entity, EquipmentSlot.HEAD, packedLight, limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPieceDecorations(poseStack, bufferSource, entity, EquipmentSlot.CHEST, packedLight, limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPieceDecorations(poseStack, bufferSource, entity, EquipmentSlot.LEGS, packedLight, limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
-		this.renderArmorPieceDecorations(poseStack, bufferSource, entity, EquipmentSlot.FEET, packedLight, limbSwing, limbSwingAmount, partialTicks, ageInTicks, headYaw, headPitch);
+		for(var decoration : this.decorations)
+		{
+			decoration.copyFrom(this.getParentModel());
+			decoration.setAllVisible(false);
+		}
+		this.renderArmorPieceDecorations(poseStack, submitNodeCollector, state.headEquipment, EquipmentSlot.HEAD, packedLight, state);
+		this.renderArmorPieceDecorations(poseStack, submitNodeCollector, state.chestEquipment, EquipmentSlot.CHEST, packedLight, state);
+		this.renderArmorPieceDecorations(poseStack, submitNodeCollector, state.legsEquipment, EquipmentSlot.LEGS, packedLight, state);
+		this.renderArmorPieceDecorations(poseStack, submitNodeCollector, state.feetEquipment, EquipmentSlot.FEET, packedLight, state);
 	}
 	
-	private void renderArmorPiece(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot slot, int packedLight, NanoArmorModel<T> model,
-								  float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch)
+	private void renderArmorPiece(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack stack, EquipmentSlot slot, int packedLight, S state, NanoArmorModel model)
 	{
-		var stack = entity.getItemBySlot(slot);
-		if(stack.getItem() instanceof NanoSuitArmorItem item && item.getEquipmentSlot() == slot)
+		if(stack.getItem() instanceof NanoSuitArmorItem item && item.getEquipmentSlot(stack) == slot)
 		{
-			this.getParentModel().copyPropertiesTo(model);
-			this.setPartVisibility(model, slot);
+			model.copyFrom(this.getParentModel());
 			model.slot = slot;
+			model.setPartVisibility();
 			
-			boolean usesInnerModel = this.usesInnerModel(slot);
+			boolean usesInnerModel = slot == EquipmentSlot.LEGS;
 			
 			var armorMaterial = item.getMaterial().value();
 			var extensions = IClientItemExtensions.of(stack);
 			int fallbackColor = extensions.getDefaultDyeColor(stack);
 			
-			for(int layerIndex = armorMaterial.layers().size() - 1; layerIndex >= 0; --layerIndex)
+			var layerType = usesInnerModel ? EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS : EquipmentClientInfo.LayerType.HUMANOID;
+			
+			var clientInfo = EQUIPMENT_ASSETS != null ? EQUIPMENT_ASSETS.get(armorMaterial.assetId()) : net.minecraft.client.resources.model.EquipmentAssetManager.MISSING;
+			var layers = clientInfo.layers().get(layerType);
+			if(layers == null || layers.isEmpty())
 			{
-				var armorMaterialLayer = armorMaterial.layers().get(layerIndex);
-				int layerColor = extensions.getArmorLayerTintColor(stack, entity, armorMaterialLayer, layerIndex, fallbackColor);
+				return;
+			}
+			for(int layerIndex = layers.size() - 1; layerIndex >= 0; --layerIndex)
+			{
+				var armorMaterialLayer = layers.get(layerIndex);
+				int layerColor = extensions.getArmorLayerTintColor(stack, armorMaterialLayer, layerIndex, fallbackColor);
 				if(layerColor != 0)
 				{
 					boolean isColored = layerColor != -1;
-					var texture = ClientHooks.getArmorTexture(entity, stack, armorMaterialLayer, usesInnerModel, slot);
+					var texture = ClientHooks.getArmorTexture(stack, layerType, armorMaterialLayer, item.getMaterial().value().assetId().location());
 					var renderType = armorRenderType(layerIndex, item, texture, isColored);
-					var buffer = bufferSource.getBuffer(renderType);
-					model.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, layerColor);
+					for(var part : model.parts())
+					{
+						submitNodeCollector.submitModelPart(part, poseStack, renderType, packedLight, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, null, layerColor, null);
+					}
 				}
-			}
-			
-			var armorTrim = stack.get(DataComponents.TRIM);
-			if(armorTrim != null)
-			{
-				this.renderTrim(item.getMaterial(), poseStack, bufferSource, packedLight, armorTrim, model, usesInnerModel);
-			}
-			
-			if(stack.hasFoil())
-			{
-				this.renderGlint(poseStack, bufferSource, packedLight, model);
 			}
 		}
 	}
 	
-	private void renderArmorPieceDecorations(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot slot, int packedLight,
-											 float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch)
+	private void renderArmorPieceDecorations(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack stack, EquipmentSlot slot, int packedLight, S state)
 	{
-		var stack = entity.getItemBySlot(slot);
-		if(stack.getItem() instanceof NanoSuitArmorItem item && item.getEquipmentSlot() == slot)
+		if(stack.getItem() instanceof NanoSuitArmorItem item && item.getEquipmentSlot(stack) == slot)
 		{
-			for(NanoSuitDecorationModel<T> decoration : decorations)
+			for(NanoSuitDecorationModel decoration : decorations)
 			{
-				this.getParentModel().copyPropertiesTo(decoration);
-				boolean shouldRender = decoration.test(entity, slot, stack);
+				boolean shouldRender = decoration.test(slot, stack);
 				decoration.setAllVisible(shouldRender);
 				
 				if(shouldRender)
 				{
-					var armorMaterial = item.getMaterial().value();
-					var extensions = IClientItemExtensions.of(stack);
-					int fallbackColor = extensions.getDefaultDyeColor(stack);
-					
-					for(int layerIndex = armorMaterial.layers().size() - 1; layerIndex >= 0; --layerIndex)
-					{
-						var armorMaterialLayer = armorMaterial.layers().get(layerIndex);
-						int layerColor = extensions.getArmorLayerTintColor(stack, entity, armorMaterialLayer, layerIndex, fallbackColor);
-						if(layerColor != 0)
-						{
-							boolean isColored = layerColor != -1;
-							decoration.render(entity, slot, stack, item, poseStack, bufferSource, packedLight, armorMaterialLayer, layerIndex, layerColor, isColored);
-						}
-					}
-					
-					if(stack.hasFoil())
-					{
-						this.renderGlint(poseStack, bufferSource, packedLight, decoration);
-					}
+					decoration.submit(poseStack, submitNodeCollector, packedLight, item, stack, slot);
 				}
 			}
 		}

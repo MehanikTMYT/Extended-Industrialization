@@ -7,7 +7,7 @@ import aztech.modern_industrialization.inventory.MIInventory;
 import aztech.modern_industrialization.inventory.SlotPositions;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.init.MachineTier;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.machines.component.fluidharvesting.FluidHarvestingBehaviorCreator;
 import net.swedz.tesseract.neoforge.compat.mi.api.SteamMachineTierHolder;
 import net.swedz.tesseract.neoforge.compat.mi.helper.EuConsumerBehavior;
@@ -20,7 +20,7 @@ public final class SteamFluidHarvestingMachineBlockEntity extends FluidHarvestin
 {
 	private final MIInventory inventory;
 	
-	public SteamFluidHarvestingMachineBlockEntity(BEP bep, ResourceLocation blockName, boolean bronze, long euCost, FluidHarvestingBehaviorCreator behaviorCreator, long capacity, FluidLike fluid)
+	public SteamFluidHarvestingMachineBlockEntity(BEP bep, Identifier blockName, boolean bronze, long euCost, FluidHarvestingBehaviorCreator behaviorCreator, long capacity, FluidLike fluid)
 	{
 		super(bep, blockName, bronze ? MachineTier.BRONZE : MachineTier.STEEL, euCost, behaviorCreator);
 		

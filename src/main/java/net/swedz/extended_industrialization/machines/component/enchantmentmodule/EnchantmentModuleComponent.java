@@ -4,7 +4,7 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -43,12 +43,12 @@ public final class EnchantmentModuleComponent extends SimpleItemStackComponent
 		return this.getActiveEnchantment().map((enchantment) -> enchantment.getEuCost(tier)).orElse(0L);
 	}
 	
-	public ItemInteractionResult onUse(MachineBlockEntity blockEntity, Player player, InteractionHand hand)
+	public InteractionResult onUse(MachineBlockEntity blockEntity, Player player, InteractionHand hand)
 	{
 		var stack = player.getItemInHand(hand);
 		if(!this.is(stack))
 		{
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 		}
 		if(this.getStack().isEmpty())
 		{
@@ -58,8 +58,8 @@ public final class EnchantmentModuleComponent extends SimpleItemStackComponent
 			{
 				this.setStackServer(blockEntity, copy);
 			}
-			return ItemInteractionResult.sidedSuccess(blockEntity.getLevel().isClientSide());
+			return InteractionResult.SUCCESS;
 		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 }

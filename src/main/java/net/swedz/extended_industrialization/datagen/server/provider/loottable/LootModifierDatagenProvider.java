@@ -1,11 +1,12 @@
 package net.swedz.extended_industrialization.datagen.server.provider.loottable;
 
-import net.minecraft.advancements.critereon.DamageSourcePredicate;
-import net.minecraft.advancements.critereon.EntityEquipmentPredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.EntityTypePredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.TagPredicate;
+import net.minecraft.advancements.criterion.DamageSourcePredicate;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.EntityEquipmentPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.TagPredicate;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,9 +32,22 @@ import net.swedz.tesseract.neoforge.compat.mi.loot.itempredicate.SimpleEnergyIte
 
 public final class LootModifierDatagenProvider extends GlobalLootModifierProvider
 {
-	public LootModifierDatagenProvider(GatherDataEvent event)
+	public LootModifierDatagenProvider(GatherDataEvent.Client event)
 	{
 		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID);
+	}
+	
+	private ItemPredicate.Builder nanoSaberPredicate(ElectricToolItem.Mode mode)
+	{
+		var components = DataComponentMatchers.components()
+				.partial(TesseractMILootConditions.ItemSubPredicates.SIMPLE_ENERGY_ITEM_HAS_CHARGE.get(), new SimpleEnergyItemHasChargePredicate());
+		if(mode != null)
+		{
+			components.partial(EILootModifiers.DataComponentPredicates.ELECTRIC_TOOL_MODE.get(), new ElectricToolModePredicate(mode));
+		}
+		return ItemPredicate.Builder.item()
+				.of(this.registries.lookupOrThrow(Registries.ITEM), EIItems.NANO_SABER.asItem())
+				.withComponents(components.build());
 	}
 	
 	private void addBeheading(EntityType entityType, float chance, Item headItem)
@@ -43,18 +57,19 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 				"nano_saber/beheading/%s/%s".formatted(typeKey.getNamespace(), typeKey.getPath()),
 				new BeheadingLootModifier(
 						new LootItemCondition[]{
-								LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(entityType))).build(),
+								LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().of(this.registries.lookupOrThrow(Registries.ENTITY_TYPE), entityType)).build(),
 								LootItemRandomChanceCondition.randomChance(chance).build(),
 								AnyOfCondition.anyOf(
 										DamageSourceCondition.hasDamageSource(new DamageSourcePredicate.Builder()
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP_BEHEADING, true))),
-										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder().equipment(new EntityEquipmentPredicate.Builder()
-												.mainhand(ItemPredicate.Builder.item()
-														.of(EIItems.NANO_SABER.asItem())
-														.withSubPredicate(TesseractMILootConditions.ItemSubPredicates.SIMPLE_ENERGY_ITEM_HAS_CHARGE.get(), new SimpleEnergyItemHasChargePredicate())
-														.withSubPredicate(EILootModifiers.ItemSubPredicates.ELECTRIC_TOOL_MODE.get(), new ElectricToolModePredicate(ElectricToolItem.Mode.BEHEADING)))))
+										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
+												.equipment(new EntityEquipmentPredicate.Builder()
+														.mainhand(this.nanoSaberPredicate(ElectricToolItem.Mode.BEHEADING).build()))
+												.build()
+										).build()
 								).build()
 						},
+						0,
 						new ItemStack(headItem)
 				)
 		);
@@ -70,12 +85,14 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 								AnyOfCondition.anyOf(
 										DamageSourceCondition.hasDamageSource(new DamageSourcePredicate.Builder()
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP, true))),
-										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder().equipment(new EntityEquipmentPredicate.Builder()
-												.mainhand(ItemPredicate.Builder.item()
-														.of(EIItems.NANO_SABER.asItem())
-														.withSubPredicate(TesseractMILootConditions.ItemSubPredicates.SIMPLE_ENERGY_ITEM_HAS_CHARGE.get(), new SimpleEnergyItemHasChargePredicate()))))
+										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
+												.equipment(new EntityEquipmentPredicate.Builder()
+														.mainhand(this.nanoSaberPredicate(null).build()))
+												.build()
+										).build()
 								).build()
-						}
+						},
+						0
 				)
 		);
 		

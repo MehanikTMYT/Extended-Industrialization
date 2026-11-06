@@ -1,6 +1,6 @@
 package net.swedz.extended_industrialization;
 
-import dev.technici4n.grandpower.api.ISimpleEnergyItem;
+import net.swedz.tesseract.neoforge.compat.mi.api.SimpleEnergyItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -34,7 +34,7 @@ public final class EICreativeTabs
 							output.accept(item);
 							
 							// Include full energy copies of items too
-							if(item.get() instanceof ISimpleEnergyItem energyItem)
+							if(item.get() instanceof SimpleEnergyItem energyItem)
 							{
 								var chargedStack = item.get().getDefaultInstance();
 								if(energyItem.getEnergyCapacity(chargedStack) > 0)

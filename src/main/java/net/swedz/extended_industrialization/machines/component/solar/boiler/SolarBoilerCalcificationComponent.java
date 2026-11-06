@@ -44,14 +44,14 @@ public final class SolarBoilerCalcificationComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putLong("calcification_ticks", ticks);
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		ticks = tag.getLong("calcification_ticks");
+		ticks = tag.getLongOr("calcification_ticks", 0L);
 	}
 }

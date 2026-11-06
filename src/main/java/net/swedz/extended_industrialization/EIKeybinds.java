@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization;
 
 import com.google.common.collect.Sets;
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,6 +26,7 @@ public final class EIKeybinds
 		
 		private static void init(RegisterKeyMappingsEvent event)
 		{
+			event.registerCategory(CATEGORY);
 			MAPPINGS.forEach((m) -> event.register(m.holder().get()));
 		}
 		
@@ -50,7 +51,7 @@ public final class EIKeybinds
 		bus.addListener(RegisterKeyMappingsEvent.class, EIKeybinds::init);
 	}
 	
-	public static final String CATEGORY = Util.makeDescriptionId("key.categories", EI.id(EI.ID));
+	public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(EI.id(EI.ID));
 	
 	public static final Keybind TOGGLE_MAIN_HAND_ABILITY  = create(
 			"toggle_main_hand_ability",

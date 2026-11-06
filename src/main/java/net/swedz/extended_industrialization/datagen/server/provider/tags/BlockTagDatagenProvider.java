@@ -20,9 +20,9 @@ import static net.swedz.extended_industrialization.datagen.DatagenCompat.*;
 
 public final class BlockTagDatagenProvider extends BlockTagsProvider
 {
-	public BlockTagDatagenProvider(GatherDataEvent event)
+	public BlockTagDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID);
 	}
 	
 	private void addFarmerDirtTags()

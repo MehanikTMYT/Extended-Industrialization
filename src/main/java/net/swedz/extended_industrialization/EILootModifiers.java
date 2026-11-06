@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.advancements.critereon.ItemSubPredicate;
+import net.minecraft.core.component.predicates.DataComponentPredicate;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -29,21 +29,21 @@ public final class EILootModifiers
 		}
 	}
 	
-	public static final class ItemSubPredicates
+	public static final class DataComponentPredicates
 	{
-		private static final DeferredRegister<ItemSubPredicate.Type<?>> ITEM_SUB_PREDICATE_TYPES = DeferredRegister.create(Registries.ITEM_SUB_PREDICATE_TYPE, EI.ID);
+		private static final DeferredRegister<DataComponentPredicate.Type<?>> DATA_COMPONENT_PREDICATE_TYPES = DeferredRegister.create(Registries.DATA_COMPONENT_PREDICATE_TYPE, EI.ID);
 		
-		public static final Supplier<ItemSubPredicate.Type<ElectricToolModePredicate>> ELECTRIC_TOOL_MODE = create("electric_tool_mode", ElectricToolModePredicate.CODEC);
+		public static final Supplier<DataComponentPredicate.Type<ElectricToolModePredicate>> ELECTRIC_TOOL_MODE = create("electric_tool_mode", ElectricToolModePredicate.CODEC);
 		
-		private static <T extends ItemSubPredicate> Supplier<ItemSubPredicate.Type<T>> create(String name, Codec<T> codec)
+		private static <T extends DataComponentPredicate> Supplier<DataComponentPredicate.Type<T>> create(String name, Codec<T> codec)
 		{
-			return ITEM_SUB_PREDICATE_TYPES.register(name, () -> new ItemSubPredicate.Type<>(codec));
+			return DATA_COMPONENT_PREDICATE_TYPES.register(name, () -> new DataComponentPredicate.ConcreteType<>(codec));
 		}
 	}
 	
 	public static void init(IEventBus bus)
 	{
 		LootModifiers.LOOT_MODIFIERS.register(bus);
-		ItemSubPredicates.ITEM_SUB_PREDICATE_TYPES.register(bus);
+		DataComponentPredicates.DATA_COMPONENT_PREDICATE_TYPES.register(bus);
 	}
 }

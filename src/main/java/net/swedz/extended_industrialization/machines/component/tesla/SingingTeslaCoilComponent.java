@@ -54,24 +54,24 @@ public final class SingingTeslaCoilComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeClientNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putInt("singing_note", note);
 	}
 	
 	@Override
-	public void readClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
-		note = tag.getInt("singing_note");
+		note = tag.getIntOr("singing_note", 0);
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 	}
 }

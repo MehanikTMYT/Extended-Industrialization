@@ -1,0 +1,74 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/root/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Enabling dist annotations on PMJ
+
+> Task :neoFormListLibraries UP-TO-DATE
+> Task :neoFormListTransformLibraries UP-TO-DATE
+> Task :cacheVersionManifest26.1.2 UP-TO-DATE
+> Task :cacheVersionExecutableClient26.1.2 UP-TO-DATE
+> Task :cacheVersionExecutableServer26.1.2 UP-TO-DATE
+> Task :neoFormSetup UP-TO-DATE
+> Task :neoFormDecompile UP-TO-DATE
+> Task :neoFormPatch UP-TO-DATE
+> Task :neoFormPatchUserDev UP-TO-DATE
+
+> Task :neoFormTransformSource
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.intellij.util.containers.Unsafe (file:/root/.gradle/caches/modules-2/files-2.1/net.neoforged.jst/jst-cli-bundle/2.0.1/6c22111132c294caf1103eb62ecf31b89813c015/jst-cli-bundle-2.0.1.jar)
+WARNING: Please consider reporting this to the maintainers of class com.intellij.util.containers.Unsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+Failed to parse access transformer file /root/home/forks/mi-stack/Extended-Industrialization/src/main/resources/extended_industrialization.accesstransformer.cfg: Invalid method descriptor '()' at line 8
+java.lang.RuntimeException: Invalid method descriptor '()' at line 8
+	at net.neoforged.accesstransformer.parser.AtParser.validateMethodDescriptor(AtParser.java:134)
+	at net.neoforged.accesstransformer.parser.AtParser.parse(AtParser.java:90)
+	at net.neoforged.accesstransformer.parser.AccessTransformerFiles.loadAT(AccessTransformerFiles.java:41)
+	at net.neoforged.accesstransformer.parser.AccessTransformerFiles.loadFromPath(AccessTransformerFiles.java:35)
+	at net.neoforged.jst.accesstransformers.AccessTransformersTransformer.beforeRun(AccessTransformersTransformer.java:55)
+	at net.neoforged.jst.cli.SourceFileProcessor.process(SourceFileProcessor.java:59)
+	at net.neoforged.jst.cli.Main.call(Main.java:96)
+	at net.neoforged.jst.cli.Main.call(Main.java:22)
+	at picocli.CommandLine.executeUserObject(CommandLine.java:2045)
+	at picocli.CommandLine.access$1500(CommandLine.java:148)
+	at picocli.CommandLine$RunLast.executeUserObjectOfLastSubcommandWithSameParent(CommandLine.java:2465)
+	at picocli.CommandLine$RunLast.handle(CommandLine.java:2457)
+	at picocli.CommandLine$RunLast.handle(CommandLine.java:2419)
+	at picocli.CommandLine$AbstractParseResultHandler.execute(CommandLine.java:2277)
+	at picocli.CommandLine$RunLast.execute(CommandLine.java:2421)
+	at picocli.CommandLine.execute(CommandLine.java:2174)
+	at net.neoforged.jst.cli.Main.innerMain(Main.java:71)
+	at net.neoforged.jst.cli.Main.main(Main.java:57)
+
+> Task :neoFormTransformSource FAILED
+
+[Incubating] Problems report is available at: file:///root/home/forks/mi-stack/Extended-Industrialization/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':neoFormTransformSource'.
+> Failed to execute stage: Default[outputs=[OutputEntry[output=/root/home/forks/mi-stack/Extended-Industrialization/build/neoForm/neoFormJoined26.1.2-1/steps/transformSource/transformed, isDirectory=true, createsDirectory=false, mergesDirectory=false], OutputEntry[output=/root/home/forks/mi-stack/Extended-Industrialization/build/neoForm/neoFormJoined26.1.2-1/steps/transformSource/stubs.jar, isDirectory=false, createsDirectory=false, mergesDirectory=false]], execute=net.neoforged.gradle.common.runtime.tasks.JavaSourceTransformer$$Lambda/0x0000000011f6c000@481cf02a]
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 22s
+11 actionable tasks: 1 executed, 10 up-to-date

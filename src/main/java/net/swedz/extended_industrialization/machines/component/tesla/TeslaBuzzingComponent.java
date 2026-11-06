@@ -51,12 +51,12 @@ public final class TeslaBuzzingComponent implements MachineComponent.ClientOnly
 	}
 	
 	@Override
-	public void writeClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeClientNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
 	@Override
-	public void readClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
 	}
 }

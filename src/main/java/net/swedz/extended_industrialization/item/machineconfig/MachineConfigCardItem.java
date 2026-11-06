@@ -5,7 +5,7 @@ import aztech.modern_industrialization.util.Simulation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
@@ -48,11 +48,11 @@ public final class MachineConfigCardItem extends Item
 					if(config.apply(player, machine, Simulation.SIMULATE))
 					{
 						config.apply(player, machine, Simulation.ACT);
-						player.displayClientMessage(EI.text().machineConfigCardApplySuccess(), true);
+						player.sendOverlayMessage(EI.text().machineConfigCardApplySuccess());
 					}
 					else
 					{
-						player.displayClientMessage(EI.text().machineConfigCardApplyFailed(), true);
+						player.sendOverlayMessage(EI.text().machineConfigCardApplyFailed());
 					}
 				}
 			}
@@ -76,7 +76,7 @@ public final class MachineConfigCardItem extends Item
 					{
 						var config = MachineConfig.from(machine);
 						itemStack.set(EIComponents.MACHINE_CONFIG, config);
-						player.displayClientMessage(EI.text().machineConfigCardSave(), true);
+						player.sendOverlayMessage(EI.text().machineConfigCardSave());
 					}
 					else
 					{
@@ -87,29 +87,29 @@ public final class MachineConfigCardItem extends Item
 							if(config.apply(player, machine, Simulation.SIMULATE))
 							{
 								config.apply(player, machine, Simulation.ACT);
-								player.displayClientMessage(EI.text().machineConfigCardApplySuccess(), true);
+								player.sendOverlayMessage(EI.text().machineConfigCardApplySuccess());
 							}
 							else
 							{
-								player.displayClientMessage(EI.text().machineConfigCardApplyFailed(), true);
+								player.sendOverlayMessage(EI.text().machineConfigCardApplyFailed());
 							}
 						}
 					}
 				}
-				return InteractionResult.sidedSuccess(context.getLevel().isClientSide);
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return InteractionResult.PASS;
 	}
 	
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand)
+	public InteractionResult use(Level level, Player player, InteractionHand usedHand)
 	{
 		if(player.isShiftKeyDown())
 		{
 			player.getItemInHand(usedHand).remove(EIComponents.MACHINE_CONFIG);
-			player.displayClientMessage(EI.text().machineConfigCardClear(), true);
-			return InteractionResultHolder.sidedSuccess(player.getItemInHand(usedHand), level.isClientSide());
+			player.sendOverlayMessage(EI.text().machineConfigCardClear());
+			return InteractionResult.SUCCESS;
 		}
 		return super.use(level, player, usedHand);
 	}

@@ -7,9 +7,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeItem;
 import net.swedz.extended_industrialization.EI;
@@ -29,7 +29,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 	
 	private int selectedModelIndex;
 	
-	public AestheticTeslaCoilComponent with(ResourceLocation path, Component text)
+	public AestheticTeslaCoilComponent with(Identifier path, Component text)
 	{
 		models.add(new Model(path, text));
 		return this;
@@ -70,17 +70,17 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 		return new Vector3f(red, green, blue);
 	}
 	
-	public ResourceLocation getSelectedModel()
+	public Identifier getSelectedModel()
 	{
 		return models.get(selectedModelIndex).path();
 	}
 	
-	public ItemInteractionResult onUse(MachineBlockEntity be, Player player, InteractionHand hand)
+	public InteractionResult onUse(MachineBlockEntity be, Player player, InteractionHand hand)
 	{
 		var stackInHand = player.getItemInHand(hand);
 		if(stackInHand.isEmpty())
 		{
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 		}
 		if(stackInHand.getItem() instanceof DyeItem item)
 		{
@@ -90,13 +90,13 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 			this.blue = (color & 0xFF) / 255f;
 			be.setChanged();
 			be.sync();
-			return ItemInteractionResult.sidedSuccess(player.level().isClientSide());
+			return InteractionResult.SUCCESS;
 		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		var colorTag = new CompoundTag();
 		colorTag.putFloat("red", red);
@@ -108,7 +108,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 		if(tag.contains("tesla_color", Tag.TAG_COMPOUND))
 		{
@@ -124,10 +124,10 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 			blue = 1;
 		}
 		
-		selectedModelIndex = tag.getInt("tesla_selected_model");
+		selectedModelIndex = tag.getIntOr("tesla_selected_model", 0);
 	}
 	
-	public record Model(ResourceLocation path, Component text)
+	public record Model(Identifier path, Component text)
 	{
 	}
 	

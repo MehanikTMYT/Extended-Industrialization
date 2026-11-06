@@ -1,62 +1,63 @@
 package net.swedz.extended_industrialization.client.model.chainer;
 
+import aztech.modern_industrialization.client.util.ModelHelper;
 import aztech.modern_industrialization.machines.models.MachineCasing;
-import aztech.modern_industrialization.machines.models.MachineCasings;
-import com.google.gson.JsonObject;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
+import aztech.modern_industrialization.machines.models.MachineModelClientData;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
-import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
-import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
-import net.swedz.extended_industrialization.EI;
-import net.swedz.extended_industrialization.client.model.MachineOverlaysJson;
+import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.resources.model.geometry.QuadCollection;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
+import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Based on {@link aztech.modern_industrialization.client.machines.models.MachineUnbakedModel}
  */
-public final class MachineChainerUnbakedModel implements IUnbakedGeometry<MachineChainerUnbakedModel>
+public record MachineChainerUnbakedModel(MachineCasing casing, Map<String, Identifier> overlays) implements CustomUnbakedBlockStateModel
 {
-	public static final ResourceLocation                            LOADER_ID = EI.id("machine_chainer");
-	public static final IGeometryLoader<MachineChainerUnbakedModel> LOADER    = (json, context) -> new MachineChainerUnbakedModel(json);
+	public static final MapCodec<MachineChainerUnbakedModel> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+			MachineCasing.CODEC.fieldOf("casing").forGetter(MachineChainerUnbakedModel::casing),
+			Codec.unboundedMap(Codec.STRING, Identifier.CODEC).optionalFieldOf("overlays", Map.of()).forGetter(MachineChainerUnbakedModel::overlays)
+	).apply(instance, MachineChainerUnbakedModel::new));
 	
-	private final MachineCasing              casing;
-	private final MachineChainerOverlaysJson overlaysJson;
-	private final Material[]                 overlays;
-	
-	private MachineChainerUnbakedModel(JsonObject json)
+	@Override
+	public MapCodec<? extends CustomUnbakedBlockStateModel> codec()
 	{
-		casing = MachineCasings.get(ResourceLocation.parse(GsonHelper.getAsString(json, "casing")));
-		
-		overlaysJson = MachineOverlaysJson.parse(MachineChainerOverlaysJson.class, GsonHelper.getAsJsonObject(json, "overlays"), null);
-		overlays = overlaysJson.toSpriteIds();
+		return CODEC;
 	}
 	
 	@Override
-	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter,
-						   ModelState modelState, ItemOverrides overrides)
+	public BlockStateModel bake(ModelBaker baker)
 	{
-		var overlays = loadSprites(spriteGetter, this.overlays);
-		return new MachineChainerBakedModel(casing, overlaysJson, overlays);
-	}
-	
-	private static TextureAtlasSprite[] loadSprites(Function<Material, TextureAtlasSprite> textureGetter, Material[] ids)
-	{
-		var sprites = new TextureAtlasSprite[ids.length];
-		for(int i = 0; i < ids.length; ++i)
+		Material.Baked[] sprites = new Material.Baked[9];
+		for(int i = 0; i < MachineChainerOverlaysJson.KEYS.length; i++)
 		{
-			if(ids[i] != null)
+			var id = overlays.get(MachineChainerOverlaysJson.KEYS[i]);
+			if(id != null)
 			{
-				sprites[i] = textureGetter.apply(ids[i]);
+				sprites[i] = baker.materials().get(new Material(id), () -> "machine chainer unbaked model");
 			}
 		}
-		return sprites;
+		return new MachineChainerBlockStateModel(casing, sprites);
+	}
+	
+	@Override
+	public void resolveDependencies(Resolver resolver)
+	{
 	}
 }

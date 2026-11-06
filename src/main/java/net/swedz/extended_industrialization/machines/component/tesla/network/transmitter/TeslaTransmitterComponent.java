@@ -1,12 +1,14 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network.transmitter;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.MachineComponent;
 import aztech.modern_industrialization.machines.components.EnergyComponent;
 import aztech.modern_industrialization.util.Simulation;
-import dev.technici4n.grandpower.api.EnergyStorageUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.swedz.extended_industrialization.machines.component.itemslot.TeslaTowerUpgradeComponent;
@@ -42,35 +44,35 @@ public class TeslaTransmitterComponent implements MachineComponent.ServerOnly, T
 			}
 			
 			@Override
-			public long extract(long maxExtract, boolean simulate)
+			public int extract(int maxExtract, TransactionContext transaction)
 			{
-				long extracted = 0;
+				int extracted = 0;
 				for(var energyComponent : energyInputs)
 				{
-					long remaining = maxExtract - extracted;
+					int remaining = maxExtract - extracted;
 					if(remaining == 0)
 					{
 						break;
 					}
-					extracted += energyComponent.consumeEu(remaining, simulate ? Simulation.SIMULATE : Simulation.ACT);
+					extracted += energyComponent.buildExtractable(tier -> false).extract(remaining, transaction);
 				}
 				return extracted;
 			}
 			
 			@Override
-			public long getAmount()
+			public long getAmountAsLong()
 			{
 				return energyInputs.stream().mapToLong(EnergyComponent::getEu).sum();
 			}
 			
 			@Override
-			public long getCapacity()
+			public long getCapacityAsLong()
 			{
 				return energyInputs.stream().mapToLong(EnergyComponent::getCapacity).sum();
 			}
 			
 			@Override
-			public boolean canExtract()
+			public boolean supportsExtraction()
 			{
 				return true;
 			}
@@ -151,24 +153,28 @@ public class TeslaTransmitterComponent implements MachineComponent.ServerOnly, T
 		if(this.hasNetwork())
 		{
 			var network = this.getNetwork();
-			return EnergyStorageUtil.move(energyStorage, network, maxTransmit);
+			try (var transaction = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+                int transferred = EnergyTransfers.move(energyStorage, network, (int)Math.min(Integer.MAX_VALUE, maxTransmit), transaction);
+                transaction.commit();
+                return transferred;
+            }
 		}
 		return 0;
 	}
 	
 	@Override
-	public long extractEnergy(long maxExtract, boolean simulate)
+	public int extractEnergy(int maxExtract, TransactionContext transaction)
 	{
-		return energyStorage.extract(maxExtract, simulate);
+		return energyStorage.extract(maxExtract, transaction);
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 	}
 }

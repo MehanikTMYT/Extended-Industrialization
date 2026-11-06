@@ -8,9 +8,9 @@ import net.swedz.tesseract.neoforge.material.Material;
 
 public final class MaterialRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public MaterialRecipesServerDatagenProvider(GatherDataEvent event)
+	public MaterialRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
 	@Override
@@ -18,7 +18,7 @@ public final class MaterialRecipesServerDatagenProvider extends RecipesServerDat
 	{
 		for(Material material : EIMaterials.values())
 		{
-			EIMaterialRegistry.get().createRecipesFor(material, output);
+			EIMaterialRegistry.get().createRecipesFor(material, registries, output);
 		}
 	}
 }

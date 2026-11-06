@@ -8,10 +8,10 @@ import aztech.modern_industrialization.client.util.RenderHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.tesseract.neoforge.compat.mi.guicomponent.modularmultiblock.ModularMultiblockGuiLine;
@@ -35,8 +35,8 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 	
 	private final class Renderer implements ClientComponentRenderer
 	{
-		private static final ResourceLocation ICON_BACKGROUND = ResourceLocation.withDefaultNamespace("container/beacon/button");
-		private static final ResourceLocation BAR_TEXTURE     = EI.id("textures/gui/container/beacon_remaining_time_bar.png");
+		private static final Identifier ICON_BACKGROUND = Identifier.withDefaultNamespace("container/beacon/button");
+		private static final Identifier BAR_TEXTURE     = EI.id("textures/gui/container/beacon_remaining_time_bar.png");
 		
 		private static final int ICONS_X       = 5;
 		private static final int ICONS_Y       = 24;
@@ -65,7 +65,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 		}
 		
 		@Override
-		public void renderBackground(GuiGraphics graphics, int left, int top)
+		public void extractBackground(GuiGraphicsExtractor graphics, int left, int top)
 		{
 			MultiblockInfoBackground.renderBackground(graphics, left, top, ICONS_HEIGHT + 16);
 			if(data.effects().isEmpty())
@@ -86,7 +86,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 			this.renderRemainingTimeBar(graphics, left, top);
 		}
 		
-		private void renderEffects(GuiGraphics graphics, int left, int top)
+		private void renderEffects(GuiGraphicsExtractor graphics, int left, int top)
 		{
 			int x = left + ICONS_X;
 			int y = top + ICONS_Y;
@@ -112,7 +112,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 			}
 		}
 		
-		private void renderRemainingTimeBar(GuiGraphics graphics, int left, int top)
+		private void renderRemainingTimeBar(GuiGraphicsExtractor graphics, int left, int top)
 		{
 			int x = left + TIME_X;
 			int y = top + TIME_Y;
@@ -124,13 +124,13 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 		}
 		
 		@Override
-		public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int left, int top, int cursorX, int cursorY)
+		public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int left, int top, int cursorX, int cursorY)
 		{
 			return this.renderEffectTooltip(screen, font, graphics, left, top, cursorX, cursorY) ||
 				   this.renderRemainingTimeBarTooltip(screen, font, graphics, left, top, cursorX, cursorY);
 		}
 		
-		private boolean renderEffectTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int left, int top, int cursorX, int cursorY)
+		private boolean renderEffectTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int left, int top, int cursorX, int cursorY)
 		{
 			var effects = data.effects();
 			int index = 0;
@@ -154,7 +154,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 			return false;
 		}
 		
-		private boolean renderRemainingTimeBarTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int left, int top, int cursorX, int cursorY)
+		private boolean renderRemainingTimeBarTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int left, int top, int cursorX, int cursorY)
 		{
 			if(RenderHelper.isPointWithinRectangle(TIME_X, TIME_Y, TIME_WIDTH, TIME_HEIGHT, cursorX - left, cursorY - top))
 			{

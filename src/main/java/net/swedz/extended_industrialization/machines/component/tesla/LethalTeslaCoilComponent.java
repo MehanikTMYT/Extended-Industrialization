@@ -143,26 +143,26 @@ public final class LethalTeslaCoilComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putBoolean("damages_players", damagesPlayers);
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		damagesPlayers = tag.getBoolean("damages_players");
+		damagesPlayers = tag.getBooleanOr("damages_players", false);
 	}
 	
 	@Override
-	public void writeClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeClientNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putInt("damaging_entities", entityCount);
 	}
 	
 	@Override
-	public void readClientNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
-		entityCount = tag.getInt("damaging_entities");
+		entityCount = tag.getIntOr("damaging_entities", 0);
 	}
 }

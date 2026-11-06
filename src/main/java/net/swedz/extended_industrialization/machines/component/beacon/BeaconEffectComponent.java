@@ -4,8 +4,8 @@ import aztech.modern_industrialization.inventory.ConfigurableItemStack;
 import aztech.modern_industrialization.inventory.MIItemStorage;
 import aztech.modern_industrialization.machines.MachineComponent;
 import aztech.modern_industrialization.machines.components.MultiblockInventoryComponent;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.transaction.Transaction;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -20,7 +20,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -169,7 +169,7 @@ public final class BeaconEffectComponent implements MachineComponent
 		var storage = new MIItemStorage(outputSlots);
 		try(var transaction = Transaction.openRoot())
 		{
-			boolean success = storage.insertAllSlot(ItemVariant.of(Items.GLASS_BOTTLE), 1, transaction) == 1;
+			boolean success = storage.insertAllSlot(ItemResource.of(Items.GLASS_BOTTLE), 1, transaction) == 1;
 			if(!simulate)
 			{
 				transaction.commit();
@@ -211,7 +211,7 @@ public final class BeaconEffectComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		var effectsTag = new ListTag();
 		for(var effect : activeEffects)
@@ -228,19 +228,19 @@ public final class BeaconEffectComponent implements MachineComponent
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 		List<Effect> activeEffects = Lists.newArrayList();
 		var effectsTag = tag.getList("beacon_effects", Tag.TAG_COMPOUND);
 		for(int index = 0; index < effectsTag.size(); index++)
 		{
 			var effectTag = effectsTag.getCompound(index);
-			var effectId = ResourceLocation.tryParse(effectTag.getString("effect"));
+			var effectId = Identifier.tryParse(effectTag.getString("effect"));
 			if(effectId == null)
 			{
 				continue;
 			}
-			var effect = registries.holder(ResourceKey.create(Registries.MOB_EFFECT, effectId));
+			var effect = tag.lookup().holder(ResourceKey.create(Registries.MOB_EFFECT, effectId));
 			if(effect.isEmpty())
 			{
 				continue;
@@ -250,8 +250,8 @@ public final class BeaconEffectComponent implements MachineComponent
 		}
 		this.activeEffects = Collections.unmodifiableList(activeEffects);
 		
-		totalEffectTicks = tag.getInt("total_beacon_effect_ticks");
-		remainingEffectTicks = tag.getInt("remaining_beacon_effect_ticks");
+		totalEffectTicks = tag.getIntOr("total_beacon_effect_ticks", 0);
+		remainingEffectTicks = tag.getIntOr("remaining_beacon_effect_ticks", 0);
 	}
 	
 	public record Effect(

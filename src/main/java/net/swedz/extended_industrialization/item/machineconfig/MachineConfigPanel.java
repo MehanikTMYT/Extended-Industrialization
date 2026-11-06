@@ -251,9 +251,9 @@ public record MachineConfigPanel(
 	private static List<ItemStack> findItemsMatching(Inventory inventory, ItemStack itemStack)
 	{
 		List<ItemStack> items = Lists.newArrayList();
-		for(int i = 0; i < inventory.items.size(); i++)
+		for(int i = 0; i < inventory.getNonEquipmentItems().size(); i++)
 		{
-			var slot = inventory.items.get(i);
+			var slot = inventory.getNonEquipmentItems().get(i);
 			if(!slot.isEmpty() && ItemStack.isSameItem(itemStack, slot))
 			{
 				items.add(slot);

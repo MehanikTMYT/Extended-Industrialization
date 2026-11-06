@@ -9,9 +9,9 @@ import net.swedz.extended_industrialization.EITags;
 
 public final class DamageTypeTagDatagenProvider extends DamageTypeTagsProvider
 {
-	public DamageTypeTagDatagenProvider(GatherDataEvent event)
+	public DamageTypeTagDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID);
 	}
 	
 	@Override

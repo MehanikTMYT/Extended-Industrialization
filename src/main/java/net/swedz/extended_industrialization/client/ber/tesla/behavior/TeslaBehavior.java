@@ -1,13 +1,13 @@
 package net.swedz.extended_industrialization.client.ber.tesla.behavior;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Vector3f;
 
 public interface TeslaBehavior
 {
 	boolean shouldTeslaRender();
 	
-	ResourceLocation getTeslaModelLocation();
+	Identifier getTeslaModelLocation();
 	
 	default Vector3f getTeslaColor()
 	{

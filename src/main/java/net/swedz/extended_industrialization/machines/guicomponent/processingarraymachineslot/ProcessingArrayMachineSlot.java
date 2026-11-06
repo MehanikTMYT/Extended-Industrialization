@@ -38,7 +38,7 @@ public final class ProcessingArrayMachineSlot implements GuiComponentServer<Unit
 	
 	public static boolean isMachine(Item item)
 	{
-		return !RegistryHelper.holder(BuiltInRegistries.ITEM, item).is(EITags.Items.PROCESSING_ARRAY_BLACKLIST) &&
+		return !RegistryHelper.holder(BuiltInRegistries.ITEM, item).orElseThrow().is(EITags.Items.PROCESSING_ARRAY_BLACKLIST) &&
 			   item instanceof BlockItem blockItem &&
 			   blockItem.getBlock() instanceof MachineBlock machineBlock &&
 			   machineBlock.getBlockEntityInstance() instanceof ElectricCraftingMachineBlockEntity;

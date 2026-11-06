@@ -5,9 +5,9 @@ import aztech.modern_industrialization.inventory.ConfigurableItemStack;
 import aztech.modern_industrialization.inventory.MIInventory;
 import aztech.modern_industrialization.machines.MachineComponent;
 import aztech.modern_industrialization.machines.components.EnergyComponent;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.fluid.FluidVariant;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.transaction.Transaction;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import aztech.modern_industrialization.util.Simulation;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.PatchedDataComponentMap;
@@ -76,7 +76,7 @@ public final class SolarGeneratorComponent implements MachineComponent.ServerOnl
 	{
 		try(var transaction = Transaction.openRoot())
 		{
-			boolean usedDistilledWater = this.getSlotWater().extractDirect(FluidVariant.of(EIFluids.DISTILLED_WATER.asFluid()), 1, transaction) > 0;
+			boolean usedDistilledWater = this.getSlotWater().extractDirect(FluidResource.of(EIFluids.DISTILLED_WATER.asFluid()), 1, transaction) > 0;
 			transaction.commit();
 			return usedDistilledWater;
 		}
@@ -105,14 +105,14 @@ public final class SolarGeneratorComponent implements MachineComponent.ServerOnl
 		this.incrementSolarTicks(cellStack);
 		if(this.getSolarTicksRemaining(cellStack) > 0)
 		{
-			slotCell.setKey(ItemVariant.of(cellStack));
+			slotCell.setKey(ItemResource.of(cellStack));
 		}
 		else
 		{
 			photovoltaicCell = null;
 			usedDistilledWater = false;
 			slotCell.setAmount(0);
-			slotCell.setKey(ItemVariant.blank());
+			slotCell.setKey(ItemResource.EMPTY);
 		}
 	}
 	
@@ -148,12 +148,12 @@ public final class SolarGeneratorComponent implements MachineComponent.ServerOnl
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 	}
 }

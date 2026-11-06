@@ -8,8 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.swedz.extended_industrialization.machines.blockentity.MachineChainerMachineBlockEntity;
 import net.swedz.extended_industrialization.machines.component.chainer.link.ChainerLinkable;
 import net.swedz.extended_industrialization.machines.component.chainer.link.LinkContext;
@@ -53,8 +54,8 @@ public final class ChainerLinks implements ChainerElement
 	private List<BlockPos> positions = List.of();
 	private int            linkCount;
 	
-	private List<IItemHandler>    itemHandlers   = List.of();
-	private List<IFluidHandler>   fluidHandlers  = List.of();
+	private List<ResourceHandler<ItemResource>>    itemHandlers   = List.of();
+	private List<ResourceHandler<FluidResource>>   fluidHandlers  = List.of();
 	private List<MIEnergyStorage> energyHandlers = List.of();
 	
 	private Optional<BlockPos> failPosition = Optional.empty();
@@ -174,7 +175,7 @@ public final class ChainerLinks implements ChainerElement
 		Set<ChunkPos> chunks = Sets.newHashSet();
 		for(var block : this.getSpannedBlocks(includeOrigin, includeFailure))
 		{
-			chunks.add(new ChunkPos(block));
+			chunks.add(ChunkPos.containing(block));
 		}
 		return Collections.unmodifiableSet(chunks);
 	}
@@ -184,12 +185,12 @@ public final class ChainerLinks implements ChainerElement
 		return allowOperation.get();
 	}
 	
-	public List<IItemHandler> itemHandlers()
+	public List<ResourceHandler<ItemResource>> itemHandlers()
 	{
 		return itemHandlers;
 	}
 	
-	public List<IFluidHandler> fluidHandlers()
+	public List<ResourceHandler<FluidResource>> fluidHandlers()
 	{
 		return fluidHandlers;
 	}
@@ -249,8 +250,8 @@ public final class ChainerLinks implements ChainerElement
 	public void invalidate()
 	{
 		List<BlockPos> machinesFound = Lists.newArrayList();
-		List<IItemHandler> itemHandlers = Lists.newArrayList();
-		List<IFluidHandler> fluidHandlers = Lists.newArrayList();
+		List<ResourceHandler<ItemResource>> itemHandlers = Lists.newArrayList();
+		List<ResourceHandler<FluidResource>> fluidHandlers = Lists.newArrayList();
 		List<MIEnergyStorage> energyHandlers = Lists.newArrayList();
 		
 		LinkResult result = null;

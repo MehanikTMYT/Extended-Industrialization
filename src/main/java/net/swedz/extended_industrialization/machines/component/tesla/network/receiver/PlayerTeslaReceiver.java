@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network.receiver;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.EnergyApi;
 import com.google.common.collect.Lists;
@@ -29,17 +32,15 @@ public final class PlayerTeslaReceiver implements TeslaReceiver
 	}
 	
 	@Override
-	public long receiveEnergy(long maxReceive, boolean simulate)
+	public int receiveEnergy(int maxReceive, TransactionContext transaction)
 	{
-		var inventory = player.getInventory();
-		
-		List<ItemStack> items = Lists.newArrayList();
-		items.addAll(inventory.armor);
-		items.addAll(inventory.items);
-		items.addAll(inventory.offhand);
-		items.addAll(EIModSlot.getContents(player, (stack) -> stack.getCapability(EnergyApi.ITEM) != null));
-		
-		return ChargeInventoryHelper.charge(items, maxReceive, simulate);
+        int charged = 0;
+        for (int slot = 0; slot < player.getInventory().getContainerSize() && charged < maxReceive; slot++) {
+            var access = net.neoforged.neoforge.transfer.access.ItemAccess.forPlayerSlot(player, slot);
+            var handler = access.getCapability(EnergyApi.ITEM);
+            if (handler != null) charged += handler.insert(maxReceive - charged, transaction);
+        }
+        return charged;
 	}
 	
 	@Override

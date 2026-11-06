@@ -5,12 +5,12 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.EnergyApi;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import dev.technici4n.grandpower.api.ILongEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringUtil;
@@ -89,13 +89,13 @@ public final class EITooltips
 			(stack, item) -> BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(EI.ID),
 			(flags, context, stack, item) ->
 			{
-				ILongEnergyStorage energyStorage = stack.getCapability(EnergyApi.ITEM);
+				EnergyHandler energyStorage = stack.getCapability(EnergyApi.ITEM, net.neoforged.neoforge.transfer.access.ItemAccess.forStack(stack));
 				if(energyStorage != null)
 				{
-					long capacity = energyStorage.getCapacity();
+					long capacity = energyStorage.getCapacityAsLong();
 					if(capacity > 0)
 					{
-						return Optional.of(MIText.EnergyStored.text(EU_MAXED_PARSER.parse(new NumberWithMax(energyStorage.getAmount(), capacity))).withStyle(DEFAULT_STYLE));
+						return Optional.of(MIText.EnergyStored.text(EU_MAXED_PARSER.parse(new NumberWithMax(energyStorage.getAmountAsLong(), capacity))).withStyle(DEFAULT_STYLE));
 					}
 				}
 				return Optional.empty();
@@ -284,9 +284,9 @@ public final class EITooltips
 			)
 	);
 	
-	private static final LinkedHashMap<TagKey<Item>, ResourceLocation> ENCHANTMENT_MODULE_MACHINES = Maps.newLinkedHashMap();
+	private static final LinkedHashMap<TagKey<Item>, Identifier> ENCHANTMENT_MODULE_MACHINES = Maps.newLinkedHashMap();
 	
-	public static void registerEnchantmentModuleMachine(TagKey<Item> tag, ResourceLocation machineId)
+	public static void registerEnchantmentModuleMachine(TagKey<Item> tag, Identifier machineId)
 	{
 		Assert.noneNull(tag, machineId);
 		if(ENCHANTMENT_MODULE_MACHINES.put(tag, machineId) != null)

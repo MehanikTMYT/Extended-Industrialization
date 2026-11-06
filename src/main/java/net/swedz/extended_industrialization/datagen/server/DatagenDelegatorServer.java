@@ -29,38 +29,48 @@ import java.util.function.Function;
 
 public final class DatagenDelegatorServer
 {
-	public static void configure(GatherDataEvent event)
+	public static void configure(GatherDataEvent.Client event)
 	{
 		add(event, DataMapDatagenProvider::new);
 		
 		addLootTable(event, BlockLootTableDatagenProvider::new);
 		add(event, LootModifierDatagenProvider::new);
 		
-		add(event, AlloySmelterRecipesServerDatagenProvider::new);
-		add(event, BendingMachineRecipesServerDatagenProvider::new);
-		add(event, CanningMachineRecipesServerDatagenProvider::new);
-		add(event, CommonRecipesServerDatagenProvider::new);
-		add(event, ComposterRecipesServerDatagenProvider::new);
-		add(event, MachineItemRecipesServerDatagenProvider::new);
-		add(event, MaterialRecipesServerDatagenProvider::new);
-		add(event, NPKProcessingRecipesServerDatagenProvider::new);
-		add(event, VanillaCompatRecipesServerDatagenProvider::new);
 		
+		        event.getGenerator().addProvider(true, new net.minecraft.data.recipes.RecipeProvider.Runner(event.getGenerator().getPackOutput(), event.getLookupProvider()) {
+            @Override protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(HolderLookup.Provider registries, net.minecraft.data.recipes.RecipeOutput output) {
+                return new net.minecraft.data.recipes.RecipeProvider(registries, output) {
+                    @Override protected void buildRecipes() {
+                        new AlloySmelterRecipesServerDatagenProvider(registries, output).generate();
+                        new BendingMachineRecipesServerDatagenProvider(registries, output).generate();
+                        new CanningMachineRecipesServerDatagenProvider(registries, output).generate();
+                        new CommonRecipesServerDatagenProvider(registries, output).generate();
+                        new ComposterRecipesServerDatagenProvider(registries, output).generate();
+                        new MachineItemRecipesServerDatagenProvider(registries, output).generate();
+                        new MaterialRecipesServerDatagenProvider(registries, output).generate();
+                        new NPKProcessingRecipesServerDatagenProvider(registries, output).generate();
+                        new VanillaCompatRecipesServerDatagenProvider(registries, output).generate();
+                    }
+                };
+            }
+            @Override public String getName() { return "Extended Industrialization recipes"; }
+        });
+
 		add(event, BlockTagDatagenProvider::new);
 		add(event, DamageTypeTagDatagenProvider::new);
 		add(event, FluidTagDatagenProvider::new);
 		add(event, ItemTagDatagenProvider::new);
 	}
 	
-	private static void add(GatherDataEvent event, Function<GatherDataEvent, DataProvider> providerCreator)
+	private static void add(GatherDataEvent.Client event, Function<GatherDataEvent.Client, DataProvider> providerCreator)
 	{
-		event.getGenerator().addProvider(event.includeServer(), providerCreator.apply(event));
+		event.getGenerator().addProvider(true, providerCreator.apply(event));
 	}
 	
-	private static void addLootTable(GatherDataEvent event, Function<HolderLookup.Provider, LootTableSubProvider> providerCreator)
+	private static void addLootTable(GatherDataEvent.Client event, Function<HolderLookup.Provider, LootTableSubProvider> providerCreator)
 	{
 		event.getGenerator().addProvider(
-				event.includeServer(),
+				true,
 				new LootTableProvider(
 						event.getGenerator().getPackOutput(),
 						Set.of(),

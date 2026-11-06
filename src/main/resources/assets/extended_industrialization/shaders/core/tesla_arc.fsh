@@ -1,10 +1,8 @@
-#version 150
+#version 330
 
-#moj_import <matrix.glsl>
+#moj_import <minecraft:dynamictransforms.glsl>
 
 uniform sampler2D Sampler0;
-
-uniform vec4 ColorModulator;
 
 in vec2 texCoord0;
 in vec4 vertexColor;
@@ -13,10 +11,10 @@ out vec4 fragColor;
 
 void main()
 {
-	vec4 plasmaTexture = texture(Sampler0, texCoord0) * vertexColor;
-	if (plasmaTexture.a > 0)
+	vec4 color = texture(Sampler0, texCoord0) * vertexColor;
+	if (color.a > 0.0)
 	{
-		fragColor = plasmaTexture;
+		fragColor = color;
 	}
 	else
 	{

@@ -1,37 +1,41 @@
 package net.swedz.extended_industrialization.item;
 
 import aztech.modern_industrialization.MIComponents;
-import dev.technici4n.grandpower.api.ISimpleEnergyItem;
+import net.swedz.tesseract.neoforge.compat.mi.api.SimpleEnergyItem;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.swedz.extended_industrialization.EIComponents;
 import net.swedz.tesseract.neoforge.item.ItemHurtHandler;
 
-public class ElectricArmorItem extends ArmorItem implements ISimpleEnergyItem, ItemHurtHandler
+public class ElectricArmorItem extends net.minecraft.world.item.Item implements EIEnergyItem, ItemHurtHandler
 {
+	protected final ArmorType type;
+	private final ItemAttributeModifiers defaultModifiers;
+	public ArmorType getType() { return type; }
 	private final long energyCapacity;
 	private final long damageCostEnergy;
 	
-	public ElectricArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties,
+	public ElectricArmorItem(ArmorMaterial material, ArmorType type, Properties properties,
 							 long energyCapacity, long damageCostEnergy)
 	{
-		super(material, type, properties
+		super(properties.humanoidArmor(material, type)
 				.stacksTo(1)
 				.component(EIComponents.HIDE_BAR, false)
 				.component(MIComponents.ENERGY, 0L));
+		this.type = type;
+		this.defaultModifiers = material.createAttributes(type);
 		this.energyCapacity = energyCapacity;
 		this.damageCostEnergy = damageCostEnergy;
 	}
 	
-	@Override
 	public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack)
 	{
-		return this.getModifiedDefaultAttributeModifiers(stack, this.hasEnergy(stack) ? defaultModifiers.get() : ItemAttributeModifiers.EMPTY);
+		return this.getModifiedDefaultAttributeModifiers(stack, this.hasEnergy(stack) ? defaultModifiers : ItemAttributeModifiers.EMPTY);
 	}
 	
 	public ItemAttributeModifiers getModifiedDefaultAttributeModifiers(ItemStack stack, ItemAttributeModifiers modifiers)

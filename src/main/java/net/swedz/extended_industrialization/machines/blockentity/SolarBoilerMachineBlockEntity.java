@@ -24,7 +24,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.LevelEvent;
@@ -182,7 +182,7 @@ public final class SolarBoilerMachineBlockEntity extends MachineBlockEntity impl
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction() && player != null)
@@ -232,7 +232,7 @@ public final class SolarBoilerMachineBlockEntity extends MachineBlockEntity impl
 					level.playSound(null, worldPosition, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1f, 1f);
 					level.levelEvent(null, LevelEvent.PARTICLES_SCRAPE, worldPosition, 0);
 					
-					result = ItemInteractionResult.CONSUME;
+					result = InteractionResult.CONSUME;
 				}
 			}
 		}

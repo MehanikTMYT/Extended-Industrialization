@@ -2,10 +2,10 @@ package net.swedz.extended_industrialization.item.nanosuit.decoration;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.item.nanosuit.NanoSuitArmorItem;
 
@@ -25,7 +25,7 @@ public interface NanoSuitDecoration
 	
 	boolean isActiveFor(NanoSuitArmorItem item, ItemStack stack);
 	
-	ArmorItem.Type armorType();
+	ArmorType armorType();
 	
 	default EquipmentSlot equipmentSlot()
 	{
@@ -52,7 +52,7 @@ public interface NanoSuitDecoration
 		return null;
 	}
 	
-	record ItemProperty(ResourceLocation id, String model, Supplier<DataComponentType<Boolean>> component)
+	record ItemProperty(Identifier id, String model, Supplier<DataComponentType<Boolean>> component)
 	{
 	}
 }

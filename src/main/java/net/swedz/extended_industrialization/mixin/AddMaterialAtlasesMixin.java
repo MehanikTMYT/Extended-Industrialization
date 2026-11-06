@@ -1,7 +1,7 @@
 package net.swedz.extended_industrialization.mixin;
 
 import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.EI;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +21,7 @@ public class AddMaterialAtlasesMixin
 	@Shadow
 	@Final
 	@Mutable
-	private static Map<ResourceLocation, ResourceLocation> VANILLA_ATLASES;
+	private static Map<Identifier, Identifier> VANILLA_ATLASES;
 	
 	@Inject(
 			method = "<clinit>",

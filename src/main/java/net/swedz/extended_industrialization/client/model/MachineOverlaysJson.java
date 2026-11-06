@@ -3,8 +3,8 @@ package net.swedz.extended_industrialization.client.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 
 import java.lang.reflect.Field;
@@ -15,7 +15,7 @@ public interface MachineOverlaysJson
 	
 	int[] getOutputSpriteIndexes();
 	
-	Gson GSON = new GsonBuilder().registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer()).create();
+	Gson GSON = new GsonBuilder().registerTypeAdapter(Identifier.class, new Identifier.Serializer()).create();
 	
 	static <O extends MachineOverlaysJson> O parse(Class<O> clazz, JsonObject json, MachineOverlaysJson defaultOverlay)
 	{
@@ -42,9 +42,9 @@ public interface MachineOverlaysJson
 		return overlays;
 	}
 	
-	default Material select(ResourceLocation... candidates)
+	default Material select(Identifier... candidates)
 	{
-		for(ResourceLocation id : candidates)
+		for(Identifier id : candidates)
 		{
 			if(id != null)
 			{

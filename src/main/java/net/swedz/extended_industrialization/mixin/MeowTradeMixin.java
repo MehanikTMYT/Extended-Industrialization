@@ -1,6 +1,6 @@
 package net.swedz.extended_industrialization.mixin;
 
-import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.feline.Cat;
 import net.swedz.extended_industrialization.entity.goal.MeowTradeGoal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

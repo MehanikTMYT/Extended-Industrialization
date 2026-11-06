@@ -14,7 +14,7 @@ import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.swedz.extended_industrialization.EI;
@@ -48,7 +48,7 @@ public abstract class FarmerBlockEntity extends BasicMultiblockMachineBlockEntit
 	
 	protected final FarmerComponent farmer;
 	
-	public FarmerBlockEntity(BEP bep, ResourceLocation blockId, long baseEuCost, PlantingMode defaultPlantingMode, boolean canChoosePlantingMode, FarmerProcessRates processRates, ShapeWrapper shapes)
+	public FarmerBlockEntity(BEP bep, Identifier blockId, long baseEuCost, PlantingMode defaultPlantingMode, boolean canChoosePlantingMode, FarmerProcessRates processRates, ShapeWrapper shapes)
 	{
 		super(
 				bep,
@@ -176,7 +176,7 @@ public abstract class FarmerBlockEntity extends BasicMultiblockMachineBlockEntit
 	{
 		super.tick();
 		
-		if(level.isClientSide)
+		if(level.isClientSide())
 		{
 			return;
 		}

@@ -17,7 +17,7 @@ import aztech.modern_industrialization.util.Simulation;
 import com.google.common.collect.Lists;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.EIMachines;
@@ -140,7 +140,7 @@ public final class ElectricFarmerBlockEntity extends FarmerBlockEntity implement
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())

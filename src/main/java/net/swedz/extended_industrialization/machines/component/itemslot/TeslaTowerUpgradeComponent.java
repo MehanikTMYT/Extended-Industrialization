@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization.machines.component.itemslot;
 
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.extended_industrialization.EIItems;
 import net.swedz.tesseract.neoforge.compat.mi.component.SimpleItemStackComponent;
@@ -24,12 +24,12 @@ public class TeslaTowerUpgradeComponent extends SimpleItemStackComponent
 		return this.getStack().is(EIItems.TESLA_INTERDIMENSIONAL_UPGRADE.asItem());
 	}
 	
-	public ItemInteractionResult onUse(MachineBlockEntity blockEntity, Player player, InteractionHand hand)
+	public InteractionResult onUse(MachineBlockEntity blockEntity, Player player, InteractionHand hand)
 	{
 		var stack = player.getItemInHand(hand);
 		if(!stack.is(EIItems.TESLA_INTERDIMENSIONAL_UPGRADE.asItem()))
 		{
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 		}
 		if(this.getStack().isEmpty())
 		{
@@ -39,8 +39,8 @@ public class TeslaTowerUpgradeComponent extends SimpleItemStackComponent
 			{
 				this.setStackServer(blockEntity, copy);
 			}
-			return ItemInteractionResult.sidedSuccess(blockEntity.getLevel().isClientSide());
+			return InteractionResult.SUCCESS;
 		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 }

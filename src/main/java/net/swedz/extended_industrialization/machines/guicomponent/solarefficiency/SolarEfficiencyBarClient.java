@@ -7,9 +7,9 @@ import aztech.modern_industrialization.client.machines.gui.MachineScreen;
 import aztech.modern_industrialization.client.util.RenderHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.swedz.extended_industrialization.EI;
 
 import java.util.List;
@@ -30,13 +30,13 @@ public final class SolarEfficiencyBarClient extends GuiComponentClient<SolarEffi
 	
 	private final class Renderer implements ClientComponentRenderer
 	{
-		private static final ResourceLocation EFFICIENCY_BAR = MI.id("textures/gui/efficiency_bar.png");
-		private static final ResourceLocation SOLAR_STATE    = EI.id("textures/gui/container/solar_state.png");
+		private static final Identifier EFFICIENCY_BAR = MI.id("textures/gui/efficiency_bar.png");
+		private static final Identifier SOLAR_STATE    = EI.id("textures/gui/container/solar_state.png");
 		
 		private final int WIDTH = 100, HEIGHT = 2;
 		
 		@Override
-		public void renderBackground(GuiGraphics guiGraphics, int x, int y)
+		public void extractBackground(GuiGraphicsExtractor guiGraphics, int x, int y)
 		{
 			guiGraphics.blit(
 					EFFICIENCY_BAR,
@@ -56,7 +56,7 @@ public final class SolarEfficiencyBarClient extends GuiComponentClient<SolarEffi
 		}
 		
 		@Override
-		public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int x, int y, int cursorX, int cursorY)
+		public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
 		{
 			if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), WIDTH, HEIGHT, cursorX - x, cursorY - y))
 			{

@@ -1,6 +1,6 @@
-#version 150
+#version 330
 
-#moj_import <fog.glsl>
+#moj_import <minecraft:dynamictransforms.glsl>
 
 uniform sampler2D Sampler0;
 
@@ -16,6 +16,6 @@ void main()
 	{
 		discard;
 	}
-	vec3 color = textureColor.rgb * vertexColor.rgb;
-	fragColor = vec4(color, textureColor.a);
+	vec3 color = textureColor.rgb * vertexColor.rgb * ColorModulator.rgb;
+	fragColor = vec4(color, textureColor.a) * ColorModulator.a;
 }

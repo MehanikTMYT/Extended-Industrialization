@@ -25,9 +25,9 @@ import aztech.modern_industrialization.util.Tickable;
 import com.google.common.collect.Lists;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -69,7 +69,7 @@ public final class SolarPanelMachineBlockEntity extends MachineBlockEntity imple
 	private final SolarSunlightComponent  sunlight;
 	private final SolarGeneratorComponent generator;
 	
-	public SolarPanelMachineBlockEntity(BEP bep, ResourceLocation blockId, CableTier tier)
+	public SolarPanelMachineBlockEntity(BEP bep, Identifier blockId, CableTier tier)
 	{
 		super(
 				bep,
@@ -151,7 +151,7 @@ public final class SolarPanelMachineBlockEntity extends MachineBlockEntity imple
 		var face = MachineOverlay.findHitSide(hitResult);
 		if(face != Direction.UP && orientation.useWrench(player, hand, face))
 		{
-			level.blockUpdated(getBlockPos(), Blocks.AIR);
+			level.updateNeighborsAt(getBlockPos(), Blocks.AIR, null);
 			this.setChanged();
 			if(!level.isClientSide())
 			{
@@ -179,7 +179,7 @@ public final class SolarPanelMachineBlockEntity extends MachineBlockEntity imple
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())

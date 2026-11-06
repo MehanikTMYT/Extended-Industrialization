@@ -5,10 +5,11 @@ import aztech.modern_industrialization.materials.MaterialRegistry;
 import com.google.common.collect.Lists;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.swedz.extended_industrialization.EIMachines;
 import net.swedz.tesseract.neoforge.helper.TagHelper;
@@ -19,41 +20,33 @@ import static aztech.modern_industrialization.materials.part.MIParts.*;
 
 public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServerDatagenProvider
 {
-	public AlloySmelterRecipesServerDatagenProvider(GatherDataEvent event)
+	public AlloySmelterRecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event);
+		super(registries, output);
 	}
 	
 	private static Ingredient combine(Ingredient... ingredients)
 	{
-		int nonNullIngredientCount = 0;
-		Ingredient lastNonNullIngredient = null;
+		List<Ingredient> nonNullIngredients = Lists.newArrayList();
 		for(var ingredient : ingredients)
 		{
 			if(ingredient != null)
 			{
-				nonNullIngredientCount++;
-				lastNonNullIngredient = ingredient;
+				nonNullIngredients.add(ingredient);
 			}
 		}
-		if(nonNullIngredientCount == 1)
+		if(nonNullIngredients.isEmpty())
 		{
-			return lastNonNullIngredient;
+			throw new IllegalArgumentException("Cannot combine zero ingredients");
 		}
-		
-		List<Ingredient.Value> values = Lists.newArrayList();
-		for(var ingredient : ingredients)
+		if(nonNullIngredients.size() == 1)
 		{
-			if(ingredient == null)
-			{
-				continue;
-			}
-			values.addAll(List.of(ingredient.getValues()));
+			return nonNullIngredients.getFirst();
 		}
-		return Ingredient.fromValues(values.stream());
+		return CompoundIngredient.of(nonNullIngredients.toArray(Ingredient[]::new));
 	}
 	
-	private static void addAlloySmelterRecipes(
+	private void addAlloySmelterRecipes(
 			String name,
 			Ingredient tinyDustA,
 			Ingredient nuggetA,
@@ -72,6 +65,11 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 			RecipeOutput output
 	)
 	{
+		if(resultIngot == null)
+		{
+			// Result item does not exist (e.g. Create not installed) - nothing to generate
+			return;
+		}
 		var path = "materials/%s/%s".formatted(name, EIMachines.RecipeTypes.ALLOY_SMELTER.getPath());
 		addMachineRecipe(
 				path,
@@ -80,9 +78,9 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 				4,
 				10 * 20,
 				(r) -> r
-						.addItemInput(combine(tinyDustA, nuggetA), amountA * 9, 1)
-						.addItemInput(combine(tinyDustB, nuggetB), amountB * 9, 1)
-						.addItemOutput(resultIngot, amountResult),
+						.itemIn(combine(tinyDustA, nuggetA), amountA * 9, 1)
+						.itemIn(combine(tinyDustB, nuggetB), amountB * 9, 1)
+						.itemOut(resultIngot, amountResult),
 				output
 		);
 		addMachineRecipe(
@@ -92,9 +90,9 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 				4,
 				10 * 20,
 				(r) -> r
-						.addItemInput(combine(dustA, ingotA), amountA, 1)
-						.addItemInput(combine(dustB, ingotB), amountB, 1)
-						.addItemOutput(resultIngot, amountResult),
+						.itemIn(combine(dustA, ingotA), amountA, 1)
+						.itemIn(combine(dustB, ingotB), amountB, 1)
+						.itemOut(resultIngot, amountResult),
 				output
 		);
 		addMachineRecipe(
@@ -104,28 +102,28 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 				4,
 				10 * 20 * 9,
 				(r) -> r
-						.addItemInput(blockA, amountA, 1)
-						.addItemInput(blockB, amountB, 1)
-						.addItemOutput(resultIngot, amountResult * 9),
+						.itemIn(blockA, amountA, 1)
+						.itemIn(blockB, amountB, 1)
+						.itemOut(resultIngot, amountResult * 9),
 				output
 		);
 	}
 	
-	private static void addAlloySmelterRecipes(Material componentA, int amountA, Material componentB, int amountB, Material result, int amountResult, RecipeOutput output)
+	private void addAlloySmelterRecipes(Material componentA, int amountA, Material componentB, int amountB, Material result, int amountResult, RecipeOutput output)
 	{
 		addAlloySmelterRecipes(
 				result.name,
-				componentA.getPart(TINY_DUST).getTaggedIngredient(),
-				componentA.getPart(NUGGET).getTaggedIngredient(),
-				componentA.getPart(DUST).getTaggedIngredient(),
-				componentA.getPart(INGOT).getTaggedIngredient(),
-				componentA.getPart(BLOCK).getTaggedIngredient(),
+				componentA.getPart(TINY_DUST).asIngredient(items),
+				componentA.getPart(NUGGET).asIngredient(items),
+				componentA.getPart(DUST).asIngredient(items),
+				componentA.getPart(INGOT).asIngredient(items),
+				componentA.getPart(BLOCK).asIngredient(items),
 				amountA,
-				componentB.getPart(TINY_DUST).getTaggedIngredient(),
-				componentB.getPart(NUGGET).getTaggedIngredient(),
-				componentB.getPart(DUST).getTaggedIngredient(),
-				componentB.getPart(INGOT).getTaggedIngredient(),
-				componentB.getPart(BLOCK).getTaggedIngredient(),
+				componentB.getPart(TINY_DUST).asIngredient(items),
+				componentB.getPart(NUGGET).asIngredient(items),
+				componentB.getPart(DUST).asIngredient(items),
+				componentB.getPart(INGOT).asIngredient(items),
+				componentB.getPart(BLOCK).asIngredient(items),
 				amountB,
 				result.getPart(INGOT),
 				amountResult,
@@ -169,19 +167,19 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 		
 		addAlloySmelterRecipes(
 				"brass",
-				Ingredient.of(TagHelper.itemCommon("tiny_dusts/copper")),
-				Ingredient.of(TagHelper.itemCommon("nuggets/copper")),
-				Ingredient.of(TagHelper.itemCommon("dusts/copper")),
-				Ingredient.of(TagHelper.itemCommon("ingots/copper")),
-				Ingredient.of(TagHelper.itemCommon("storage_blocks/copper")),
+				tag(TagHelper.itemCommon("tiny_dusts/copper")),
+				tag(TagHelper.itemCommon("nuggets/copper")),
+				tag(TagHelper.itemCommon("dusts/copper")),
+				tag(TagHelper.itemCommon("ingots/copper")),
+				tag(TagHelper.itemCommon("storage_blocks/copper")),
 				1,
 				null,
-				Ingredient.of(TagHelper.itemCommon("nuggets/zinc")),
+				tag(TagHelper.itemCommon("nuggets/zinc")),
 				null,
-				Ingredient.of(TagHelper.itemCommon("ingots/zinc")),
-				Ingredient.of(TagHelper.itemCommon("storage_blocks/zinc")),
+				tag(TagHelper.itemCommon("ingots/zinc")),
+				tag(TagHelper.itemCommon("storage_blocks/zinc")),
 				1,
-				BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("create", "brass_ingot")),
+				BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("create", "brass_ingot")).orElse(null),
 				2,
 				output.withConditions(new ModLoadedCondition("create"))
 		);

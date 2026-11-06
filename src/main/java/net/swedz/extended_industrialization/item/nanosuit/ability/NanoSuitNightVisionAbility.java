@@ -6,7 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.item.nanosuit.NanoSuitArmorItem;
@@ -19,9 +19,9 @@ public final class NanoSuitNightVisionAbility implements NanoSuitAbility
 	private static final long ENERGY_COST = 4;
 	
 	@Override
-	public ArmorItem.Type armorType()
+	public ArmorType armorType()
 	{
-		return ArmorItem.Type.HELMET;
+		return ArmorType.HELMET;
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public final class NanoSuitNightVisionAbility implements NanoSuitAbility
 	@Override
 	public void onActivationChange(NanoSuitArmorItem item, Player player, ItemStack stack, boolean activated)
 	{
-		player.displayClientMessage(activated ? EI.text().nanoSuitNightVisionToggledOn() : EI.text().nanoSuitNightVisionToggledOff(), true);
+		player.sendOverlayMessage(activated ? EI.text().nanoSuitNightVisionToggledOn() : EI.text().nanoSuitNightVisionToggledOff());
 	}
 	
 	private boolean hasNightVision(LivingEntity entity)

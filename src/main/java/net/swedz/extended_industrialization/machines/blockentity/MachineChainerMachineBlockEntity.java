@@ -17,7 +17,7 @@ import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Tickable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -227,7 +227,7 @@ public final class MachineChainerMachineBlockEntity extends MachineBlockEntity i
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())
@@ -246,11 +246,11 @@ public final class MachineChainerMachineBlockEntity extends MachineBlockEntity i
 		MICapabilities.onEvent((event) ->
 		{
 			event.registerBlockEntity(
-					Capabilities.ItemHandler.BLOCK, bet,
+					Capabilities.Item.BLOCK, bet,
 					(be, direction) -> ((MachineChainerMachineBlockEntity) be).getChainerComponent().itemHandler()
 			);
 			event.registerBlockEntity(
-					Capabilities.FluidHandler.BLOCK, bet,
+					Capabilities.Fluid.BLOCK, bet,
 					(be, direction) -> ((MachineChainerMachineBlockEntity) be).getChainerComponent().fluidHandler()
 			);
 			event.registerBlockEntity(

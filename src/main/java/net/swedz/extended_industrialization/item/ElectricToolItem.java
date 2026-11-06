@@ -7,7 +7,7 @@ import aztech.modern_industrialization.items.DynamicToolItem;
 import aztech.modern_industrialization.items.tools.QuantumSword;
 import aztech.modern_industrialization.util.GeometryHelper;
 import com.google.common.collect.Lists;
-import dev.technici4n.grandpower.api.ISimpleEnergyItem;
+import net.swedz.tesseract.neoforge.compat.mi.api.SimpleEnergyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -23,7 +23,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -39,7 +39,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
@@ -94,7 +94,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @EventBusSubscriber(modid = EI.ID)
-public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEnergyItem, DynamicDyedItem, ToggleableItem
+public class ElectricToolItem extends Item implements DynamicToolItem, EIEnergyItem, DynamicDyedItem, ToggleableItem
 {
 	public static final  int SPEED_MIN        = 1;
 	public static final  int SPEED_MAX        = 10;
@@ -111,7 +111,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				true,
 				EI.text()::electricToolHelp2FortuneSilkTouch,
 				Stream.of(
-						ItemAbilities.DEFAULT_PICKAXE_ACTIONS,
+						Set.<ItemAbility>of(),
 						ItemAbilities.DEFAULT_SHOVEL_ACTIONS
 				).flatMap(Set::stream).toList(),
 				List.of(
@@ -121,7 +121,8 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				() -> new Tool(
 						List.of(),
 						1,
-						1
+						1,
+						true
 				)
 		),
 		CHAINSAW(
@@ -141,12 +142,13 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				() -> new Tool(
 						List.of(
 								Tool.Rule.minesAndDrops(
-										List.of(Blocks.COBWEB),
+										net.minecraft.core.HolderSet.direct(Blocks.COBWEB.builtInRegistryHolder()),
 										1
 								)
 						),
 						1,
-						1
+						1,
+						true
 				)
 		),
 		SABER(
@@ -156,7 +158,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				false,
 				EI.text()::electricToolHelp2LootingBeheading,
 				Stream.of(
-						ItemAbilities.DEFAULT_SWORD_ACTIONS
+						Set.of(ItemAbilities.SWORD_SWEEP)
 				).flatMap(Set::stream).toList(),
 				List.of(
 						Mode.LOOTING,
@@ -165,12 +167,13 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				() -> new Tool(
 						List.of(
 								Tool.Rule.minesAndDrops(
-										List.of(Blocks.COBWEB),
+										net.minecraft.core.HolderSet.direct(Blocks.COBWEB.builtInRegistryHolder()),
 										1
 								)
 						),
 						1,
-						2
+						2,
+						true
 				)
 		),
 		ULTIMATE(
@@ -180,11 +183,11 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				true,
 				EI.text()::electricToolHelp2FortuneLooting,
 				Stream.of(
-						ItemAbilities.DEFAULT_PICKAXE_ACTIONS,
+						Set.<ItemAbility>of(),
 						ItemAbilities.DEFAULT_SHOVEL_ACTIONS,
 						ItemAbilities.DEFAULT_AXE_ACTIONS,
 						ItemAbilities.DEFAULT_SHEARS_ACTIONS,
-						ItemAbilities.DEFAULT_SWORD_ACTIONS
+						Set.of(ItemAbilities.SWORD_SWEEP)
 				).flatMap(Set::stream).toList(),
 				List.of(
 						Mode.SILK_TOUCH,
@@ -193,12 +196,13 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				() -> new Tool(
 						List.of(
 								Tool.Rule.minesAndDrops(
-										List.of(Blocks.COBWEB),
+										net.minecraft.core.HolderSet.direct(Blocks.COBWEB.builtInRegistryHolder()),
 										1
 								)
 						),
 						1,
-						1
+						1,
+						true
 				)
 		);
 		
@@ -395,9 +399,9 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 		return quantum;
 	}
 	
-	public static Mode getMode(ItemStack stack)
+	public static Mode getMode(net.minecraft.world.item.ItemInstance stack)
 	{
-		if(!(stack.getItem() instanceof ElectricToolItem item))
+		if(!(stack.typeHolder().value() instanceof ElectricToolItem item))
 		{
 			throw new IllegalArgumentException("Cannot get tool mode for a non electric tool item");
 		}
@@ -455,7 +459,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 			
 			if(!player.level().isClientSide())
 			{
-				player.displayClientMessage(activated ? EI.text().electricTool3By3ToggledOn() : EI.text().electricTool3By3ToggledOff(), true);
+				player.sendOverlayMessage(activated ? EI.text().electricTool3By3ToggledOn() : EI.text().electricTool3By3ToggledOff());
 			}
 		}
 	}
@@ -478,12 +482,6 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 			return true;
 		}
 		return super.overrideOtherStackedOnMe(stack, other, slot, action, player, access);
-	}
-	
-	@Override
-	public boolean isEnchantable(ItemStack stack)
-	{
-		return false;
 	}
 	
 	private static MergedDrops MERGED_DROPS = null;
@@ -590,7 +588,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 							(ServerPlayer) player,
 							minedPos, minedState
 					);
-					if(!event.isCanceled() && minedBlock.onDestroyedByPlayer(minedState, level, minedPos, player, true, minedState.getFluidState()))
+					if(!event.isCanceled() && minedBlock.onDestroyedByPlayer(minedState, level, minedPos, player, stack, true, minedState.getFluidState()))
 					{
 						minedBlock.destroy(level, minedPos, minedState);
 						Block.dropResources(minedState, level, minedPos, minedBlockEntity, miner, stack);
@@ -700,16 +698,16 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	}
 	
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
 		this.tryUseEnergy(stack, ENERGY_COST);
-		return true;
+		return;
 	}
 	
 	private boolean isValidForBlock(ItemStack stack, BlockState state)
 	{
 		return this.isSupportedBlock(stack, state) &&
-			   !state.is(Tiers.NETHERITE.getIncorrectBlocksForDrops());
+			   !state.is(ToolMaterial.NETHERITE.incorrectBlocksForDrops());
 	}
 	
 	private boolean hasEnergy(ItemStack stack)
@@ -855,21 +853,21 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flag)
 	{
 		if(toolType.hasAdjustableSpeed())
 		{
-			tooltip.add(EI.text().toolMiningSpeed((float) ElectricToolItem.getToolSpeed(stack) / ElectricToolItem.SPEED_MAX));
+			tooltip.accept(EI.text().toolMiningSpeed((float) ElectricToolItem.getToolSpeed(stack) / ElectricToolItem.SPEED_MAX));
 		}
 		
 		if(toolType.canDo3by3())
 		{
-			tooltip.add(EI.text().toolMiningArea(this.isActivated(stack) ? EI.text().toolMiningArea3By3() : EI.text().toolMiningArea1By1()));
+			tooltip.accept(EI.text().toolMiningArea(this.isActivated(stack) ? EI.text().toolMiningArea3By3() : EI.text().toolMiningArea1By1()));
 		}
 		
 		if(context.registries() != null)
 		{
-			tooltip.add(EI.text().toolMode(getMode(stack)));
+			tooltip.accept(EI.text().toolMode(getMode(stack)));
 		}
 	}
 	
@@ -895,7 +893,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	}
 	
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
+	public InteractionResult use(Level level, Player player, InteractionHand hand)
 	{
 		var stack = player.getItemInHand(hand);
 		if(hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown())
@@ -904,9 +902,9 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 			setMode(stack, mode);
 			if(!level.isClientSide())
 			{
-				player.displayClientMessage(mode.text().switched(), true);
+				player.sendOverlayMessage(mode.text().switched());
 			}
-			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+			return InteractionResult.SUCCESS;
 		}
 		else if(toolType == Type.SABER && this.hasEnergy(stack))
 		{
@@ -915,9 +913,9 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 			{
 				this.tryUseEnergy(stack, ENERGY_COST * 4);
 				this.sweep(level, player, stack);
-				player.getCooldowns().addCooldown(this, 20);
+				player.getCooldowns().addCooldown(stack, 20);
 			}
-			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 		return super.use(level, player, hand);
 	}
@@ -938,12 +936,12 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				if(result != null)
 				{
 					level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1, 1);
-					if(!level.isClientSide)
+					if(!level.isClientSide())
 					{
 						level.setBlock(pos, result, Block.UPDATE_ALL_IMMEDIATE);
 						this.tryUseEnergy(stack, ENERGY_COST);
 					}
-					return InteractionResult.sidedSuccess(level.isClientSide);
+					return InteractionResult.SUCCESS;
 				}
 			}
 			if(stack.is(ItemTags.SHOVELS))
@@ -952,12 +950,12 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 				if(result != null)
 				{
 					level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1, 1);
-					if(!level.isClientSide)
+					if(!level.isClientSide())
 					{
 						level.setBlock(pos, result, Block.UPDATE_ALL_IMMEDIATE);
 						this.tryUseEnergy(stack, ENERGY_COST);
 					}
-					return InteractionResult.sidedSuccess(level.isClientSide);
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
@@ -972,11 +970,11 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 		if(this.hasEnergy(stack) &&
 		   stack.is(Tags.Items.TOOLS_SHEAR) && interactionTarget instanceof IShearable shearable)
 		{
-			if(!level.isClientSide && shearable.isShearable(player, stack, level, blockPos))
+			if(!level.isClientSide() && shearable.isShearable(player, stack, level, blockPos))
 			{
 				this.tryUseEnergy(stack, ENERGY_COST);
 				shearable.onSheared(player, stack, level, blockPos)
-						.forEach((drop) -> shearable.spawnShearedDrop(level, blockPos, drop));
+						.forEach((drop) -> shearable.spawnShearedDrop((net.minecraft.server.level.ServerLevel)level, blockPos, drop));
 				interactionTarget.gameEvent(GameEvent.SHEAR, player);
 				return InteractionResult.SUCCESS;
 			}
@@ -989,9 +987,9 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	}
 	
 	@Override
-	public int getEnchantmentLevel(ItemStack stack, Holder<Enchantment> enchantment)
+	public int getEnchantmentLevel(net.minecraft.world.item.ItemInstance stack, Holder<Enchantment> enchantment)
 	{
-		return this.getAllEnchantments(stack, enchantment.unwrapLookup()).getLevel(enchantment);
+		return this.getAllEnchantmentsFromInstance(stack, enchantment.unwrapLookup()).getLevel(enchantment);
 	}
 	
 	private static void includeEnchantment(HolderLookup.RegistryLookup<Enchantment> lookup,
@@ -1004,7 +1002,11 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	@Override
 	public ItemEnchantments getAllEnchantments(ItemStack stack, HolderLookup.RegistryLookup<Enchantment> lookup)
 	{
-		var enchantments = new ItemEnchantments.Mutable(super.getAllEnchantments(stack, lookup));
+        return getAllEnchantmentsFromInstance(stack, lookup);
+    }
+    private ItemEnchantments getAllEnchantmentsFromInstance(net.minecraft.world.item.ItemInstance stack, HolderLookup.RegistryLookup<Enchantment> lookup) {
+
+		var enchantments = new ItemEnchantments.Mutable(stack.getTagEnchantments());
 		if(this.hasEnergy(stack))
 		{
 			for(var enchantment : getMode(stack).enchantments())
@@ -1028,13 +1030,13 @@ public class ElectricToolItem extends Item implements DynamicToolItem, ISimpleEn
 	}
 	
 	@Override
-	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player)
+	public boolean canAttackBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player)
 	{
 		return toolType != Type.SABER || !player.isCreative();
 	}
 	
 	@Override
-	public boolean canPerformAction(ItemStack stack, ItemAbility ability)
+	public boolean canPerformAction(net.minecraft.world.item.ItemInstance stack, ItemAbility ability)
 	{
 		return toolType.canPerformAction(ability);
 	}

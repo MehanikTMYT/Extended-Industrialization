@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.machines.component.tesla.network.receiver;
 
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.swedz.extended_industrialization.port.EnergyTransfers;
+
 import aztech.modern_industrialization.api.energy.CableTier;
 import net.swedz.extended_industrialization.machines.component.tesla.network.TeslaNetwork;
 import net.swedz.extended_industrialization.machines.component.tesla.network.TeslaNetworkPart;
@@ -52,7 +55,7 @@ public interface TeslaReceiver extends TeslaNetworkPart, Comparable<TeslaReceive
 		return TeslaReceiverState.SUCCESS;
 	}
 	
-	long receiveEnergy(long maxReceive, boolean simulate);
+	int receiveEnergy(int maxReceive, TransactionContext transaction);
 	
 	long getStoredEnergy();
 	
@@ -105,9 +108,9 @@ public interface TeslaReceiver extends TeslaNetworkPart, Comparable<TeslaReceive
 		}
 		
 		@Override
-		default long receiveEnergy(long maxReceive, boolean simulate)
+		default int receiveEnergy(int maxReceive, TransactionContext transaction)
 		{
-			return this.getDelegateReceiver().receiveEnergy(maxReceive, simulate);
+			return this.getDelegateReceiver().receiveEnergy(maxReceive, transaction);
 		}
 		
 		@Override

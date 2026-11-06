@@ -1,53 +1,46 @@
 package net.swedz.extended_industrialization.client.model.tesla;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockElement;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.ModelDebugName;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.cuboid.CuboidModelElement;
+import net.minecraft.client.resources.model.geometry.UnbakedGeometry;
+import net.minecraft.client.resources.model.sprite.TextureSlots;
+import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.model.IModelBuilder;
-import net.neoforged.neoforge.client.model.QuadTransformers;
-import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
-import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
-import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
-import net.neoforged.neoforge.client.model.geometry.UnbakedGeometryHelper;
+import net.neoforged.neoforge.client.model.UnbakedElementsHelper;
+import net.neoforged.neoforge.client.model.UnbakedModelLoader;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.tesseract.api.Assert;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.Function;
 
-public final class TeslaUnbakedModel implements IUnbakedGeometry<TeslaUnbakedModel>
+public final class TeslaUnbakedModel implements UnbakedModel
 {
-	public static final ResourceLocation LOADER_ID                = EI.id("tesla");
-	public static final IGeometryLoader<TeslaUnbakedModel> LOADER = (json, context) ->
+	public static final Identifier                              LOADER_ID = EI.id("tesla");
+	public static final UnbakedModelLoader<TeslaUnbakedModel>   LOADER    = (json, context) ->
 	{
 		Plasma plasma = json.has("plasma") ? Plasma.deserialize(json.getAsJsonObject("plasma"), context) : null;
 		Arcs arcs = json.has("arcs") ? Arcs.deserialize(json.getAsJsonObject("arcs"), context) : null;
-		return new TeslaUnbakedModel(plasma, arcs);
+		TextureSlots.Data textures = json.has("textures") ? BlockModel.parseTextureMap(json.getAsJsonObject("textures")) : TextureSlots.Data.EMPTY;
+		return new TeslaUnbakedModel(plasma, arcs, textures);
 	};
 	
 	public record Plasma(
-			List<BlockElement> elements,
+			List<CuboidModelElement> elements,
 			Vec3 offset,
 			float scale, float speed, float textureScale
 	)
@@ -55,10 +48,10 @@ public final class TeslaUnbakedModel implements IUnbakedGeometry<TeslaUnbakedMod
 		private static Plasma deserialize(JsonObject json, JsonDeserializationContext context)
 		{
 			Assert.that(json.has("elements"), "A tesla model's plasma must have an \"elements\" member.", JsonParseException::new);
-			List<BlockElement> elements = Lists.newArrayList();
+			List<CuboidModelElement> elements = Lists.newArrayList();
 			for(JsonElement element : GsonHelper.getAsJsonArray(json, "elements"))
 			{
-				elements.add(context.deserialize(element, BlockElement.class));
+				elements.add(context.deserialize(element, CuboidModelElement.class));
 			}
 			
 			Assert.that(json.has("offset"), "A tesla model's plasma must have an \"offset\" member.", JsonParseException::new);
@@ -264,81 +257,51 @@ public final class TeslaUnbakedModel implements IUnbakedGeometry<TeslaUnbakedMod
 		return new AABB(min, max);
 	}
 	
-	private final Plasma plasma;
-	private final Arcs   arcs;
+	private final Plasma           plasma;
+	private final Arcs             arcs;
+	private final TextureSlots.Data textures;
 	
-	private TeslaUnbakedModel(Plasma plasma, Arcs arcs)
+	private TeslaUnbakedModel(Plasma plasma, Arcs arcs, TextureSlots.Data textures)
 	{
 		this.plasma = plasma;
 		this.arcs = arcs;
-	}
-	
-	private void addQuads(IGeometryBakingContext context, IModelBuilder<?> modelBuilder, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState)
-	{
-		var postTransform = QuadTransformers.empty();
-		var rootTransform = context.getRootTransform();
-		if(!rootTransform.isIdentity())
-		{
-			postTransform = UnbakedGeometryHelper.applyRootTransform(modelState, rootTransform);
-		}
-		
-		if(plasma != null)
-		{
-			for(var element : plasma.elements())
-			{
-				for(var direction : element.faces.keySet())
-				{
-					var face = element.faces.get(direction);
-					var sprite = spriteGetter.apply(context.getMaterial(face.texture()));
-					var quad = BlockModel.bakeFace(element, face, sprite, direction, modelState);
-					postTransform.processInPlace(quad);
-					
-					if(face.cullForDirection() == null)
-					{
-						modelBuilder.addUnculledFace(quad);
-					}
-					else
-					{
-						modelBuilder.addCulledFace(modelState.getRotation().rotateTransform(face.cullForDirection()), quad);
-					}
-				}
-			}
-		}
+		this.textures = textures;
 	}
 	
 	@Override
-	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter,
-						   ModelState modelState, ItemOverrides overrides)
+	public TextureSlots.Data textureSlots()
 	{
-		List<BakedQuad> unculledFaces = Lists.newArrayList();
-		Map<Direction, List<BakedQuad>> culledFaces = Maps.newEnumMap(Direction.class);
-		for(var direction : Direction.values())
+		return textures;
+	}
+	
+	@Override
+	public UnbakedGeometry geometry()
+	{
+		return (textureSlots, baker, modelState, name) ->
 		{
-			culledFaces.put(direction, Lists.newArrayList());
-		}
-		IModelBuilder<?> builder = new IModelBuilder()
-		{
-			@Override
-			public IModelBuilder addCulledFace(Direction facing, BakedQuad quad)
+			QuadCollection.Builder builder = new QuadCollection.Builder();
+			if(plasma != null)
 			{
-				culledFaces.get(facing).add(quad);
-				return this;
+				var quads = UnbakedElementsHelper.bakeElements(
+						baker, plasma.elements(),
+						(reference) -> resolveMaterial(textureSlots, baker, reference, name),
+						modelState
+				);
+				for(var quad : quads)
+				{
+					builder.addUnculledFace(quad);
+				}
 			}
-			
-			@Override
-			public IModelBuilder addUnculledFace(BakedQuad quad)
-			{
-				unculledFaces.add(quad);
-				return this;
-			}
-			
-			@Override
-			public BakedModel build()
-			{
-				return new TeslaBakedModel(unculledFaces, culledFaces, plasma, arcs);
-			}
+			var collection = builder.build();
+			TeslaClientModels.register(Identifier.parse(name.debugName()), new TeslaBakedModel(collection, plasma, arcs));
+			return collection;
 		};
-		this.addQuads(context, builder, baker, spriteGetter, modelState);
-		return builder.build();
+	}
+	
+	private static net.minecraft.client.resources.model.sprite.Material.Baked resolveMaterial(TextureSlots textureSlots, ModelBaker baker, String reference, ModelDebugName name)
+	{
+		var material = textureSlots.getMaterial(reference);
+		Assert.notNull(material, "Missing texture reference '%s' for tesla model '%s'".formatted(reference, name.debugName()));
+		return baker.materials().get(material, name);
 	}
 }

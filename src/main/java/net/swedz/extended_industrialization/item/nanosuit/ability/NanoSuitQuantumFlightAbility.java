@@ -3,7 +3,7 @@ package net.swedz.extended_industrialization.item.nanosuit.ability;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.neoforge.common.NeoForgeMod;
@@ -16,9 +16,9 @@ import java.util.Optional;
 public final class NanoSuitQuantumFlightAbility implements NanoSuitAbility
 {
 	@Override
-	public ArmorItem.Type armorType()
+	public ArmorType armorType()
 	{
-		return ArmorItem.Type.CHESTPLATE;
+		return ArmorType.CHESTPLATE;
 	}
 	
 	@Override

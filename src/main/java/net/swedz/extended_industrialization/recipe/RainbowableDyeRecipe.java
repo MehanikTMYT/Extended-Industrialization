@@ -1,20 +1,24 @@
 package net.swedz.extended_industrialization.recipe;
 
 import com.google.common.collect.Lists;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.swedz.extended_industrialization.EIComponents;
-import net.swedz.extended_industrialization.EIRecipeTypes;
 import net.swedz.extended_industrialization.EITags;
 import net.swedz.extended_industrialization.component.RainbowDataComponent;
 
@@ -23,9 +27,12 @@ import java.util.Optional;
 
 public final class RainbowableDyeRecipe extends CustomRecipe
 {
-	public RainbowableDyeRecipe(CraftingBookCategory category)
+	public static final MapCodec<RainbowableDyeRecipe> MAP_CODEC = MapCodec.unit(RainbowableDyeRecipe::new);
+	public static final StreamCodec<RegistryFriendlyByteBuf, RainbowableDyeRecipe> STREAM_CODEC = StreamCodec.unit(RainbowableDyeRecipe::new);
+	public static final RecipeSerializer<RainbowableDyeRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+	
+	public RainbowableDyeRecipe()
 	{
-		super(category);
 	}
 	
 	private Optional<Match> find(CraftingInput input)
@@ -38,7 +45,7 @@ public final class RainbowableDyeRecipe extends CustomRecipe
 			var item = input.getItem(i);
 			if(!item.isEmpty())
 			{
-				if(item.is(ItemTags.DYEABLE) && item.is(EITags.Items.RAINBOW_DYEABLE))
+				if(item.is(EITags.Items.RAINBOW_DYEABLE))
 				{
 					if(!dyeableItem.isEmpty())
 					{
@@ -67,7 +74,7 @@ public final class RainbowableDyeRecipe extends CustomRecipe
 	}
 	
 	@Override
-	public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries)
+	public ItemStack assemble(CraftingInput input)
 	{
 		return this.find(input).map(Match::assemble).orElse(ItemStack.EMPTY);
 	}
@@ -79,9 +86,9 @@ public final class RainbowableDyeRecipe extends CustomRecipe
 	}
 	
 	@Override
-	public RecipeSerializer<?> getSerializer()
+	public RecipeSerializer<? extends CustomRecipe> getSerializer()
 	{
-		return EIRecipeTypes.RAINBOWABLE_DYE_SERIALIZER.get();
+		return SERIALIZER;
 	}
 	
 	private record Match(ItemStack dyeableItem, List<DyeItem> dyeItems)
@@ -114,7 +121,7 @@ public final class RainbowableDyeRecipe extends CustomRecipe
 				}
 				else
 				{
-					return DyedItemColor.applyDyes(dyeableItem, dyeItems);
+					return DyedItemColor.applyDyes(dyeableItem, dyeItems.stream().map((dye) -> (DyeColor) new ItemStack(dye).get(DataComponents.DYE)).toList());
 				}
 			}
 			else

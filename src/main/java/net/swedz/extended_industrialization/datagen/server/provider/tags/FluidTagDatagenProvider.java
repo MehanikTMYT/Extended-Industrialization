@@ -13,9 +13,9 @@ import java.util.Comparator;
 
 public final class FluidTagDatagenProvider extends FluidTagsProvider
 {
-	public FluidTagDatagenProvider(GatherDataEvent event)
+	public FluidTagDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID);
 	}
 	
 	@Override

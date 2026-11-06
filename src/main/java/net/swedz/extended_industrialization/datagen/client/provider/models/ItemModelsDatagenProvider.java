@@ -8,9 +8,9 @@ import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
 
 public final class ItemModelsDatagenProvider extends ItemModelProvider
 {
-	public ItemModelsDatagenProvider(GatherDataEvent event)
+	public ItemModelsDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), EI.ID);
 	}
 	
 	@Override

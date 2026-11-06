@@ -6,7 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.material.Fluid;
@@ -221,7 +221,7 @@ public interface EIText
 	@LangKey(text = "Can be used in the %s.")
 	@WithStyle("tooltip")
 	MutableComponent enchantmentModuleMachine(
-			@Parsed("block") @WithStyle("highlighted") ResourceLocation blockId
+			@Parsed("block") @WithStyle("highlighted") Identifier blockId
 	);
 	
 	record EnchantmentWithLevelField(

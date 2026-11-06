@@ -2,8 +2,8 @@ package net.swedz.extended_industrialization.datagen.server.provider.tags;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -18,11 +18,11 @@ import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
 import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
 
-public final class ItemTagDatagenProvider extends ItemTagsProvider
+public final class ItemTagDatagenProvider extends IntrinsicHolderTagsProvider<Item>
 {
-	public ItemTagDatagenProvider(GatherDataEvent event)
+	public ItemTagDatagenProvider(GatherDataEvent.Client event)
 	{
-		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), CompletableFuture.completedFuture(TagLookup.empty()), EI.ID, event.getExistingFileHelper());
+		super(event.getGenerator().getPackOutput(), Registries.ITEM, event.getLookupProvider(), item -> item.builtInRegistryHolder().key(), EI.ID);
 	}
 	
 	private void addFarmerVoidableDropTag()
@@ -41,7 +41,7 @@ public final class ItemTagDatagenProvider extends ItemTagsProvider
 				.addTags(
 						ItemTags.SAPLINGS
 				)
-				.addOptionalTag(ResourceLocation.fromNamespaceAndPath("rootsclassic", "berries"));
+				.addOptionalTag(Identifier.fromNamespaceAndPath("rootsclassic", "berries"));
 	}
 	
 	private void addFarmerStandardPlantableTag()
@@ -84,7 +84,7 @@ public final class ItemTagDatagenProvider extends ItemTagsProvider
 	
 	private IntrinsicTagAppender<Item> curiosTag(String path)
 	{
-		return this.tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", path)));
+		return this.tag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("curios", path)));
 	}
 	
 	private void addCuriosTags()

@@ -18,28 +18,28 @@ public final class EILocalizedListeners extends LocalizedListeners
 				BlockEvent.NeighborNotifyEvent.class,
 				(event) -> event.getLevel() instanceof Level,
 				(event) -> (Level) event.getLevel(),
-				(event) -> new ChunkPos(event.getPos())
+				(event) -> ChunkPos.containing(event.getPos())
 		);
 		
 		this.withListener(
 				BlockEvent.FarmlandTrampleEvent.class,
 				(event) -> event.getLevel() instanceof Level,
 				(event) -> (Level) event.getLevel(),
-				(event) -> new ChunkPos(event.getPos())
+				(event) -> ChunkPos.containing(event.getPos())
 		);
 		
 		this.withListener(
 				FarmlandLoseMoistureEvent.class,
 				(event) -> event.getLevel() instanceof Level,
 				(event) -> (Level) event.getLevel(),
-				(event) -> new ChunkPos(event.getPos())
+				(event) -> ChunkPos.containing(event.getPos())
 		);
 		
 		this.withListener(
 				TreeGrowthEvent.class,
 				(event) -> event.getLevel() instanceof Level,
 				(event) -> (Level) event.getLevel(),
-				(event) -> new ChunkPos(event.getPos())
+				(event) -> ChunkPos.containing(event.getPos())
 		);
 	}
 }

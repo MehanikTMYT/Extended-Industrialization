@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization.machines.component.farmer;
 
 import aztech.modern_industrialization.inventory.ChangeListener;
 import aztech.modern_industrialization.inventory.ConfigurableItemStack;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.minecraft.world.item.Item;
 import net.swedz.extended_industrialization.machines.component.farmer.planting.FarmerPlantable;
 
@@ -28,16 +28,16 @@ public final class PlantableConfigurableItemStack extends ChangeListener
 		return stack;
 	}
 	
-	public ItemVariant getItemVariant()
+	public ItemResource getItemResource()
 	{
 		return (stack.isPlayerLocked() || stack.isMachineLocked()) && stack.getResource().isBlank() ?
-				ItemVariant.of(stack.getLockedInstance()) :
+				ItemResource.of(stack.getLockedInstance()) :
 				stack.getResource();
 	}
 	
 	public Item getItem()
 	{
-		return this.getItemVariant().getItem();
+		return this.getItemResource().getItem();
 	}
 	
 	public boolean isPlantable()
@@ -53,7 +53,7 @@ public final class PlantableConfigurableItemStack extends ChangeListener
 	@Override
 	protected void onChange()
 	{
-		var itemVariant = this.getItemVariant();
+		var itemVariant = this.getItemResource();
 		var item = itemVariant.getItem();
 		if(lastUpdateItem != item)
 		{

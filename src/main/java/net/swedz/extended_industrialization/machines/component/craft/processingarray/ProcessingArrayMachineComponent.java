@@ -6,7 +6,7 @@ import aztech.modern_industrialization.machines.components.DropableComponent;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.machines.guicomponent.processingarraymachineslot.ProcessingArrayMachineSlot;
@@ -14,7 +14,7 @@ import net.swedz.tesseract.neoforge.compat.mi.api.ComponentStackHolder;
 
 public final class ProcessingArrayMachineComponent implements MachineComponent.ServerOnly, DropableComponent, ComponentStackHolder
 {
-	public static final ResourceLocation ID = EI.id("processing_array_machine");
+	public static final Identifier ID = EI.id("processing_array_machine");
 	
 	private ItemStack machines = ItemStack.EMPTY;
 	
@@ -48,15 +48,15 @@ public final class ProcessingArrayMachineComponent implements MachineComponent.S
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.put("machinesStack", machines.saveOptional(registries));
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		machines = ItemStack.parseOptional(registries, tag.getCompound("machinesStack"));
+		machines = ItemStack.parseOptional(tag.lookup(), tag.getCompound("machinesStack"));
 		if(!machines.isEmpty())
 		{
 			machineRecipeType = ProcessingArrayMachineSlot.getMachine(machines).recipeType();

@@ -15,9 +15,9 @@ import static aztech.modern_industrialization.materials.property.MaterialPropert
 
 public abstract class RecipesServerDatagenProvider extends RecipeProvider
 {
-	protected RecipesServerDatagenProvider(GatherDataEvent event)
+	protected RecipesServerDatagenProvider(net.minecraft.core.HolderLookup.Provider registries, RecipeOutput output)
 	{
-		super(event.getGenerator().getPackOutput(), event.getLookupProvider());
+		super(registries, output);
 	}
 	
 	protected static boolean hasPart(Material material, PartTemplate part)
@@ -42,7 +42,9 @@ public abstract class RecipesServerDatagenProvider extends RecipeProvider
 		addMaterialMachineRecipe(material, name, recipeType, eu, (int) (200 * material.get(HARDNESS).timeFactor), recipeBuilder, output);
 	}
 	
-	@Override
+	public final void generate() { buildRecipes(output); }
+	@Override protected final void buildRecipes() { buildRecipes(output); }
+	protected abstract void buildRecipes(RecipeOutput output);
 	public String getName()
 	{
 		return this.getClass().getSimpleName();

@@ -35,7 +35,7 @@ public record ModifyElectricToolSpeedPacket(boolean increase) implements EICusto
 			{
 				ElectricToolItem.setToolSpeed(stack, speed);
 				
-				player.displayClientMessage(EI.text().toolChangedMiningSpeed((float) speed / ElectricToolItem.SPEED_MAX), true);
+				player.sendOverlayMessage(EI.text().toolChangedMiningSpeed((float) speed / ElectricToolItem.SPEED_MAX));
 			}
 		}
 	}

@@ -3,7 +3,7 @@ package net.swedz.extended_industrialization.machines.recipe;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.ProxyableMachineRecipeType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public final class ComposterMachineRecipeType extends ProxyableMachineRecipeType
 {
-	public ComposterMachineRecipeType(ResourceLocation id)
+	public ComposterMachineRecipeType(Identifier id)
 	{
 		super(id);
 	}
@@ -31,10 +31,10 @@ public final class ComposterMachineRecipeType extends ProxyableMachineRecipeType
 		var recipe = new MIMachineRecipeBuilder(this, 2, 5 * 20);
 		
 		int amountNeeded = Math.max(1, (int) Math.floor((8 / chance) / 2));
-		recipe.addItemInput(item, amountNeeded);
-		recipe.addItemOutput(Items.BONE_MEAL, 2);
+		recipe.itemIn(item, amountNeeded);
+		recipe.itemOut(Items.BONE_MEAL, 2);
 		
-		return new RecipeHolder<>(id, (MachineRecipe) recipe.convert());
+		return new RecipeHolder<>(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id), (MachineRecipe) recipe.convert());
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public final class ComposterMachineRecipeType extends ProxyableMachineRecipeType
 		{
 			for(var item : BuiltInRegistries.ITEM)
 			{
-				if(!RegistryHelper.holder(BuiltInRegistries.ITEM, item).is(EITags.GeneratedRecipesBlacklist.COMPOSTING))
+				if(!RegistryHelper.holder(BuiltInRegistries.ITEM, item).orElseThrow().is(EITags.GeneratedRecipesBlacklist.COMPOSTING))
 				{
 					float chance = ComposterBlock.getValue(item.getDefaultInstance());
 					if(chance > 0f)

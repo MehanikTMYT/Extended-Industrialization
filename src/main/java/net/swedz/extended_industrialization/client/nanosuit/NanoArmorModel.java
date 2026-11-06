@@ -1,6 +1,6 @@
 package net.swedz.extended_industrialization.client.nanosuit;
 
-import net.minecraft.client.model.HumanoidArmorModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,13 +9,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.swedz.extended_industrialization.EI;
 
 import java.util.List;
 
-public final class NanoArmorModel<T extends LivingEntity> extends HumanoidArmorModel<T>
+public final class NanoArmorModel extends HumanoidModel<HumanoidRenderState>
 {
 	public static final ModelLayerLocation INNER_LAYER = new ModelLayerLocation(EI.id("nano_armor"), "inner_armor");
 	public static final ModelLayerLocation OUTER_LAYER = new ModelLayerLocation(EI.id("nano_armor"), "outer_armor");
@@ -119,43 +119,45 @@ public final class NanoArmorModel<T extends LivingEntity> extends HumanoidArmorM
 		return root;
 	}
 	
-	public EquipmentSlot slot;
-	public ModelPart     root, head, hat, body, leftArm, rightArm, leftLeg, rightLeg;
+	public EquipmentSlot slot = EquipmentSlot.HEAD;
 	
 	public NanoArmorModel(ModelPart root)
 	{
 		super(root);
-		this.root = root;
-		this.head = root.getChild("head");
-		this.hat = root.getChild("hat");
-		this.body = root.getChild("body");
-		this.leftArm = root.getChild("left_arm");
-		this.rightArm = root.getChild("right_arm");
-		this.leftLeg = root.getChild("left_leg");
-		this.rightLeg = root.getChild("right_leg");
 	}
 	
-	@Override
-	protected Iterable<ModelPart> headParts()
+	public List<ModelPart> parts()
 	{
-		return slot == EquipmentSlot.HEAD ? List.of(head, hat) : List.of();
+		return switch (slot)
+		{
+			case HEAD -> List.of(this.head, this.hat);
+			case CHEST -> List.of(this.body, this.leftArm, this.rightArm);
+			case LEGS -> List.of(this.body, this.leftLeg, this.rightLeg);
+			case FEET -> List.of(this.leftLeg, this.rightLeg);
+			default -> List.of();
+		};
 	}
 	
-	@Override
-	protected Iterable<ModelPart> bodyParts()
+	/**
+	 * Copies the animated pose of the parent humanoid model onto this model.
+	 */
+	public void copyFrom(HumanoidModel<?> parent)
 	{
-		if(slot == EquipmentSlot.CHEST)
+		this.head.loadPose(parent.head.storePose());
+		this.hat.loadPose(parent.hat.storePose());
+		this.body.loadPose(parent.body.storePose());
+		this.leftArm.loadPose(parent.leftArm.storePose());
+		this.rightArm.loadPose(parent.rightArm.storePose());
+		this.leftLeg.loadPose(parent.leftLeg.storePose());
+		this.rightLeg.loadPose(parent.rightLeg.storePose());
+	}
+	
+	public void setPartVisibility()
+	{
+		this.setAllVisible(false);
+		for(var part : this.parts())
 		{
-			return List.of(body, leftArm, rightArm);
+			part.visible = true;
 		}
-		else if(slot == EquipmentSlot.LEGS)
-		{
-			return List.of(body, leftLeg, rightLeg);
-		}
-		else if(slot == EquipmentSlot.FEET)
-		{
-			return List.of(leftLeg, rightLeg);
-		}
-		return List.of();
 	}
 }

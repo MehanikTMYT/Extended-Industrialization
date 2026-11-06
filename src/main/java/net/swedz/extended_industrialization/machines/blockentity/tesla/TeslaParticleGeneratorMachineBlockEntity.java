@@ -11,9 +11,9 @@ import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Tickable;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.client.ber.tesla.behavior.TeslaBehavior;
@@ -78,7 +78,7 @@ public final class TeslaParticleGeneratorMachineBlockEntity extends MachineBlock
 	}
 	
 	@Override
-	public ResourceLocation getTeslaModelLocation()
+	public Identifier getTeslaModelLocation()
 	{
 		return aesthetic.getSelectedModel();
 	}
@@ -128,7 +128,7 @@ public final class TeslaParticleGeneratorMachineBlockEntity extends MachineBlock
 	}
 	
 	@Override
-	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	protected InteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
 	{
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())

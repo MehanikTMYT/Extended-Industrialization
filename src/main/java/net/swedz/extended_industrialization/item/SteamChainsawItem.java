@@ -7,7 +7,7 @@ import aztech.modern_industrialization.items.ContainerItem;
 import aztech.modern_industrialization.items.DynamicToolItem;
 import aztech.modern_industrialization.items.ItemContainingItemHelper;
 import aztech.modern_industrialization.items.SteamDrillFuel;
-import aztech.modern_industrialization.thirdparty.fabrictransfer.api.item.ItemVariant;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import aztech.modern_industrialization.util.Simulation;
 import aztech.modern_industrialization.util.TextHelper;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,8 +36,8 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
@@ -72,17 +72,17 @@ import java.util.Optional;
 @EventBusSubscriber(modid = EI.ID)
 public final class SteamChainsawItem extends Item implements DynamicToolItem, ItemContainingItemHelper
 {
-	public static final StorageBehaviour<ItemVariant> BEHAVIOR = new StorageBehaviour<>()
+	public static final StorageBehaviour<ItemResource> BEHAVIOR = new StorageBehaviour<>()
 	{
 		@Override
-		public long getCapacityForResource(ItemVariant resource)
+		public long getCapacityForResource(ItemResource resource)
 		{
 			return resource.getMaxStackSize();
 		}
 		
-		public boolean canInsert(ItemVariant item)
+		public boolean canInsert(ItemResource item)
 		{
-			return item.toStack().getBurnTime(null) > 0;
+			return item.toStack().getBurnTime(null, null) > 0;
 		}
 	};
 	
@@ -98,7 +98,7 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 				.component(MIComponents.WATER, 0));
 	}
 	
-	private static boolean isNotSilkTouch(ItemStack stack)
+	private static boolean isNotSilkTouch(net.minecraft.world.item.ItemInstance stack)
 	{
 		return !stack.getOrDefault(MIComponents.SILK_TOUCH, true);
 	}
@@ -123,7 +123,7 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	@Override
 	public boolean isCorrectToolForDrops(ItemStack stack, BlockState state)
 	{
-		if(this.isSupportedBlock(stack, state) && this.canUse(stack) && !state.is(Tiers.NETHERITE.getIncorrectBlocksForDrops()))
+		if(this.isSupportedBlock(stack, state) && this.canUse(stack) && !state.is(ToolMaterial.NETHERITE.incorrectBlocksForDrops()))
 		{
 			return true;
 		}
@@ -137,7 +137,7 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 		{
 			if(isCorrectToolForDrops(stack, state))
 			{
-				return Tiers.DIAMOND.getSpeed();
+				return ToolMaterial.DIAMOND.speed();
 			}
 			else
 			{
@@ -185,10 +185,10 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	}
 	
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
 		this.useFuel(stack, attacker);
-		return true;
+		return;
 	}
 	
 	public void useFuel(ItemStack stack, LivingEntity entity)
@@ -213,33 +213,31 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	}
 	
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player user, InteractionHand hand)
+	public InteractionResult use(Level level, Player user, InteractionHand hand)
 	{
 		if(hand == InteractionHand.MAIN_HAND && user.isShiftKeyDown())
 		{
 			var stack = user.getItemInHand(hand);
 			setSilkTouch(stack, isNotSilkTouch(stack));
-			if(!level.isClientSide)
+			if(!level.isClientSide())
 			{
-				user.displayClientMessage(
-						(isNotSilkTouch(stack) ? MIText.ToolSwitchedNoSilkTouch : MIText.ToolSwitchedSilkTouch).text(),
-						true
-				);
+				user.sendOverlayMessage(
+						(isNotSilkTouch(stack) ? MIText.ToolSwitchedNoSilkTouch : MIText.ToolSwitchedSilkTouch).text());
 			}
-			return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 		
 		var itemStack = user.getItemInHand(hand);
 		var hitResult = getPlayerPOVHitResult(level, user, ClipContext.Fluid.ANY);
 		if(hitResult.getType() != HitResult.Type.BLOCK)
 		{
-			return InteractionResultHolder.pass(itemStack);
+			return InteractionResult.PASS;
 		}
 		var fluidState = level.getFluidState(hitResult.getBlockPos());
 		if(fluidState.getType() == Fluids.WATER || fluidState.getType() == Fluids.FLOWING_WATER)
 		{
 			this.fillWater(user, itemStack);
-			return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+			return InteractionResult.SUCCESS;
 		}
 		
 		return super.use(level, user, hand);
@@ -253,11 +251,11 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 		if(this.canUse(stack) &&
 		   stack.is(Tags.Items.TOOLS_SHEAR) && interactionTarget instanceof IShearable shearable)
 		{
-			if(!level.isClientSide && shearable.isShearable(player, stack, level, blockPos))
+			if(!level.isClientSide() && shearable.isShearable(player, stack, level, blockPos))
 			{
 				this.useFuel(stack, player);
 				shearable.onSheared(player, stack, level, blockPos)
-						.forEach((drop) -> shearable.spawnShearedDrop(level, blockPos, drop));
+						.forEach((drop) -> shearable.spawnShearedDrop((net.minecraft.server.level.ServerLevel)level, blockPos, drop));
 				interactionTarget.gameEvent(GameEvent.SHEAR, player);
 				return InteractionResult.SUCCESS;
 			}
@@ -274,12 +272,12 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 		if(stack.getOrDefault(MIComponents.WATER, 0) != FULL_WATER)
 		{
 			stack.set(MIComponents.WATER, FULL_WATER);
-			player.playNotifySound(SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1f, 1f);
+			player.playSound(SoundEvents.BUCKET_FILL, 1f, 1f);
 		}
 	}
 	
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected)
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot)
 	{
 		var fuel = stack.getOrDefault(MIComponents.STEAM_DRILL_FUEL, SteamDrillFuel.EMPTY);
 		if(fuel.burnTicks() > 0)
@@ -317,7 +315,7 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	
 	private int consumeFuel(ItemStack stack, Simulation simulation)
 	{
-		int burnTicks = this.getResource(stack).toStack().getBurnTime(null);
+		int burnTicks = this.getResource(stack).toStack().getBurnTime(null, null);
 		if(burnTicks > 0)
 		{
 			if(simulation.isActing())
@@ -325,11 +323,12 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 				var burnt = getResource(stack).toStack();
 				setAmount(stack, getAmount(stack) - 1);
 				
-				if(burnt.hasCraftingRemainingItem())
-				{
-					new ContainerItem.ItemHandler(stack, this)
-							.insertItem(0, burnt.getCraftingRemainingItem(), false, true, true);
-				}
+                var remainder = burnt.getCraftingRemainder();
+                if (remainder != null && getAmount(stack) == 0) {
+                    var remaining = remainder.create();
+                    setResource(stack, ItemResource.of(remaining));
+                    setAmount(stack, remaining.getCount());
+                }
 			}
 			return burnTicks;
 		}
@@ -337,14 +336,18 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	}
 	
 	@Override
-	public int getEnchantmentLevel(ItemStack stack, Holder<Enchantment> enchantment)
+	public int getEnchantmentLevel(net.minecraft.world.item.ItemInstance stack, Holder<Enchantment> enchantment)
 	{
-		return this.getAllEnchantments(stack, enchantment.unwrapLookup()).getLevel(enchantment);
+		return this.getAllEnchantmentsFromInstance(stack, enchantment.unwrapLookup()).getLevel(enchantment);
 	}
 	
 	@Override
 	public ItemEnchantments getAllEnchantments(ItemStack stack, HolderLookup.RegistryLookup<Enchantment> lookup)
 	{
+        return getAllEnchantmentsFromInstance(stack, lookup);
+    }
+    private ItemEnchantments getAllEnchantmentsFromInstance(net.minecraft.world.item.ItemInstance stack, HolderLookup.RegistryLookup<Enchantment> lookup) {
+
 		var map = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 		if(!isNotSilkTouch(stack))
 		{
@@ -375,12 +378,12 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 				if(newBlock != null)
 				{
 					level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1, 1);
-					if(!level.isClientSide)
+					if(!level.isClientSide())
 					{
 						level.setBlock(pos, newBlock.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
 						this.useFuel(stack, player);
 					}
-					return InteractionResult.sidedSuccess(level.isClientSide);
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
@@ -424,7 +427,8 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	
 	private boolean tryFillWater(Player player, ItemStack barrelLike, ItemStack fillSource)
 	{
-		var otherStorage = fillSource.getCapability(Capabilities.FluidHandler.ITEM);
+		var nativeStorage = net.neoforged.neoforge.transfer.access.ItemAccess.forStack(fillSource).getCapability(Capabilities.Fluid.ITEM);
+		var otherStorage = nativeStorage == null ? null : net.neoforged.neoforge.fluids.capability.IFluidHandler.of(nativeStorage);
 		
 		if(otherStorage != null)
 		{
@@ -448,43 +452,43 @@ public final class SteamChainsawItem extends Item implements DynamicToolItem, It
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flag)
 	{
 		var data = (SteamChainsawTooltipData) this.getTooltipImage(stack).orElseThrow();
 		
-		tooltip.add(MIText.WaterPercent.text(data.waterLevel).setStyle(TextHelper.WATER_TEXT));
+		tooltip.accept(MIText.WaterPercent.text(data.waterLevel).setStyle(TextHelper.WATER_TEXT));
 		int barWater = (int) Math.ceil(data.waterLevel / 5d);
 		int barVoid = 20 - barWater;
-		tooltip.add(Component.literal("|".repeat(barWater)).setStyle(TextHelper.WATER_TEXT)
+		tooltip.accept(Component.literal("|".repeat(barWater)).setStyle(TextHelper.WATER_TEXT)
 				.append(Component.literal("|".repeat(barVoid)).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x6b6b6b)))));
 		
 		if(data.burnTicks > 0)
 		{
-			tooltip.add(MIText.SecondsLeft.text(data.burnTicks / 100).setStyle(TextHelper.GRAY_TEXT));
+			tooltip.accept(MIText.SecondsLeft.text(data.burnTicks / 100).setStyle(TextHelper.GRAY_TEXT));
 		}
 		
-		tooltip.add(MIText.SilkTouchState
+		tooltip.accept(MIText.SilkTouchState
 				.text(isNotSilkTouch(stack) ? MIText.Deactivated.text().setStyle(TextHelper.RED) : MIText.Activated.text().setStyle(TextHelper.GREEN))
 				.setStyle(TextHelper.GRAY_TEXT.withItalic(false)));
 	}
 	
 	@Override
-	public StorageBehaviour<ItemVariant> getBehaviour()
+	public StorageBehaviour<ItemResource> getBehaviour()
 	{
 		return BEHAVIOR;
 	}
 	
 	public record SteamChainsawTooltipData(
-			int waterLevel, int burnTicks, int maxBurnTicks, ItemVariant variant, long amount
+			int waterLevel, int burnTicks, int maxBurnTicks, ItemResource variant, long amount
 	) implements TooltipComponent
 	{
 	}
 	
 	private static class StrippingAccess extends AxeItem
 	{
-		private StrippingAccess(Tier material, Properties properties)
+		private StrippingAccess(ToolMaterial material, Properties properties)
 		{
-			super(material, properties);
+			super(material, 0, 0, properties);
 		}
 		
 		public static Map<Block, Block> getStrippedBlocks()

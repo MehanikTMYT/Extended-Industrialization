@@ -232,57 +232,52 @@ public final class FarmerComponent implements MachineComponent
 	}
 	
 	@Override
-	public void writeNbt(CompoundTag tag, HolderLookup.Provider registries)
+	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 		tag.putBoolean("tilling", tilling);
 		tag.putString("planting_mode", plantingMode.name());
 		
-		var harvestingHandlersCache = new CompoundTag();
+		var harvestingHandlersCache = tag.child("harvesting_handlers");
 		for(var harvestingHandler : harvestableBehaviorHolder.behaviors())
 		{
 			harvestingHandler.writeNbt(harvestingHandlersCache);
 		}
-		tag.put("harvesting_handlers", harvestingHandlersCache);
 		
-		var tasksTag = new CompoundTag();
+		var tasksTag = tag.child("tasks");
 		for(var task : tasks)
 		{
-			var taskTag = new CompoundTag();
+			var taskTag = tasksTag.child(task.type().name());
 			task.writeNbt(taskTag);
-			if(!taskTag.isEmpty())
+			if(taskTag.isEmpty())
 			{
-				tasksTag.put(task.type().name(), taskTag);
+				tasksTag.discard(task.type().name());
 			}
-		}
-		if(!tasksTag.isEmpty())
-		{
-			tag.put("tasks", tasksTag);
 		}
 	}
 	
 	@Override
-	public void readNbt(CompoundTag tag, HolderLookup.Provider registries, boolean isUpgradingMachine)
+	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		tilling = tag.getBoolean("tilling");
-		plantingMode = PlantingMode.fromName(tag.getString("planting_mode"));
+		tilling = tag.getBooleanOr("tilling", false);
+		plantingMode = PlantingMode.fromName(tag.getStringOr("planting_mode", ""));
 		if(plantingMode == null)
 		{
 			plantingMode = defaultPlantingMode;
 		}
 		
-		var harvestingHandlersCache = tag.getCompound("harvesting_handlers");
+		var harvestingHandlersCache = tag.childOrEmpty("harvesting_handlers");
 		for(HarvestableBehavior harvestingHandler : harvestableBehaviorHolder.behaviors())
 		{
 			harvestingHandler.readNbt(harvestingHandlersCache);
 		}
 		
-		var tasksTag = tag.getCompound("tasks");
-		if(!tasksTag.isEmpty())
+		var tasksTag = tag.childOrEmpty("tasks");
+		for(var task : tasks)
 		{
-			for(var task : tasks)
+			var taskTag = tasksTag.child(task.type().name());
+			if(taskTag.isPresent())
 			{
-				var taskTag = tasksTag.getCompound(task.type().name());
-				task.readNbt(taskTag, isUpgradingMachine);
+				task.readNbt(taskTag.get(), isUpgradingMachine);
 			}
 		}
 	}
