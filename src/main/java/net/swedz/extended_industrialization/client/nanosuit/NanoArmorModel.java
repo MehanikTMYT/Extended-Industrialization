@@ -160,4 +160,9 @@ public final class NanoArmorModel extends HumanoidModel<HumanoidRenderState>
 			part.visible = true;
 		}
 	}
+
+	public void setAllVisible(boolean visible)
+	{
+		for(var part : root().getAllParts()) part.visible = visible;
+	}
 }

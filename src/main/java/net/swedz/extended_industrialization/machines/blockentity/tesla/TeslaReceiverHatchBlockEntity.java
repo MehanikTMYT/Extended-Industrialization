@@ -278,7 +278,7 @@ public final class TeslaReceiverHatchBlockEntity extends HatchBlockEntity implem
 				{
 					throw new RuntimeException("Replaced machine should be a TeslaReceiverHatchBlockEntity, found " + newBlockEntity);
 				}
-				newHatchBlockEntity.load(oldBlockData, level.registryAccess(), true);
+				newHatchBlockEntity.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, level.registryAccess(), oldBlockData), true);
 				
 				if(hand == InteractionHand.MAIN_HAND)
 				{

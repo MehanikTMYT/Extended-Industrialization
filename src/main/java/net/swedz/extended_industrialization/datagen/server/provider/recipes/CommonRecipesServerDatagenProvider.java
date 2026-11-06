@@ -339,7 +339,7 @@ public final class CommonRecipesServerDatagenProvider extends RecipesServerDatag
 	}
 	
 	@Override
-	protected void buildRecipes(RecipeOutput output, HolderLookup.Provider registries)
+	protected void buildRecipes(RecipeOutput output)
 	{
 		addMachineRecipe(
 				"mixer", "mulch", MIMachineRecipeTypes.MIXER,

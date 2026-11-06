@@ -1007,7 +1007,7 @@ public class ElectricToolItem extends Item implements DynamicToolItem, EIEnergyI
     private ItemEnchantments getAllEnchantmentsFromInstance(net.minecraft.world.item.ItemInstance stack, HolderLookup.RegistryLookup<Enchantment> lookup) {
 
 		var enchantments = new ItemEnchantments.Mutable(stack.getTagEnchantments());
-		if(this.hasEnergy(stack))
+		if(stack.getOrDefault(MIComponents.ENERGY.get(), 0L) > 0)
 		{
 			for(var enchantment : getMode(stack).enchantments())
 			{
@@ -1030,9 +1030,9 @@ public class ElectricToolItem extends Item implements DynamicToolItem, EIEnergyI
 	}
 	
 	@Override
-	public boolean canAttackBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player)
+	public boolean canDestroyBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, LivingEntity entity)
 	{
-		return toolType != Type.SABER || !player.isCreative();
+		return toolType != Type.SABER || !(entity instanceof Player player) || !player.isCreative();
 	}
 	
 	@Override

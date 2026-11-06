@@ -36,9 +36,9 @@ public final class FluidFertilizerCategory extends ViewerCategory<Fluid>
 	}
 	
 	@Override
-	public void buildRecipes(RecipeManager recipeManager, RegistryAccess registryAccess, Consumer<Fluid> consumer)
+	public void buildRecipes(net.minecraft.world.item.crafting.RecipeMap recipeManager, RegistryAccess registryAccess, Consumer<Fluid> consumer)
 	{
-		for(var fluid : registryAccess.registryOrThrow(Registries.FLUID))
+		for(var fluid : BuiltInRegistries.FLUID)
 		{
 			if(FertilizerPotency.getFor(fluid) != null)
 			{
@@ -50,7 +50,7 @@ public final class FluidFertilizerCategory extends ViewerCategory<Fluid>
 	@Override
 	public void buildLayout(Fluid recipe, LayoutBuilder builder)
 	{
-		builder.inputSlot(15, 15).variant(FluidResource.of(recipe));
+		builder.inputSlot(15, 15).resource(FluidResource.of(recipe));
 	}
 	
 	@Override

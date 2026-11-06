@@ -15,6 +15,8 @@ import net.swedz.tesseract.neoforge.item.ItemHurtHandler;
 public class ElectricArmorItem extends net.minecraft.world.item.Item implements EIEnergyItem, ItemHurtHandler
 {
 	protected final ArmorType type;
+	private final ArmorMaterial material;
+	public ArmorMaterial getMaterial() { return material; }
 	private final ItemAttributeModifiers defaultModifiers;
 	public ArmorType getType() { return type; }
 	private final long energyCapacity;
@@ -23,11 +25,12 @@ public class ElectricArmorItem extends net.minecraft.world.item.Item implements 
 	public ElectricArmorItem(ArmorMaterial material, ArmorType type, Properties properties,
 							 long energyCapacity, long damageCostEnergy)
 	{
-		super(properties.humanoidArmor(material, type)
+		super(properties.humanoidArmor(material, type).enchantable(material.enchantmentValue())
 				.stacksTo(1)
 				.component(EIComponents.HIDE_BAR, false)
 				.component(MIComponents.ENERGY, 0L));
 		this.type = type;
+		this.material = material;
 		this.defaultModifiers = material.createAttributes(type);
 		this.energyCapacity = energyCapacity;
 		this.damageCostEnergy = damageCostEnergy;
@@ -43,11 +46,6 @@ public class ElectricArmorItem extends net.minecraft.world.item.Item implements 
 		return modifiers;
 	}
 	
-	@Override
-	public boolean isEnchantable(ItemStack stack)
-	{
-		return true;
-	}
 	
 	@Override
 	public DataComponentType<Long> getEnergyComponent()

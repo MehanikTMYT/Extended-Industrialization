@@ -199,7 +199,7 @@ public final class EITooltips
 			{
 				List<Component> lines = Lists.newArrayList();
 				lines.add(EI.text().electricToolHelp1());
-				if(stack.is(ItemTags.DYEABLE))
+				if(stack.is(ItemTags.CAULDRON_CAN_REMOVE_DYE))
 				{
 					lines.add(EI.text().dyeableHelp());
 				}

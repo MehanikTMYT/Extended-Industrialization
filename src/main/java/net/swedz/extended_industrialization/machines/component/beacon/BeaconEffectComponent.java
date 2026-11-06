@@ -137,7 +137,7 @@ public final class BeaconEffectComponent implements MachineComponent
 				continue;
 			}
 			
-			var potionContentsOptional = stack.getResource().getComponentsPatch().get(DataComponents.POTION_CONTENTS);
+			var potionContentsOptional = Optional.ofNullable(stack.getResource().toStack().get(DataComponents.POTION_CONTENTS));
 			if(potionContentsOptional != null && potionContentsOptional.isPresent())
 			{
 				var potionContents = potionContentsOptional.get();
@@ -213,16 +213,14 @@ public final class BeaconEffectComponent implements MachineComponent
 	@Override
 	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		var effectsTag = new ListTag();
+		var effectsTag = tag.childrenList("beacon_effects");
 		for(var effect : activeEffects)
 		{
-			var effectTag = new CompoundTag();
-			effectTag.putString("effect", effect.effect().getKey().location().toString());
+			var effectTag = effectsTag.addChild();
+			effectTag.putString("effect", effect.effect().getKey().identifier().toString());
 			effectTag.putInt("amplifier", effect.amplifier());
-			effectsTag.add(effectTag);
 		}
-		tag.put("beacon_effects", effectsTag);
-		
+
 		tag.putInt("total_beacon_effect_ticks", totalEffectTicks);
 		tag.putInt("remaining_beacon_effect_ticks", remainingEffectTicks);
 	}
@@ -231,11 +229,9 @@ public final class BeaconEffectComponent implements MachineComponent
 	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 		List<Effect> activeEffects = Lists.newArrayList();
-		var effectsTag = tag.getList("beacon_effects", Tag.TAG_COMPOUND);
-		for(int index = 0; index < effectsTag.size(); index++)
+		for(var effectTag : tag.childrenListOrEmpty("beacon_effects"))
 		{
-			var effectTag = effectsTag.getCompound(index);
-			var effectId = Identifier.tryParse(effectTag.getString("effect"));
+			var effectId = Identifier.tryParse(effectTag.getStringOr("effect", ""));
 			if(effectId == null)
 			{
 				continue;
@@ -245,7 +241,7 @@ public final class BeaconEffectComponent implements MachineComponent
 			{
 				continue;
 			}
-			int amplifier = effectTag.getInt("amplifier");
+			int amplifier = effectTag.getIntOr("amplifier", 0);
 			activeEffects.add(new Effect(effect.get(), amplifier));
 		}
 		this.activeEffects = Collections.unmodifiableList(activeEffects);

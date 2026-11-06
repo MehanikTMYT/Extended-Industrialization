@@ -39,7 +39,7 @@ public record CatHammerPacket(int entityId) implements EICustomPacket
 	
 	private static void flash(LevelAccessor level, Vec3 pos)
 	{
-		level.addParticle(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 0, 0, 0);
+		level.addParticle(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), pos.x, pos.y, pos.z, 0, 0, 0);
 	}
 	
 	private static float sparkSpeed(LevelAccessor level, boolean y)

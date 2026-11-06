@@ -1,5 +1,6 @@
 package net.swedz.extended_industrialization.lootmodifier;
 
+import net.minecraft.world.item.ItemStack;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.predicates.DataComponentPredicate;

@@ -28,7 +28,7 @@ import java.util.Optional;
 public final class RainbowableDyeRecipe extends CustomRecipe
 {
 	public static final MapCodec<RainbowableDyeRecipe> MAP_CODEC = MapCodec.unit(RainbowableDyeRecipe::new);
-	public static final StreamCodec<RegistryFriendlyByteBuf, RainbowableDyeRecipe> STREAM_CODEC = StreamCodec.unit(RainbowableDyeRecipe::new);
+	public static final StreamCodec<RegistryFriendlyByteBuf, RainbowableDyeRecipe> STREAM_CODEC = StreamCodec.unit(new RainbowableDyeRecipe());
 	public static final RecipeSerializer<RainbowableDyeRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 	
 	public RainbowableDyeRecipe()
@@ -79,7 +79,6 @@ public final class RainbowableDyeRecipe extends CustomRecipe
 		return this.find(input).map(Match::assemble).orElse(ItemStack.EMPTY);
 	}
 	
-	@Override
 	public boolean canCraftInDimensions(int width, int height)
 	{
 		return width * height >= 2;

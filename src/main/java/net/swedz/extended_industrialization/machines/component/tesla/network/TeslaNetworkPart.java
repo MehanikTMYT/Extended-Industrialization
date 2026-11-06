@@ -24,7 +24,7 @@ public interface TeslaNetworkPart
 		{
 			throw new IllegalStateException("Cannot get network without a server");
 		}
-		return proxy.getServer().getTeslaNetworks().get(this.getNetworkKey());
+		return ((TeslaNetworkHolder) proxy.getServer()).getTeslaNetworks().get(this.getNetworkKey());
 	}
 	
 	WorldPos getPosition();

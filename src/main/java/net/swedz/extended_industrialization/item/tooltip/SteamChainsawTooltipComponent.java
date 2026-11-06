@@ -19,7 +19,7 @@ public final class SteamChainsawTooltipComponent implements ClientTooltipCompone
 	}
 	
 	@Override
-	public int getHeight()
+	public int getHeight(Font font)
 	{
 		return 20;
 	}
@@ -31,9 +31,9 @@ public final class SteamChainsawTooltipComponent implements ClientTooltipCompone
 	}
 	
 	@Override
-	public void renderImage(Font font, int x, int y, GuiGraphicsExtractor guiGraphics)
+	public void extractImage(Font font, int x, int y, int width, int height, GuiGraphicsExtractor guiGraphics)
 	{
-		guiGraphics.blit(MachineScreen.SLOT_ATLAS, x, y, 0, 0, 18, 18, 256, 256);
+		guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, MachineScreen.SLOT_ATLAS, x, y, 0, 0, 18, 18, 256, 256);
 		
 		RenderHelper.renderAndDecorateItem(guiGraphics, font, data.variant().toStack((int) data.amount()), x + 1, y + 1);
 		

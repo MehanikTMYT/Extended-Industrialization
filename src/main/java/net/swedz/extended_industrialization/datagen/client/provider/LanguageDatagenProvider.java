@@ -61,7 +61,7 @@ public final class LanguageDatagenProvider extends LanguageProvider
 		MIDatagenHooks.Client.withLanguageHook(this, EI.ID);
 		
 		this.add("itemGroup.%s.%s".formatted(EI.ID, EI.ID), EI.NAME);
-		this.add(EIKeybinds.CATEGORY, EI.NAME);
+		this.add("key.categories." + EIKeybinds.CATEGORY.id().toLanguageKey(), EI.NAME);
 		
 		this.add("lef_tier.%s.%s.%s".formatted(EI.ID, MI.ID, "cupronickel_coil"), "Cupronickel");
 		this.add("lef_tier.%s.%s.%s".formatted(EI.ID, MI.ID, "kanthal_coil"), "Kanthal");

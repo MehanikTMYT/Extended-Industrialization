@@ -35,7 +35,7 @@ public final class TeslaNetworkBarClient extends GuiComponentClient<TeslaNetwork
 			public void extractBackground(GuiGraphicsExtractor graphics, int x, int y)
 			{
 				int iconIndex = data.map(TeslaNetworkBar.Data::iconIndex).orElse(0);
-				graphics.blit(
+				graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
 						TESLA_NETWORK_BAR,
 						x + params.renderX(), y + params.renderY(),
 						iconIndex * 18, 0, WIDTH, HEIGHT, 18 * 7, 18
@@ -43,7 +43,7 @@ public final class TeslaNetworkBarClient extends GuiComponentClient<TeslaNetwork
 			}
 			
 			@Override
-			public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int mouseX, int mouseY)
+			public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int mouseX, int mouseY)
 			{
 				if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), WIDTH, HEIGHT, mouseX - x, mouseY - y))
 				{
@@ -83,7 +83,7 @@ public final class TeslaNetworkBarClient extends GuiComponentClient<TeslaNetwork
 					}
 					if(!lines.isEmpty())
 					{
-						graphics.renderTooltip(font, lines.stream().map((c) -> ComponentHelper.stripStyle(c.getVisualOrderText())).toList(), mouseX, mouseY);
+						graphics.setTooltipForNextFrame(font, lines.stream().map((c) -> ComponentHelper.stripStyle(c.getVisualOrderText())).toList(), mouseX, mouseY);
 						return true;
 					}
 				}

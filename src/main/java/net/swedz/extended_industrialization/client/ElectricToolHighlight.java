@@ -10,7 +10,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderHighlightEvent;
+import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.item.ElectricToolItem;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -19,9 +19,10 @@ import org.apache.commons.lang3.mutable.MutableObject;
 public final class ElectricToolHighlight
 {
 	@SubscribeEvent
-	private static void onBlockHighlight(RenderHighlightEvent.Block event)
+	public static void onBlockHighlight(ExtractBlockOutlineRenderStateEvent event)
 	{
 		var player = Minecraft.getInstance().player;
+		if (player == null) return;
 		var level = player.level();
 		var stack = player.getMainHandItem();
 		if(stack.getItem() instanceof ElectricToolItem tool)
@@ -39,24 +40,28 @@ public final class ElectricToolHighlight
 					float destroyProgress = state.getDestroyProgress(player, level, pos);
 					if(!((double) destroyProgress <= 1.0E-9))
 					{
-						VoxelShape blockShape = state.getShape(level, pos, CollisionContext.of(event.getCamera().getEntity()));
+						VoxelShape blockShape = state.getShape(level, pos, CollisionContext.of(player));
 						blockShape = blockShape.move(pos.getX() - center.getX(), pos.getY() - center.getY(), pos.getZ() - center.getZ());
 						fullShape.setValue(Shapes.joinUnoptimized(fullShape.getValue(), blockShape, BooleanOp.OR));
 					}
 				});
 				
-				if(fullShape.getValue() != Shapes.empty())
+				VoxelShape shape = fullShape.getValue();
+				if(shape != Shapes.empty())
 				{
-					LevelRenderer.renderShape(
-							event.getPoseStack(),
-							event.getMultiBufferSource().getBuffer(RenderType.lines()),
-							fullShape.getValue(),
-							(double) center.getX() - event.getCamera().getPosition().x(),
-							(double) center.getY() - event.getCamera().getPosition().y(),
-							(double) center.getZ() - event.getCamera().getPosition().z(),
-							0.0F, 0.0F, 0.0F, 0.4F
-					);
-					event.setCanceled(true);
+					event.addCustomRenderer((outline, buffers, poseStack, translucentPass, levelState) -> {
+						var cam = levelState.cameraRenderState.pos;
+						net.minecraft.client.renderer.ShapeRenderer.renderShape(
+								poseStack,
+								buffers.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.lines()),
+								shape,
+								(double) center.getX() - cam.x,
+								(double) center.getY() - cam.y,
+								(double) center.getZ() - cam.z,
+								0x66000000, 2.0F
+						);
+						return true;
+					});
 				}
 			}
 		}

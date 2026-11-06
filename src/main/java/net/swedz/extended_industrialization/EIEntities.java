@@ -22,7 +22,7 @@ public final class EIEntities
 	
 	private static <T extends Entity> Supplier<EntityType<T>> create(String name, Supplier<EntityType.Builder<T>> builder)
 	{
-		return ENTITY_TYPES.register(name, () -> builder.get().build(name));
+		return ENTITY_TYPES.register(name, () -> builder.get().build(net.minecraft.resources.ResourceKey.create(Registries.ENTITY_TYPE, EI.id(name))));
 	}
 	
 	public static void init(IEventBus bus)

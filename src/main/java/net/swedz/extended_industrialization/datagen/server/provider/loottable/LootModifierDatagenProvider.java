@@ -7,6 +7,7 @@ import net.minecraft.advancements.criterion.EntityEquipmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.TagPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +40,7 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 	
 	private ItemPredicate.Builder nanoSaberPredicate(ElectricToolItem.Mode mode, HolderLookup.Provider registries)
 	{
-		var components = DataComponentMatchers.components()
+		var components = DataComponentMatchers.Builder.components()
 				.partial(TesseractMILootConditions.ItemSubPredicates.SIMPLE_ENERGY_ITEM_HAS_CHARGE.get(), new SimpleEnergyItemHasChargePredicate());
 		if(mode != null)
 		{
@@ -64,9 +65,8 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP_BEHEADING, true))),
 										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
 												.equipment(new EntityEquipmentPredicate.Builder()
-														.mainhand(this.nanoSaberPredicate(ElectricToolItem.Mode.BEHEADING, registries).build()))
-												.build()
-										).build()
+														.mainhand(this.nanoSaberPredicate(ElectricToolItem.Mode.BEHEADING, registries)))
+										)
 								).build()
 						},
 						0,
@@ -76,7 +76,7 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 	}
 	
 	@Override
-	protected void start(HolderLookup.Provider registries)
+	protected void start()
 	{
 		this.add(
 				"nano_saber/auto_smelting",
@@ -87,9 +87,8 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP, true))),
 										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
 												.equipment(new EntityEquipmentPredicate.Builder()
-														.mainhand(this.nanoSaberPredicate(null, registries).build()))
-												.build()
-										).build()
+														.mainhand(this.nanoSaberPredicate(null, registries)))
+										)
 								).build()
 						},
 						0

@@ -92,16 +92,16 @@ public final class ProcessingArrayMachineSlotClient extends GuiComponentClient<U
 				var box = this.getBox(leftPos, topPos);
 				
 				int textureX = box.x() - leftPos - box.w();
-				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y(), textureX, 0, box.w(), box.h() - 4);
-				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y() + box.h() - 4, textureX, 252, box.w(), 4);
+				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y(), textureX, 0, box.w(), box.h() - 4, 256, 256);
+				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y() + box.h() - 4, textureX, 252, box.w(), 4, 256, 256);
 			}
 			
 			@Override
-			public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
+			public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
 			{
 				if(screen.getFocusedSlot() instanceof SlotTooltip slotTooltip && !screen.getFocusedSlot().hasItem())
 				{
-					graphics.renderTooltip(font, slotTooltip.getTooltip(), cursorX, cursorY);
+					graphics.setTooltipForNextFrame(font, slotTooltip.getTooltip(), cursorX, cursorY);
 					return true;
 				}
 				return false;

@@ -33,7 +33,6 @@ import net.swedz.tesseract.api.Assert;
 import net.swedz.tesseract.api.tuple.Pair;
 import net.swedz.tesseract.config.ConfigManager;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
-import net.swedz.tesseract.neoforge.compat.guideme.tags.TesseractGuideMETags;
 import net.swedz.tesseract.neoforge.compat.mi.TesseractMI;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostTransformer;
 import net.swedz.tesseract.neoforge.compat.mi.tooltip.MIParser;
@@ -190,7 +189,6 @@ public final class EI
 	{
 		var guide = Guide.builder(EI.id("guide"))
 				.extension(SceneElementTagCompiler.EXTENSION_POINT, new MultiblockShapeCompiler());
-		TesseractGuideMETags.includeIn(guide);
 		guide.build();
 	}
 }

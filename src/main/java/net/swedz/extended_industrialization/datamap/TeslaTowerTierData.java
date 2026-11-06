@@ -22,6 +22,6 @@ public record TeslaTowerTierData(
 	@Override
 	public TeslaTowerTier wrap(ResourceKey<Block> key)
 	{
-		return new TeslaTowerTier(key.location(), maxTransfer, maxDistance, drain);
+		return new TeslaTowerTier(key.identifier(), maxTransfer, maxDistance, drain);
 	}
 }

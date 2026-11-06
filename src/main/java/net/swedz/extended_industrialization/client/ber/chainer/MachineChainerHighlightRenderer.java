@@ -80,12 +80,12 @@ public final class MachineChainerHighlightRenderer extends MachineChainerBlockEn
 		}
 		else
 		{
-			return BlockEntityRenderer.super.getRenderBoundingBox(blockEntity);
+			return super.getRenderBoundingBox(blockEntity);
 		}
 	}
 	
 	@Override
-	public void extractRenderState(MachineChainerMachineBlockEntity machine, ChainerRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress)
+	public void extractRenderState(MachineChainerMachineBlockEntity machine, ChainerRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress)
 	{
 		super.extractRenderState(machine, machineState, partialTicks, cameraPosition, breakProgress);
 		var state = (HighlightRenderState) machineState;

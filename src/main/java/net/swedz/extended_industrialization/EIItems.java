@@ -2,7 +2,6 @@ package net.swedz.extended_industrialization;
 
 import aztech.modern_industrialization.api.energy.CableTier;
 import com.google.common.collect.Sets;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
@@ -70,9 +69,9 @@ public final class EIItems
 	public static final ItemHolder<SteamChainsawItem> STEAM_CHAINSAW          = create("steam_chainsaw", "Steam Chainsaw", SteamChainsawItem::new, EISortOrder.GEAR).tag(ItemTags.AXES, ItemTags.HOES, ItemTags.SWORDS, Tags.Items.TOOLS_SHEAR).register();
 	public static final ItemHolder<ElectricToolItem>  ELECTRIC_CHAINSAW       = create("electric_chainsaw", "Electric Chainsaw", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.CHAINSAW), EISortOrder.GEAR).tag(ItemTags.AXES, ItemTags.HOES, ItemTags.SWORDS, Tags.Items.TOOLS_SHEAR).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
 	public static final ItemHolder<ElectricToolItem>  ELECTRIC_MINING_DRILL   = create("electric_mining_drill", "Electric Mining Drill", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.DRILL), EISortOrder.GEAR).tag(ItemTags.PICKAXES, ItemTags.SHOVELS).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
-	public static final ItemHolder<ElectricToolItem>  NANO_SABER              = create("nano_saber", "Nano Saber", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.SABER), EISortOrder.GEAR).tag(ItemTags.DYEABLE, EITags.Items.RAINBOW_DYEABLE, ItemTags.SWORDS).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
-	public static final ItemHolder<ElectricToolItem>  NANO_QUANTUM_SABER      = create("nano_quantum_saber", "Quantum Nano Saber", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.SABER, true), EISortOrder.GEAR).tag(ItemTags.DYEABLE, EITags.Items.RAINBOW_DYEABLE, ItemTags.SWORDS).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).register();
-	public static final ItemHolder<ElectricToolItem>  ULTIMATE_LASER_DRILL    = create("ultimate_laser_drill", "Ultimate Laser Drill", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.ULTIMATE), EISortOrder.GEAR).tag(ItemTags.DYEABLE, EITags.Items.RAINBOW_DYEABLE, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES, ItemTags.HOES, ItemTags.SWORDS, Tags.Items.TOOLS_SHEAR).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
+	public static final ItemHolder<ElectricToolItem>  NANO_SABER              = create("nano_saber", "Nano Saber", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.SABER), EISortOrder.GEAR).tag(ItemTags.CAULDRON_CAN_REMOVE_DYE, EITags.Items.RAINBOW_DYEABLE, ItemTags.SWORDS).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
+	public static final ItemHolder<ElectricToolItem>  NANO_QUANTUM_SABER      = create("nano_quantum_saber", "Quantum Nano Saber", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.SABER, true), EISortOrder.GEAR).tag(ItemTags.CAULDRON_CAN_REMOVE_DYE, EITags.Items.RAINBOW_DYEABLE, ItemTags.SWORDS).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).register();
+	public static final ItemHolder<ElectricToolItem>  ULTIMATE_LASER_DRILL    = create("ultimate_laser_drill", "Ultimate Laser Drill", (p) -> new ElectricToolItem(p, ElectricToolItem.Type.ULTIMATE), EISortOrder.GEAR).tag(ItemTags.CAULDRON_CAN_REMOVE_DYE, EITags.Items.RAINBOW_DYEABLE, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES, ItemTags.HOES, ItemTags.SWORDS, Tags.Items.TOOLS_SHEAR).withRegistrationListener(CommonRegistrations::cauldronClearDye).withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
 	public static final ItemHolder<NanoSuitArmorItem> NANO_HELMET             = createNanosuitArmor("nano_helmet", "Nano Helmet", ArmorType.HELMET, NanoSuitAbility.NIGHT_VISION).register();
 	public static final ItemHolder<NanoSuitArmorItem> NANO_CHESTPLATE         = createNanosuitArmor("nano_chestplate", "Nano Chestplate", ArmorType.CHESTPLATE).register();
 	public static final ItemHolder<NanoSuitArmorItem> NANO_GRAVICHESTPLATE    = createNanosuitArmor("nano_gravichestplate", "Nano Gravichestplate", ArmorType.CHESTPLATE, EIArmorMaterials.NANO_GRAVICHESTPLATE, NanoSuitAbility.GRAVICHESTPLATE).register();
@@ -84,7 +83,7 @@ public final class EIItems
 	public static final ItemHolder<NanoSuitArmorItem> NANO_QUANTUM_BOOTS      = createNanosuitArmor("nano_quantum_boots", "Quantum Nano Boots", ArmorType.BOOTS, EIArmorMaterials.NANO_QUANTUM, NanoSuitAbility.STEP).register();
 	
 	public static final ItemHolder<Item>                TIN_CAN           = create("tin_can", "Tin Can", Item::new, EISortOrder.OTHER_GEAR).register();
-	public static final ItemHolder<Item>                CANNED_FOOD       = create("canned_food", "Canned Food", Item::new, EISortOrder.OTHER_GEAR).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.3f).fast().usingConvertsTo(TIN_CAN).build())).tag(ItemTags.WOLF_FOOD, ItemTags.CAT_FOOD).register();
+	public static final ItemHolder<Item>                CANNED_FOOD       = create("canned_food", "Canned Food", Item::new, EISortOrder.OTHER_GEAR).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.3f).build(), net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.8f).build()).usingConvertsTo(TIN_CAN.asItem())).tag(ItemTags.WOLF_FOOD, ItemTags.CAT_FOOD).register();
 	public static final ItemHolder<RobotAutoFeederItem> ROBOT_AUTO_FEEDER = create("robot_auto_feeder", "Robot Auto Feeder", RobotAutoFeederItem::new, EISortOrder.OTHER_GEAR).withCapabilities(MICommonCapabitilies::simpleEnergyItem).register();
 	
 	public static final ItemHolder<MachineConfigCardItem>     MACHINE_CONFIG_CARD     = create("machine_config_card", "Machine Config Card", MachineConfigCardItem::new, EISortOrder.OTHER_GEAR).register();
@@ -96,9 +95,9 @@ public final class EIItems
 	public static final ItemHolder<Item> NETHERITE_ROTARY_BLADE = create("netherite_rotary_blade", "Netherite Rotary Blade", Item::new, EISortOrder.PARTS).register();
 	public static final ItemHolder<Item> STEEL_COMBINE          = create("steel_combine", "Steel Combine", Item::new, EISortOrder.PARTS).register();
 	
-	public static final ItemHolder<Item> MULCH              = create("mulch", "Mulch", Item::new, EISortOrder.RESOURCES).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.3f).fast().build())).register();
+	public static final ItemHolder<Item> MULCH              = create("mulch", "Mulch", Item::new, EISortOrder.RESOURCES).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.3f).build(), net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.8f).build())).register();
 	public static final ItemHolder<Item> NETHERITE_DUST     = create("netherite_dust", "Netherite Dust", Item::new, EISortOrder.RESOURCES).tag(EITags.itemCommon("dusts"), EITags.itemCommon("dusts/netherite")).register();
-	public static final ItemHolder<Item> CRYSTALLIZED_HONEY = create("crystallized_honey", "Crystallized Honey", Item::new, EISortOrder.RESOURCES).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(3).saturationModifier(0.3f).fast().build())).register();
+	public static final ItemHolder<Item> CRYSTALLIZED_HONEY = create("crystallized_honey", "Crystallized Honey", Item::new, EISortOrder.RESOURCES).withProperties((p) -> p.food(new FoodProperties.Builder().nutrition(3).saturationModifier(0.3f).build(), net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.8f).build())).register();
 	public static final ItemHolder<Item> GRANITE_DUST       = create("granite_dust", "Granite Dust", Item::new, EISortOrder.RESOURCES).tag(EITags.itemCommon("dusts"), EITags.itemCommon("dusts/granite")).register();
 	
 	public static final ItemHolder<PhotovoltaicCellItem> LV_PHOTOVOLTAIC_CELL = createPhotovoltaicCell("lv", "LV", CableTier.LV, 32, 10 * 60 * 20);
@@ -156,22 +155,10 @@ public final class EIItems
 			default ->
 					throw new IllegalArgumentException("Cannot get tag for armor type %s".formatted(armorType.name()));
 		};
-		Function<NanoSuitArmorItem, List<NanoSuitDecoration.ItemProperty>> itemProperties = (item) -> NanoSuitDecoration.values().stream()
-				.filter((d) -> d.armorType() == armorType)
-				.map((d) -> d.itemProperty(item))
-				.filter(Objects::nonNull)
-				.toList();
 		return create(id, englishName, (p) -> new NanoSuitArmorItem(material, armorType, p.rarity(quantum ? Rarity.EPIC : ability.map(NanoSuitAbility::rarity).orElse(Rarity.UNCOMMON)), ability, quantum), EISortOrder.GEAR.and(quantum).and(armorType))
-				.tag(armorTag, Tags.Items.ARMORS, ItemTags.TRIMMABLE_ARMOR, ItemTags.DYEABLE, EITags.Items.RAINBOW_DYEABLE)
+				.tag(armorTag, Tags.Items.ARMORS, ItemTags.TRIMMABLE_ARMOR, ItemTags.CAULDRON_CAN_REMOVE_DYE, EITags.Items.RAINBOW_DYEABLE)
 				.withRegistrationListener(CommonRegistrations::cauldronClearDye)
 				.withRegistrationListener(RainbowDataComponent::cauldronClearDyeAndRainbow)
-				.withClientRegistrationListener((item) ->
-				{
-					for(var itemProperty : itemProperties.apply(item))
-					{
-						ItemProperties.register(item, itemProperty.id(), (stack, __, ___, ____) -> stack.getOrDefault(itemProperty.component(), false) ? 1 : 0);
-					}
-				})
 				.withCapabilities(MICommonCapabitilies::simpleEnergyItem);
 	}
 	
@@ -215,6 +202,6 @@ public final class EIItems
 	
 	public static void itemPropertyTeslaNetworkSelected(Item item)
 	{
-		ItemProperties.register(item, EI.id("selected_tesla_network"), (stack, __, ___, ____) -> stack.has(EIComponents.SELECTED_TESLA_NETWORK) ? 1 : 0);
+		// Legacy item model predicate requires a new item model JSON definition; see PORTING.md.
 	}
 }

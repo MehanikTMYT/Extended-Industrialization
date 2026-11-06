@@ -5,9 +5,10 @@ import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import com.mojang.blaze3d.vertex.QuadInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.Sheets;
+import com.mojang.blaze3d.vertex.PoseStack;
+import javax.annotation.Nullable;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.BlockModelSet;
+import net.minecraft.client.renderer.block.BlockStateModelSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
@@ -27,11 +28,11 @@ import net.swedz.extended_industrialization.machines.blockentity.MachineChainerM
  */
 public class MachineChainerBlockEntityRenderer implements BlockEntityRenderer<MachineChainerMachineBlockEntity, MachineChainerBlockEntityRenderer.ChainerRenderState>
 {
-	private final BlockModelSet blockModels;
+	private final BlockStateModelSet blockModels;
 	
 	public MachineChainerBlockEntityRenderer(BlockEntityRendererProvider.Context context)
 	{
-		this.blockModels = Minecraft.getInstance().getModelManager().getBlockModelSet();
+		this.blockModels = Minecraft.getInstance().getModelManager().getBlockStateModelSet();
 	}
 	
 	@Override
@@ -41,7 +42,7 @@ public class MachineChainerBlockEntityRenderer implements BlockEntityRenderer<Ma
 	}
 	
 	@Override
-	public void extractRenderState(MachineChainerMachineBlockEntity machine, ChainerRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress)
+	public void extractRenderState(MachineChainerMachineBlockEntity machine, ChainerRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress)
 	{
 		BlockEntityRenderer.super.extractRenderState(machine, state, partialTicks, cameraPosition, breakProgress);
 		
@@ -50,7 +51,7 @@ public class MachineChainerBlockEntityRenderer implements BlockEntityRenderer<Ma
 		
 		var data = machine.getMachineModelData();
 		state.activeQuads.clear();
-		if(model != null && data.isActive())
+		if(model != null && data.isActive)
 		{
 			for(var direction : Direction.values())
 			{
@@ -71,7 +72,7 @@ public class MachineChainerBlockEntityRenderer implements BlockEntityRenderer<Ma
 		{
 			final var quad = activeQuad.quad;
 			final int light = activeQuad.light;
-			submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, buffer) ->
+			submitNodeCollector.submitCustomGeometry(poseStack, net.minecraft.client.renderer.Sheets.cutoutBlockSheet(), (pose, buffer) ->
 			{
 				var instance = new QuadInstance();
 				instance.setLightCoords(light);
@@ -84,7 +85,7 @@ public class MachineChainerBlockEntityRenderer implements BlockEntityRenderer<Ma
 	{
 	}
 	
-	public static final class ChainerRenderState extends net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+	public static class ChainerRenderState extends net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
 	{
 		public final java.util.List<ActiveQuad> activeQuads = new java.util.ArrayList<>();
 	}

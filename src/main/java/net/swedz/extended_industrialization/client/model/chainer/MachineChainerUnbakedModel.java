@@ -1,5 +1,7 @@
 package net.swedz.extended_industrialization.client.model.chainer;
 
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import java.util.Map;
 import aztech.modern_industrialization.client.util.ModelHelper;
 import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;

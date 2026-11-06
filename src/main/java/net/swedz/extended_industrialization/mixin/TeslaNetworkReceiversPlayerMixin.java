@@ -55,9 +55,9 @@ public abstract class TeslaNetworkReceiversPlayerMixin extends LivingEntity
 		var inventory = player.getInventory();
 		
 		List<ItemStack> items = Lists.newArrayList();
-		items.addAll(inventory.armor);
+		for(var slot : net.minecraft.world.entity.EquipmentSlot.values()) if(slot.isArmor()) items.add(player.getItemBySlot(slot));
 		items.addAll(inventory.getNonEquipmentItems());
-		items.addAll(inventory.offhand);
+		items.add(player.getOffhandItem());
 		items.addAll(EIModSlot.getContents(player, (stack) -> true));
 		
 		return items;

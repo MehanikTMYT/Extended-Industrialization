@@ -100,7 +100,7 @@ public final class EIMIHookListener implements MIHookListener
 			boolean isValidForProcessingArray = false;
 			for(var workstationId : params.workstations)
 			{
-				var workstationItem = BuiltInRegistries.ITEM.get(workstationId);
+				var workstationItem = BuiltInRegistries.ITEM.getValue(workstationId);
 				if(ProcessingArrayMachineSlot.isMachine(workstationItem))
 				{
 					isValidForProcessingArray = true;

@@ -15,7 +15,7 @@ public interface MachineOverlaysJson
 	
 	int[] getOutputSpriteIndexes();
 	
-	Gson GSON = new GsonBuilder().registerTypeAdapter(Identifier.class, new Identifier.Serializer()).create();
+	Gson GSON = new GsonBuilder().registerTypeAdapter(Identifier.class, (com.google.gson.JsonDeserializer<Identifier>) (json, type, context) -> Identifier.parse(json.getAsString())).create();
 	
 	static <O extends MachineOverlaysJson> O parse(Class<O> clazz, JsonObject json, MachineOverlaysJson defaultOverlay)
 	{
@@ -48,7 +48,7 @@ public interface MachineOverlaysJson
 		{
 			if(id != null)
 			{
-				return new Material(InventoryMenu.BLOCK_ATLAS, id);
+				return new Material(id);
 			}
 		}
 		return null;

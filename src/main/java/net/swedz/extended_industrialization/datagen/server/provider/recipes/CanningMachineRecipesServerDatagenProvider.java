@@ -34,7 +34,7 @@ public final class CanningMachineRecipesServerDatagenProvider extends RecipesSer
 				(r) -> r
 						.fluidIn(fluidStack.getFluid(), fluidStack.getAmount())
 						.itemIn(emptyItem, 1)
-						.itemOut(ItemResource.of(fullItemAsOutput), 1, 1f),
+						.itemOut(fullItemAsOutput.getItem(), 1, 1f),
 				output
 		);
 		addMachineRecipe(

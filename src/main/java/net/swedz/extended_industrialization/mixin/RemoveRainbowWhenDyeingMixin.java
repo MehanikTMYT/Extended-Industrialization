@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class RemoveRainbowWhenDyeingMixin
 {
 	@WrapOperation(
-			method = "applyDyes",
+			method = "applyDyes(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;)Lnet/minecraft/world/item/ItemStack;",
 			at = @At(
 					value = "INVOKE",
 					target = "Lnet/minecraft/world/item/ItemStack;get(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;"

@@ -38,25 +38,25 @@ public final class SolarEfficiencyBarClient extends GuiComponentClient<SolarEffi
 		@Override
 		public void extractBackground(GuiGraphicsExtractor guiGraphics, int x, int y)
 		{
-			guiGraphics.blit(
+			guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
 					EFFICIENCY_BAR,
 					x + params.renderX() - 1, y + params.renderY() - 1,
 					0, 2, WIDTH + 2, HEIGHT + 2, 102, 6
 			);
 			int barPixels = (int) ((float) data.efficiency() / 100 * WIDTH);
-			guiGraphics.blit(
+			guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
 					EFFICIENCY_BAR,
 					x + params.renderX(), y + params.renderY(),
 					0, 0, barPixels, HEIGHT, 102, 6
 			);
-			guiGraphics.blit(SOLAR_STATE,
+			guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,SOLAR_STATE,
 					x + params.renderX() - 20, y + params.renderY() + HEIGHT / 2 - 6,
 					data.working() ? 0 : 12, 0, 12, 12, 24, 12
 			);
 		}
 		
 		@Override
-		public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
+		public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
 		{
 			if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), WIDTH, HEIGHT, cursorX - x, cursorY - y))
 			{
@@ -70,7 +70,7 @@ public final class SolarEfficiencyBarClient extends GuiComponentClient<SolarEffi
 				{
 					lines.add(EI.text().generatingEuPerTick(data.energyProduced()));
 				}
-				graphics.renderTooltip(font, lines, Optional.empty(), cursorX, cursorY);
+				graphics.setTooltipForNextFrame(font, lines, Optional.empty(), cursorX, cursorY);
 				return true;
 			}
 			return false;

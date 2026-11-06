@@ -1,5 +1,7 @@
 package net.swedz.extended_industrialization.client.ber.tesla;
 
+import net.swedz.extended_industrialization.client.ber.tesla.behavior.TeslaBehavior;
+import aztech.modern_industrialization.client.machines.MachineRenderState;
 import aztech.modern_industrialization.client.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,7 +25,7 @@ public class TeslaPartMultiblockRenderer extends MultiblockMachineBER
 	}
 	
 	@Override
-	public void extractRenderState(MultiblockMachineBlockEntity machine, MachineRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress)
+	public void extractRenderState(MultiblockMachineBlockEntity machine, MachineRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress)
 	{
 		super.extractRenderState(machine, machineState, partialTicks, cameraPosition, breakProgress);
 		var state = (TeslaRenderState) machineState;

@@ -100,14 +100,14 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 				int iconX = iconPosition[0] + x;
 				int iconY = iconPosition[1] + y;
 				
-				graphics.blitSprite(ICON_BACKGROUND, iconX, iconY, 22, 22);
-				graphics.blit(iconX + 2, iconY + 2, 0, 18, 18, Minecraft.getInstance().getMobEffectTextures().get(effect.effect()));
+				graphics.blitSprite(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, ICON_BACKGROUND, iconX, iconY, 22, 22);
+				graphics.blitSprite(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, net.minecraft.client.gui.Gui.getMobEffectSprite(effect.effect()), iconX + 2, iconY + 2, 18, 18);
 				
 				if(effect.amplifier() >= 1 && effect.amplifier() <= 9)
 				{
 					var font = Minecraft.getInstance().font;
 					var amplifierText = Component.translatable("enchantment.level." + (effect.amplifier() + 1));
-					graphics.drawString(font, amplifierText, iconX + 22 - font.width(amplifierText) - 2, iconY + 22 - font.lineHeight - 1, 0xFFFFFF);
+					graphics.text(font, amplifierText, iconX + 22 - font.width(amplifierText) - 2, iconY + 22 - font.lineHeight - 1, 0xFFFFFF);
 				}
 			}
 		}
@@ -117,14 +117,14 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 			int x = left + TIME_X;
 			int y = top + TIME_Y;
 			
-			graphics.blit(BAR_TEXTURE, x - 1, y - 1, 0, 2, TIME_WIDTH + 2, TIME_HEIGHT + 2, 102, 6);
+			graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,BAR_TEXTURE, x - 1, y - 1, 0, 2, TIME_WIDTH + 2, TIME_HEIGHT + 2, 102, 6);
 			
 			int barPixels = (int) ((float) data.remainingTicks() / data.totalTicks() * TIME_WIDTH);
-			graphics.blit(BAR_TEXTURE, x, y, 0, 0, barPixels, TIME_HEIGHT, 102, 6);
+			graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,BAR_TEXTURE, x, y, 0, 0, barPixels, TIME_HEIGHT, 102, 6);
 		}
 		
 		@Override
-		public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int left, int top, int cursorX, int cursorY)
+		public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int left, int top, int cursorX, int cursorY)
 		{
 			return this.renderEffectTooltip(screen, font, graphics, left, top, cursorX, cursorY) ||
 				   this.renderRemainingTimeBarTooltip(screen, font, graphics, left, top, cursorX, cursorY);
@@ -146,7 +146,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 					{
 						effectText.append(CommonComponents.SPACE).append(Component.translatable("enchantment.level." + (effect.amplifier() + 1)));
 					}
-					graphics.renderTooltip(font, effectText, cursorX, cursorY);
+					graphics.setTooltipForNextFrame(font, effectText, cursorX, cursorY);
 					return true;
 				}
 				index++;
@@ -161,7 +161,7 @@ public final class BeaconEffectsViewClient extends GuiComponentClient<Unit, Beac
 				List<Component> lines = Lists.newArrayList();
 				lines.add(EI.text().electricBeaconRemainingTimeTooltip(data.remainingTicks()));
 				lines.add(EI.text().electricBeaconEuCostTooltip(data.euCost()));
-				graphics.renderTooltip(font, lines, Optional.empty(), cursorX, cursorY);
+				graphics.setTooltipForNextFrame(font, lines, Optional.empty(), cursorX, cursorY);
 				return true;
 			}
 			return false;

@@ -38,16 +38,17 @@ public final class BlockTagDatagenProvider extends BlockTagsProvider
 						Tags.Blocks.VILLAGER_FARMLANDS,
 						BlockTags.NYLIUM
 				)
-				.addOptional(mysticalAgriculture("inferium_farmland"))
-				.addOptional(mysticalAgriculture("prudentium_farmland"))
-				.addOptional(mysticalAgriculture("tertium_farmland"))
-				.addOptional(mysticalAgriculture("imperium_farmland"))
-				.addOptional(mysticalAgriculture("supremium_farmland"))
-				.addOptional(farmersDelight("rich_soil"))
-				.addOptional(farmersDelight("rich_soil_farmland"))
-				.addOptional(eternalStarlight("nightfall_farmland"))
-				.addOptional(biomesWeveGone("sandy_farmland"))
-				.addOptional(biomesWeveGone("lush_farmland"));
+				;
+		this.getOrCreateRawBuilder(EITags.Blocks.FARMER_DIRT).addOptionalElement(mysticalAgriculture("inferium_farmland"))
+				.addOptionalElement(mysticalAgriculture("prudentium_farmland"))
+				.addOptionalElement(mysticalAgriculture("tertium_farmland"))
+				.addOptionalElement(mysticalAgriculture("imperium_farmland"))
+				.addOptionalElement(mysticalAgriculture("supremium_farmland"))
+				.addOptionalElement(farmersDelight("rich_soil"))
+				.addOptionalElement(farmersDelight("rich_soil_farmland"))
+				.addOptionalElement(eternalStarlight("nightfall_farmland"))
+				.addOptionalElement(biomesWeveGone("sandy_farmland"))
+				.addOptionalElement(biomesWeveGone("lush_farmland"));
 	}
 	
 	private void addChainerLinkables()

@@ -5,25 +5,25 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.ArmorDyeRecipe;
+import net.minecraft.world.item.crafting.DyeRecipe;
 import net.swedz.extended_industrialization.EITags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(ArmorDyeRecipe.class)
+@Mixin(DyeRecipe.class)
 public class ArmorDyeRecipeIgnoreRainbowItemsMixin
 {
 	@WrapOperation(
 			method = "matches(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/world/level/Level;)Z",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"
+					target = "Lnet/minecraft/world/item/crafting/Ingredient;test(Lnet/minecraft/world/item/ItemStack;)Z"
 			)
 	)
-	private boolean isDyeable(ItemStack stack, TagKey<Item> tag,
+	private boolean isDyeable(net.minecraft.world.item.crafting.Ingredient ingredient, ItemStack stack,
 							  Operation<Boolean> original)
 	{
-		return original.call(stack, tag) &&
+		return original.call(ingredient, stack) &&
 			   !stack.is(EITags.Items.RAINBOW_DYEABLE);
 	}
 }

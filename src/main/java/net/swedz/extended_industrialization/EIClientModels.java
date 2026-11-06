@@ -50,7 +50,7 @@ public final class EIClientModels
 		}
 		for(var skin : event.getSkins())
 		{
-			if(event.getSkin(skin) instanceof LivingEntityRenderer renderer)
+			if(event.getPlayerRenderer(skin) instanceof LivingEntityRenderer renderer)
 			{
 				renderer.addLayer(layer.apply(renderer));
 			}

@@ -25,8 +25,8 @@ public final class SteamFluidHarvestingMachineBlockEntity extends FluidHarvestin
 		super(bep, blockName, bronze ? MachineTier.BRONZE : MachineTier.STEEL, euCost, behaviorCreator);
 		
 		List<ConfigurableFluidStack> fluidStacks = Arrays.asList(
-				ConfigurableFluidStack.lockedInputSlot(capacity, MIFluids.STEAM.asFluid()),
-				ConfigurableFluidStack.lockedOutputSlot(capacity, fluid.asFluid())
+				ConfigurableFluidStack.lockedInputSlot((int) capacity, MIFluids.STEAM.asFluid()),
+				ConfigurableFluidStack.lockedOutputSlot((int) capacity, fluid.asFluid())
 		);
 		SlotPositions fluidPositions = new SlotPositions.Builder().addSlot(21, 30).addSlot(OUTPUT_SLOT_X, OUTPUT_SLOT_Y).build();
 		this.inventory = new MIInventory(Collections.emptyList(), fluidStacks, SlotPositions.empty(), fluidPositions);

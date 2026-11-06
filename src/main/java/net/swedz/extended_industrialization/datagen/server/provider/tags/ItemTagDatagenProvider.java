@@ -41,7 +41,7 @@ public final class ItemTagDatagenProvider extends IntrinsicHolderTagsProvider<It
 				.addTags(
 						ItemTags.SAPLINGS
 				)
-				.addOptionalTag(Identifier.fromNamespaceAndPath("rootsclassic", "berries"));
+				.addOptionalTag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("rootsclassic", "berries")));
 	}
 	
 	private void addFarmerStandardPlantableTag()
@@ -82,7 +82,7 @@ public final class ItemTagDatagenProvider extends IntrinsicHolderTagsProvider<It
 				.add(Items.OMINOUS_BOTTLE);
 	}
 	
-	private IntrinsicTagAppender<Item> curiosTag(String path)
+	private net.minecraft.data.tags.TagAppender<Item, Item> curiosTag(String path)
 	{
 		return this.tag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("curios", path)));
 	}

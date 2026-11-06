@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.client.model.chainer;
 
+import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import aztech.modern_industrialization.client.util.ModelHelper;
 import aztech.modern_industrialization.client.machines.models.CasingModels;
 import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;

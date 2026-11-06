@@ -57,13 +57,13 @@ public final class TransformerTierComponent implements MachineComponent.ServerOn
 	@Override
 	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		tag.put(this.nbtKey(), stack.saveOptional(registries));
+		tag.store(this.nbtKey(), ItemStack.OPTIONAL_CODEC, stack);
 	}
 	
 	@Override
 	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		this.setCasingInternal(ItemStack.parseOptional(tag.lookup(), tag.getCompound(this.nbtKey())));
+		this.setCasingInternal(tag.read(this.nbtKey(), ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
 	}
 	
 	@Override

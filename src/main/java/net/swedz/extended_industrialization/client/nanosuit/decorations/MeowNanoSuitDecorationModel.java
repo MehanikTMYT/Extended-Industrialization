@@ -194,7 +194,7 @@ public final class MeowNanoSuitDecorationModel extends NanoSuitDecorationModel
 					   NanoSuitArmorItem item, ItemStack stack, EquipmentSlot slot)
 	{
 		this.head.visible = false;
-		for(var child : this.head.getChildren().values())
+		for(var child : this.head.getAllParts().stream().filter(part -> part != this.head).toList())
 		{
 			child.visible = true;
 		}
@@ -205,7 +205,7 @@ public final class MeowNanoSuitDecorationModel extends NanoSuitDecorationModel
 			submitNodeCollector.submitModelPart(this.head, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, null, -1, null);
 		}
 		this.head.visible = false;
-		for(var child : this.head.getChildren().values())
+		for(var child : this.head.getAllParts().stream().filter(part -> part != this.head).toList())
 		{
 			child.visible = false;
 		}

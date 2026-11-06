@@ -23,7 +23,7 @@ public final class EICommands
 	private static void registerCommands(RegisterCommandsEvent event)
 	{
 		event.getDispatcher().register(literal("ei")
-				.requires((s) -> s.hasPermission(4))
+				.requires(net.minecraft.commands.Commands.hasPermission(net.minecraft.commands.Commands.LEVEL_OWNERS))
 				.then(literal("tesla_network")
 						.then(literal("dump")
 								.then(argument("pos", blockPos())
@@ -59,7 +59,7 @@ public final class EICommands
 	private static int teslaNetworkDump(CommandSourceStack source, WorldPos pos)
 	{
 		var level = pos.level();
-		var cache = level.getServer().getTeslaNetworks();
+		var cache = ((net.swedz.extended_industrialization.machines.component.tesla.network.TeslaNetworkHolder) level.getServer()).getTeslaNetworks();
 		
 		if(cache.exists(pos))
 		{

@@ -23,18 +23,18 @@ public final class NanoGravichestplateHudRenderer
 			if(chestplate.getItem() instanceof NanoSuitArmorItem item &&
 			   item.hasAbility(NanoSuitGravichestplateAbility.class))
 			{
-				graphics.pose().pushPose();
-				graphics.pose().translate(0, MIClientConfig.INSTANCE.armorHudYPosition.getAsInt(), 0);
+				graphics.pose().pushMatrix();
+				graphics.pose().translate(0, MIClientConfig.INSTANCE.armorHudYPosition.getAsInt());
 				
 				var activeComponent = item.isActivated(chestplate) ?
 						MIText.GravichestplateEnabled.text().withStyle(ChatFormatting.GREEN) :
 						MIText.GravichestplateDisabled.text().withStyle(ChatFormatting.RED);
-				graphics.drawString(mc.font, activeComponent, 4, 0, 0xF9FFFE);
+				graphics.text(mc.font, activeComponent, 4, 0, 0xF9FFFE);
 				
 				Component chargeComponent = MIText.EnergyFill.text(item.getStoredEnergy(chestplate) * 100 / item.getEnergyCapacity(chestplate));
-				graphics.drawString(mc.font, chargeComponent, 4, 10, 0xF9FFFE);
+				graphics.text(mc.font, chargeComponent, 4, 10, 0xF9FFFE);
 				
-				graphics.pose().popPose();
+				graphics.pose().popMatrix();
 			}
 		}
 	}

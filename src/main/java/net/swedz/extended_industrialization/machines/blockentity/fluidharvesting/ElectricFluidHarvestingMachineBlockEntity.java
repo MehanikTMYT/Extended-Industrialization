@@ -37,7 +37,7 @@ public final class ElectricFluidHarvestingMachineBlockEntity extends FluidHarves
 		super(bep, blockName, MachineTier.LV, euCost, behaviorCreator);
 		
 		List<ConfigurableFluidStack> fluidStacks = Collections.singletonList(
-				ConfigurableFluidStack.lockedOutputSlot(capacity, fluid.asFluid())
+				ConfigurableFluidStack.lockedOutputSlot((int) capacity, fluid.asFluid())
 		);
 		SlotPositions fluidPositions = new SlotPositions.Builder().addSlot(OUTPUT_SLOT_X, OUTPUT_SLOT_Y).build();
 		this.inventory = new MIInventory(Collections.emptyList(), fluidStacks, SlotPositions.empty(), fluidPositions);

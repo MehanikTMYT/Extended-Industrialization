@@ -1,5 +1,8 @@
 package net.swedz.extended_industrialization.client.ber.tesla;
 
+import net.minecraft.util.context.ContextKey;
+import net.swedz.extended_industrialization.EIClient;
+import net.swedz.extended_industrialization.EIClientRenderTypes;
 import aztech.modern_industrialization.MITags;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import com.google.common.collect.Lists;
@@ -48,7 +51,7 @@ public final class TeslaPartRenderer
 	
 	// ---------- Held network key / wrench helpers ----------
 	
-	public static Optional<Identifier> getHeldNetworkKey()
+	public static Optional<net.swedz.tesseract.neoforge.api.WorldPos> getHeldNetworkKey()
 	{
 		var player = Minecraft.getInstance().player;
 		if(player == null)

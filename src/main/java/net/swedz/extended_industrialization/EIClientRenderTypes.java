@@ -100,7 +100,7 @@ public final class EIClientRenderTypes
 				"plasma_%s_%s".formatted(scale, speed),
 				RenderSetup.builder(EIRenderPipelines.TESLA_PLASMA)
 						.withTexture("Sampler0", EI.id("textures/vfx/tesla_plasma.png"))
-						.withTexture("Sampler1", net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
+						.withTexture("Sampler1", net.minecraft.resources.Identifier.withDefaultNamespace("textures/atlas/blocks.png"))
 						.setTextureTransform(textureTransform)
 						.createRenderSetup()
 		);

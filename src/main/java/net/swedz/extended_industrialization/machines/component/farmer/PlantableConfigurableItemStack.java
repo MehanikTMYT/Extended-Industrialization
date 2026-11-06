@@ -30,7 +30,7 @@ public final class PlantableConfigurableItemStack extends ChangeListener
 	
 	public ItemResource getItemResource()
 	{
-		return (stack.isPlayerLocked() || stack.isMachineLocked()) && stack.getResource().isBlank() ?
+		return (stack.isPlayerLocked() || stack.isMachineLocked()) && stack.getResource().isEmpty() ?
 				ItemResource.of(stack.getLockedInstance()) :
 				stack.getResource();
 	}

@@ -142,7 +142,7 @@ public final class ChainerComponent implements MachineComponent, ChainerElement
 	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
 		links.count(tag.getIntOr("connected_machines", 0));
-		if(tag.contains("fail_position", CompoundTag.TAG_LONG))
+		if(tag.getLong("fail_position").isPresent())
 		{
 			links.failPosition(BlockPos.of(tag.getLongOr("fail_position", 0L)));
 		}

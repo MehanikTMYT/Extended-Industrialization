@@ -156,7 +156,7 @@ public final class UniversalTransformerMachineBlockEntity extends MachineBlockEn
 					{
 						try (var transaction = Transaction.openRoot())
 						{
-							long extracted = energyItem.extract(energy.getRemainingCapacity() / stackSize, false);
+							long extracted = energyItem.extract((int) (energy.getRemainingCapacity() / stackSize), transaction);
 							
 							if(extracted == 0)
 							{

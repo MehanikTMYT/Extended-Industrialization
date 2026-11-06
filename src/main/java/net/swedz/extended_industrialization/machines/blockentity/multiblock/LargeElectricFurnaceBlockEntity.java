@@ -142,7 +142,7 @@ public final class LargeElectricFurnaceBlockEntity extends AbstractElectricMulti
 	{
 		List<Tier> tiers = Lists.newArrayList();
 		LargeElectricFurnaceTier.getAll().forEach((block, tier) ->
-				tiers.add(new Tier(block.location(), tier.batchSize(), tier.euCostMultiplier())));
+				tiers.add(new Tier(block.identifier(), tier.batchSize(), tier.euCostMultiplier())));
 		tiers.sort(Comparator.comparingInt(Tier::batchSize));
 		initTiers(tiers);
 	}

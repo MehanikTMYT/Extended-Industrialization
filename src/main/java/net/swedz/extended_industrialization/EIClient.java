@@ -1,5 +1,7 @@
 package net.swedz.extended_industrialization;
 
+import net.minecraft.resources.Identifier;
+import net.swedz.extended_industrialization.port.fluid.MIFluidHolder;
 import aztech.modern_industrialization.client.machines.MachineBlockEntityRenderer;
 import aztech.modern_industrialization.client.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.client.machines.multiblocks.MultiblockTankBER;
@@ -84,7 +86,7 @@ public final class EIClient
 		
 		NeoForge.EVENT_BUS.addListener(InputEvent.MouseScrollingEvent.class, (event) ->
 		{
-			if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_ALT))
+			if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_ALT))
 			{
 				var player = Minecraft.getInstance().player;
 				var stack = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -126,6 +128,12 @@ public final class EIClient
 		event.enqueueWork(() -> EIItems.values().forEach(ItemHolder::triggerClientRegistrationListener));
 	}
 	
+	@SubscribeEvent
+	private static void registerBlockStateModels(net.neoforged.neoforge.client.event.RegisterBlockStateModels event)
+	{
+		event.registerModel(EI.id("machine_chainer"), net.swedz.extended_industrialization.client.model.chainer.MachineChainerUnbakedModel.CODEC);
+	}
+
 	@SubscribeEvent
 	private static void registerModelLoaders(ModelEvent.RegisterLoaders event)
 	{
@@ -177,7 +185,7 @@ public final class EIClient
 	@SubscribeEvent
 	private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
 	{
-		event.registerEntityRenderer(EIEntities.NANO_SABER_SWEEP.get(), (EntityRendererProvider<NanoSaberSweepEntity, ?>) NanoSaberSweepEntityRenderer::new);
+		event.registerEntityRenderer(EIEntities.NANO_SABER_SWEEP.get(), NanoSaberSweepEntityRenderer::new);
 	}
 	
 	@SubscribeEvent
@@ -202,6 +210,7 @@ public final class EIClient
 	private static void registerAtlases(RegisterTextureAtlasesEvent event)
 	{
 		event.register(new AtlasManager.AtlasConfig(EIClientSheets.NANO_SABER_SWEEP, EI.id("nano_saber_sweep"), false));
+		event.register(new AtlasManager.AtlasConfig(EI.id("textures/atlas/nano_quantum.png"), EI.id("nano_quantum"), false));
 	}
 	
 	@SubscribeEvent

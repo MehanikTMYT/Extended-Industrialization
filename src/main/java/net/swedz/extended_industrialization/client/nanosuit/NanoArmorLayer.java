@@ -95,7 +95,7 @@ public final class NanoArmorLayer<S extends HumanoidRenderState, M extends Human
 			
 			boolean usesInnerModel = slot == EquipmentSlot.LEGS;
 			
-			var armorMaterial = item.getMaterial().value();
+			var armorMaterial = item.getMaterial();
 			var extensions = IClientItemExtensions.of(stack);
 			int fallbackColor = extensions.getDefaultDyeColor(stack);
 			
@@ -114,7 +114,7 @@ public final class NanoArmorLayer<S extends HumanoidRenderState, M extends Human
 				if(layerColor != 0)
 				{
 					boolean isColored = layerColor != -1;
-					var texture = ClientHooks.getArmorTexture(stack, layerType, armorMaterialLayer, item.getMaterial().value().assetId().location());
+					var texture = ClientHooks.getArmorTexture(stack, layerType, armorMaterialLayer, item.getMaterial().assetId().identifier());
 					var renderType = armorRenderType(layerIndex, item, texture, isColored);
 					for(var part : model.parts())
 					{

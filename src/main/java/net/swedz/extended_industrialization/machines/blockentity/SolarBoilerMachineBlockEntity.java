@@ -94,7 +94,7 @@ public final class SolarBoilerMachineBlockEntity extends MachineBlockEntity impl
 		steamProduction = new SteamProductionComponent(
 				inventory.fluidStorage,
 				List.of(Fluids.WATER, EIFluids.DISTILLED_WATER.asFluid()),
-				MIFluids.STEAM.variant(),
+				MIFluids.STEAM.resource(),
 				() -> (long) (maxEuProduction * this.getEfficiency(true)),
 				() -> 16
 		);
@@ -157,11 +157,11 @@ public final class SolarBoilerMachineBlockEntity extends MachineBlockEntity impl
 		if(sunlight.canOperate())
 		{
 			var waterFluid = steamProduction.tryMakeSteam();
-			if(waterFluid.isBlank())
+			if(waterFluid.isEmpty())
 			{
 				active = false;
 			}
-			else if(!waterFluid.isOf(EIFluids.DISTILLED_WATER.asFluid()))
+			else if(!waterFluid.is(EIFluids.DISTILLED_WATER.asFluid()))
 			{
 				calcification.tick();
 			}

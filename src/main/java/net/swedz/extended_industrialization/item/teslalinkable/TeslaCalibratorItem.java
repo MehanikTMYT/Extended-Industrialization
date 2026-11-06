@@ -114,12 +114,12 @@ public final class TeslaCalibratorItem extends Item
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag isAdvanced)
+	public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> lines, TooltipFlag isAdvanced)
 	{
 		if(stack.has(EIComponents.SELECTED_TESLA_NETWORK))
 		{
 			var key = stack.get(EIComponents.SELECTED_TESLA_NETWORK).key();
-			lines.add(EI.text().teslaCalibratorLinked(key));
+			lines.accept(EI.text().teslaCalibratorLinked(key));
 		}
 	}
 	

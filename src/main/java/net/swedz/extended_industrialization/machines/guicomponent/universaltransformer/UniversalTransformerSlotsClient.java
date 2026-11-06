@@ -100,18 +100,18 @@ public final class UniversalTransformerSlotsClient extends GuiComponentClient<Un
 				var box = this.getBox(leftPos, topPos);
 				
 				int textureX = leftPos - box.x() - box.w();
-				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y(), textureX, 0, box.w(), box.h() - 4);
-				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y() + box.h() - 4, textureX, 252, box.w(), 4);
+				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y(), textureX, 0, box.w(), box.h() - 4, 256, 256);
+				graphics.blit(MachineScreen.BACKGROUND, box.x(), box.y() + box.h() - 4, textureX, 252, box.w(), 4, 256, 256);
 				
-				graphics.blit(TRANSFORMER_DIRECTION, leftPos - 22, topPos + 37, 0, 0, 16, 16, 16, 16);
+				graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,TRANSFORMER_DIRECTION, leftPos - 22, topPos + 37, 0, 0, 16, 16, 16, 16);
 			}
 			
 			@Override
-			public boolean extractTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
+			public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphicsExtractor graphics, int x, int y, int cursorX, int cursorY)
 			{
 				if(screen.getFocusedSlot() instanceof SlotTooltip slotTooltip && !screen.getFocusedSlot().hasItem())
 				{
-					graphics.renderTooltip(font, slotTooltip.getTooltip(), cursorX, cursorY);
+					graphics.setTooltipForNextFrame(font, slotTooltip.getTooltip(), cursorX, cursorY);
 					return true;
 				}
 				return false;

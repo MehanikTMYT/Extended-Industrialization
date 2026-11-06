@@ -58,7 +58,7 @@ public final class HoneyExtractorBehavior extends FluidHarvestingBehavior
 			long honeyToCollect = Math.min((long) this.getOutputMultiplier() * FluidType.BUCKET_VOLUME / 5, fluidStack.getRemainingSpace());
 			
 			fluidStack.setKey(FluidResource.of(EIFluids.HONEY.asFluid()));
-			fluidStack.increment(honeyToCollect);
+			fluidStack.increment(Math.toIntExact(honeyToCollect));
 		}
 	}
 	

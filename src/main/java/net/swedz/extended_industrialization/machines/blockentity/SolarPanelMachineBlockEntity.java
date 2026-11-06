@@ -88,7 +88,7 @@ public final class SolarPanelMachineBlockEntity extends MachineBlockEntity imple
 		);
 		var itemPositions = new SlotPositions.Builder().addSlot(CELL_X, CELL_Y).build();
 		List<ConfigurableFluidStack> fluidStacks = List.of(
-				ConfigurableFluidStack.lockedInputSlot(capacity, EIFluids.DISTILLED_WATER.asFluid())
+				ConfigurableFluidStack.lockedInputSlot((int) capacity, EIFluids.DISTILLED_WATER.asFluid())
 		);
 		var fluidPositions = new SlotPositions.Builder().addSlot(WATER_X, WATER_Y).build();
 		inventory = new MIInventory(itemStacks, fluidStacks, itemPositions, fluidPositions);

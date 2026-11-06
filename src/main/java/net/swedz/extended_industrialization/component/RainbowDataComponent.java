@@ -41,9 +41,9 @@ public record RainbowDataComponent(boolean value, boolean showInTooltip) impleme
 	
 	public static <I extends Item> void cauldronClearDyeAndRainbow(I item)
 	{
-		CauldronInteraction.WATER.map().put(item, (state, level, pos, player, hand, stack) ->
+		net.minecraft.core.cauldron.CauldronInteractions.WATER.put(item, (state, level, pos, player, hand, stack) ->
 		{
-			if(!stack.is(ItemTags.DYEABLE) &&
+			if(!stack.is(ItemTags.CAULDRON_CAN_REMOVE_DYE) &&
 			   !stack.is(EITags.Items.RAINBOW_DYEABLE))
 			{
 				return InteractionResult.PASS;

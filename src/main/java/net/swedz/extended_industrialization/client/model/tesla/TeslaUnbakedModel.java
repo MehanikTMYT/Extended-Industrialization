@@ -1,5 +1,6 @@
 package net.swedz.extended_industrialization.client.model.tesla;
 
+import net.minecraft.client.resources.model.geometry.QuadCollection;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -35,7 +36,7 @@ public final class TeslaUnbakedModel implements UnbakedModel
 	{
 		Plasma plasma = json.has("plasma") ? Plasma.deserialize(json.getAsJsonObject("plasma"), context) : null;
 		Arcs arcs = json.has("arcs") ? Arcs.deserialize(json.getAsJsonObject("arcs"), context) : null;
-		TextureSlots.Data textures = json.has("textures") ? BlockModel.parseTextureMap(json.getAsJsonObject("textures")) : TextureSlots.Data.EMPTY;
+		TextureSlots.Data textures = json.has("textures") ? TextureSlots.parseTextureMap(json.getAsJsonObject("textures")) : TextureSlots.Data.EMPTY;
 		return new TeslaUnbakedModel(plasma, arcs, textures);
 	};
 	

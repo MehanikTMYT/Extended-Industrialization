@@ -49,7 +49,7 @@ public final class WasteCollectorBehavior extends FluidHarvestingBehavior
 		long manureToCollect = Math.min((long) this.getOutputMultiplier() * MANURE_PER_ANIMAL * animalsFound, fluidStack.getRemainingSpace());
 		
 		fluidStack.setKey(FluidResource.of(EIFluids.MANURE.asFluid()));
-		fluidStack.increment(manureToCollect);
+		fluidStack.increment(Math.toIntExact(manureToCollect));
 	}
 	
 	private int countAnimalsInArea()

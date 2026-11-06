@@ -1,7 +1,18 @@
 {
   "variants": {
     "": {
-      "model": "extended_industrialization:block/machine_chainer"
+      "casing": "modern_industrialization:lv",
+      "overlays": {
+        "front": "extended_industrialization:block/machines/machine_chainer/overlay_front",
+        "up": "extended_industrialization:block/machines/machine_chainer/overlay_arrow_up",
+        "down": "extended_industrialization:block/machines/machine_chainer/overlay_arrow_down",
+        "left": "extended_industrialization:block/machines/machine_chainer/overlay_arrow_left",
+        "right": "extended_industrialization:block/machines/machine_chainer/overlay_arrow_right",
+        "output": "modern_industrialization:block/overlays/output",
+        "item_auto": "modern_industrialization:block/overlays/item_auto",
+        "fluid_auto": "modern_industrialization:block/overlays/fluid_auto"
+      },
+      "type": "extended_industrialization:machine_chainer"
     }
   }
 }

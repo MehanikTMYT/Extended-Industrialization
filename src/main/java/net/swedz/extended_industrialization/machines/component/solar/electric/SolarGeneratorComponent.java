@@ -74,12 +74,13 @@ public final class SolarGeneratorComponent implements MachineComponent.ServerOnl
 	
 	private boolean tryUseDistilledWater()
 	{
-		try(var transaction = Transaction.openRoot())
+		var water = this.getSlotWater();
+		if(water.getAmount() > 0 && water.getResource().is(EIFluids.DISTILLED_WATER.asFluid()))
 		{
-			boolean usedDistilledWater = this.getSlotWater().extractDirect(FluidResource.of(EIFluids.DISTILLED_WATER.asFluid()), 1, transaction) > 0;
-			transaction.commit();
-			return usedDistilledWater;
+			water.decrement(1);
+			return true;
 		}
+		return false;
 	}
 	
 	private void incrementSolarTicks(ItemStack stack)

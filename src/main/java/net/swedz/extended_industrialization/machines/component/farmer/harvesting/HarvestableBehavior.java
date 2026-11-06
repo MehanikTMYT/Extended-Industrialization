@@ -26,11 +26,11 @@ public interface HarvestableBehavior extends Behavior<HarvestingContext>
 		return List.of();
 	}
 	
-	default void writeNbt(CompoundTag tag)
+	default void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
 	}
 	
-	default void readNbt(CompoundTag tag)
+	default void readNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
 	}
 }

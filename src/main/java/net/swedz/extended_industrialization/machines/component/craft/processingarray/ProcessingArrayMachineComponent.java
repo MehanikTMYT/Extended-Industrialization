@@ -50,13 +50,13 @@ public final class ProcessingArrayMachineComponent implements MachineComponent.S
 	@Override
 	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		tag.put("machinesStack", machines.saveOptional(registries));
+		tag.store("machinesStack", ItemStack.OPTIONAL_CODEC, machines);
 	}
 	
 	@Override
 	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		machines = ItemStack.parseOptional(tag.lookup(), tag.getCompound("machinesStack"));
+		machines = tag.read("machinesStack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
 		if(!machines.isEmpty())
 		{
 			machineRecipeType = ProcessingArrayMachineSlot.getMachine(machines).recipeType();

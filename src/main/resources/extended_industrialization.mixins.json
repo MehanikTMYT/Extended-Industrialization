@@ -15,7 +15,6 @@
         "mi.accessor.ConfigurableItemStackAccessor"
     ],
     "client": [
-        "AddMaterialAtlasesMixin",
         "DontRenderWrenchStuffForParticleGeneratorMixin",
         "NanoArmorDontUseVanillaRendererMixin"
     ],

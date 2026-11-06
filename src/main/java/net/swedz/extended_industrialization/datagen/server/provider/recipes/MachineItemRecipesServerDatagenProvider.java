@@ -484,7 +484,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 	
 	private void machineChainer(RecipeOutput output)
 	{
-		new MachineRecipeBuilder(MIMachineRecipeTypes.ASSEMBLER, 8, 10 * 20)
+		new MIMachineRecipeBuilder(registries, MIMachineRecipeTypes.ASSEMBLER, 8, 10 * 20)
 				.itemIn(MIBlock.ADVANCED_MACHINE_HULL, 1)
 				.itemIn(MIItem.LARGE_MOTOR, 2)
 				.itemIn(MIItem.LARGE_PUMP, 2)
@@ -492,7 +492,7 @@ public final class MachineItemRecipesServerDatagenProvider extends RecipesServer
 				.itemIn(MITags.FLUID_PIPES, 64)
 				.itemIn("modern_industrialization:electrum_cable", 64)
 				.itemOut("extended_industrialization:machine_chainer", 1)
-				.offerTo(output, "machines/machine_chainer/assembler");
+				.offerTo(output, EI.id("machines/machine_chainer/assembler"));
 		
 		addBasicCraftingMachineRecipes(
 				"machine_chainer_relay",

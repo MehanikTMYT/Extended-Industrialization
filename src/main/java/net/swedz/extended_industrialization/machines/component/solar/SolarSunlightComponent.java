@@ -17,7 +17,7 @@ public final class SolarSunlightComponent implements MachineComponent.ServerOnly
 	
 	public long getTime()
 	{
-		return machine.getLevel().getDayTime() % 24000;
+		return machine.getLevel().getOverworldClockTime() % 24000;
 	}
 	
 	public boolean isSolarTime()

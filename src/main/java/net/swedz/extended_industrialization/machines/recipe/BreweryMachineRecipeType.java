@@ -56,7 +56,7 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 	
 	private static String idPotion(Holder<Potion> potion)
 	{
-		return id(potion.unwrapKey().orElseThrow().location());
+		return id(potion.unwrapKey().orElseThrow().identifier());
 	}
 	
 	public BreweryMachineRecipeType(Identifier id)
@@ -131,7 +131,7 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 		outputStack.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
 		
 		var id = EI.id("/brewery/generated/container/%s/%s/%s/%s".formatted(
-				id(potion.unwrapKey().orElseThrow().location()),
+				id(potion.unwrapKey().orElseThrow().identifier()),
 				idItem(mix.from()),
 				id(reagentIngredient),
 				idItem(mix.to())
@@ -160,7 +160,7 @@ public final class BreweryMachineRecipeType extends ProxyableMachineRecipeType
 				
 				if(mix.from().value() instanceof PotionItem)
 				{
-					BuiltInRegistries.POTION.holders().forEach(recipeGen);
+					BuiltInRegistries.POTION.listElements().forEach(recipeGen);
 				}
 				else
 				{

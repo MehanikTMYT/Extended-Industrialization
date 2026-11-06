@@ -115,12 +115,12 @@ public final class MachineConfigCardItem extends Item
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
+	public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
 		if(stack.has(EIComponents.MACHINE_CONFIG))
 		{
 			var machineBlock = stack.get(EIComponents.MACHINE_CONFIG).machineBlock();
-			tooltipComponents.add(EI.text().machineConfigCardConfigured(machineBlock.asItem()));
+			tooltipComponents.accept(EI.text().machineConfigCardConfigured(machineBlock.asItem()));
 		}
 	}
 	

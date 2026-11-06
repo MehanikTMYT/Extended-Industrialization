@@ -159,7 +159,7 @@ public final class NanoSaberSweepEntity extends Projectile
 				this.hitTargetOrDeflectSelf(new EntityHitResult(hitEntity));
 			}
 			
-			this.checkInsideBlocks();
+			this.applyEffectsFromBlocks();
 			
 			this.setPos(this.position().add(this.getDeltaMovement()));
 		}

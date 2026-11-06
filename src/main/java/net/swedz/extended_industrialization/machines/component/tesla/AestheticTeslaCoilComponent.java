@@ -24,57 +24,57 @@ import java.util.function.Supplier;
 public final class AestheticTeslaCoilComponent implements MachineComponent
 {
 	private final List<Model> models = Lists.newArrayList();
-	
+
 	private float red = 1, green = 1, blue = 1;
-	
+
 	private int selectedModelIndex;
-	
+
 	public AestheticTeslaCoilComponent with(Identifier path, Component text)
 	{
 		models.add(new Model(path, text));
 		return this;
 	}
-	
+
 	public float red()
 	{
 		return red;
 	}
-	
+
 	public int redInt()
 	{
 		return (int) (red * 255);
 	}
-	
+
 	public float green()
 	{
 		return green;
 	}
-	
+
 	public int greenInt()
 	{
 		return (int) (green * 255);
 	}
-	
+
 	public float blue()
 	{
 		return blue;
 	}
-	
+
 	public int blueInt()
 	{
 		return (int) (blue * 255);
 	}
-	
+
 	public Vector3f getColor()
 	{
 		return new Vector3f(red, green, blue);
 	}
-	
+
 	public Identifier getSelectedModel()
 	{
 		return models.get(selectedModelIndex).path();
 	}
-	
+
 	public InteractionResult onUse(MachineBlockEntity be, Player player, InteractionHand hand)
 	{
 		var stackInHand = player.getItemInHand(hand);
@@ -84,7 +84,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 		}
 		if(stackInHand.getItem() instanceof DyeItem item)
 		{
-			int color = ColorHelper.getVibrantColor(item.getDyeColor());
+			int color = ColorHelper.getVibrantColor(item.getDefaultInstance().get(net.minecraft.core.component.DataComponents.DYE));
 			this.red = ((color >> 16) & 0xFF) / 255f;
 			this.green = ((color >> 8) & 0xFF) / 255f;
 			this.blue = (color & 0xFF) / 255f;
@@ -94,28 +94,28 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 		}
 		return InteractionResult.PASS;
 	}
-	
+
 	@Override
 	public void writeNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		var colorTag = new CompoundTag();
+		var colorTag = tag.child("tesla_color");
 		colorTag.putFloat("red", red);
 		colorTag.putFloat("green", green);
 		colorTag.putFloat("blue", blue);
-		tag.put("tesla_color", colorTag);
-		
+
+
 		tag.putInt("tesla_selected_model", selectedModelIndex);
 	}
-	
+
 	@Override
 	public void readNbt(net.minecraft.world.level.storage.ValueInput tag, boolean isUpgradingMachine)
 	{
-		if(tag.contains("tesla_color", Tag.TAG_COMPOUND))
+		if(tag.child("tesla_color").isPresent())
 		{
-			var colorTag = tag.getCompound("tesla_color");
-			red = colorTag.getFloat("red");
-			green = colorTag.getFloat("green");
-			blue = colorTag.getFloat("blue");
+			var colorTag = tag.childOrEmpty("tesla_color");
+			red = colorTag.getFloatOr("red", 1);
+			green = colorTag.getFloatOr("green", 1);
+			blue = colorTag.getFloatOr("blue", 1);
 		}
 		else
 		{
@@ -123,14 +123,14 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 			green = 1;
 			blue = 1;
 		}
-		
+
 		selectedModelIndex = tag.getIntOr("tesla_selected_model", 0);
 	}
-	
+
 	public record Model(Identifier path, Component text)
 	{
 	}
-	
+
 	private List<Component> createColorTranslations(Component prefix)
 	{
 		List<Component> lines = Lists.newArrayList();
@@ -141,7 +141,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 		}
 		return lines;
 	}
-	
+
 	private void appendColorLine(ConfigurationPanelBuilder builder, Component prefix, Supplier<Integer> colorIntGetter, Consumer<Float> colorSetter)
 	{
 		builder.add(
@@ -154,7 +154,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 				() -> colorIntGetter.get() / 15
 		);
 	}
-	
+
 	public void appendSelectionPanel(MachineBlockEntity machine, ConfigurationPanelBuilder builder)
 	{
 		if(!models.isEmpty())
@@ -177,7 +177,7 @@ public final class AestheticTeslaCoilComponent implements MachineComponent
 					() -> selectedModelIndex
 			);
 		}
-		
+
 		this.appendColorLine(builder, EI.text().colorRed(), this::redInt, (color) -> red = color);
 		this.appendColorLine(builder, EI.text().colorGreen(), this::greenInt, (color) -> green = color);
 		this.appendColorLine(builder, EI.text().colorBlue(), this::blueInt, (color) -> blue = color);

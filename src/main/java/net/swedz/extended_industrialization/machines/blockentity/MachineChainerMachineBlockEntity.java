@@ -221,7 +221,7 @@ public final class MachineChainerMachineBlockEntity extends MachineBlockEntity i
 		
 		if(rebuildsThisTick >= 10)
 		{
-			EI.LOGGER.warn("Prevented Machine Chainer in dimension '{}' at ({}) from rebuilding links {} times in the same tick!", level.dimension().location(), worldPosition.toShortString(), rebuildsThisTick);
+			EI.LOGGER.warn("Prevented Machine Chainer in dimension '{}' at ({}) from rebuilding links {} times in the same tick!", level.dimension().identifier(), worldPosition.toShortString(), rebuildsThisTick);
 		}
 		rebuildsThisTick = 0;
 	}

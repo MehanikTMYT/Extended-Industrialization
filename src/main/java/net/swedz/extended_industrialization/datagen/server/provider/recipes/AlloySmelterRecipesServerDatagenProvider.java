@@ -179,7 +179,7 @@ public final class AlloySmelterRecipesServerDatagenProvider extends RecipesServe
 				tag(TagHelper.itemCommon("ingots/zinc")),
 				tag(TagHelper.itemCommon("storage_blocks/zinc")),
 				1,
-				BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("create", "brass_ingot")).orElse(null),
+				BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("create", "brass_ingot")),
 				2,
 				output.withConditions(new ModLoadedCondition("create"))
 		);

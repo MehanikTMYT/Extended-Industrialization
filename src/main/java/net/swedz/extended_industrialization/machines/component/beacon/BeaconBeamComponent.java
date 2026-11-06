@@ -82,7 +82,7 @@ public final class BeaconBeamComponent implements MachineComponent.ClientOnly
 			}
 			else
 			{
-				if(state.getLightBlock(level, pos) >= 15 && !state.is(Blocks.BEDROCK))
+				if(state.getLightDampening() >= 15 && !state.is(Blocks.BEDROCK))
 				{
 					return List.of();
 				}
@@ -107,23 +107,18 @@ public final class BeaconBeamComponent implements MachineComponent.ClientOnly
 	@Override
 	public void writeClientNbt(net.minecraft.world.level.storage.ValueOutput tag)
 	{
-		var beamSectionsTag = new ListTag();
-		for(var section : beamSections)
-		{
-			beamSectionsTag.add(new IntArrayTag(new int[]{section.color(), section.height()}));
-		}
-		tag.put("beam_sections", beamSectionsTag);
+		var list = tag.list("beam_sections", com.mojang.serialization.Codec.INT_STREAM);
+		for(var section : beamSections) list.add(java.util.stream.IntStream.of(section.color(), section.height()));
 	}
 	
 	@Override
 	public void readClientNbt(net.minecraft.world.level.storage.ValueInput tag)
 	{
 		List<Section> sections = Lists.newArrayList();
-		var beamSectionsTag = tag.getList("beam_sections", Tag.TAG_INT_ARRAY);
-		for(int index = 0; index < beamSectionsTag.size(); index++)
+		for(var entry : tag.listOrEmpty("beam_sections", com.mojang.serialization.Codec.INT_STREAM))
 		{
-			var beamSectionTag = beamSectionsTag.getIntArray(index);
-			sections.add(new Section(beamSectionTag[0], beamSectionTag[1]));
+			var values = entry.toArray();
+			if(values.length == 2) sections.add(new Section(values[0], values[1]));
 		}
 		beamSections = Collections.unmodifiableList(sections);
 	}

@@ -24,7 +24,7 @@ public final class ElectricBeaconBlockEntityRenderer extends MultiblockMachineBE
 	
 	private static final class BeaconRenderState extends MachineRenderState
 	{
-		final List<BeaconRenderer.BeaconRenderState.Section> sections = new ArrayList<>();
+		final List<net.minecraft.client.renderer.blockentity.state.BeaconRenderState.Section> sections = new ArrayList<>();
 		float animationTime;
 		boolean active;
 	}
@@ -36,7 +36,7 @@ public final class ElectricBeaconBlockEntityRenderer extends MultiblockMachineBE
 	}
 	
 	@Override
-	public void extractRenderState(MultiblockMachineBlockEntity machine, MachineRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress)
+	public void extractRenderState(MultiblockMachineBlockEntity machine, MachineRenderState machineState, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress)
 	{
 		super.extractRenderState(machine, machineState, partialTicks, cameraPosition, breakProgress);
 		if(!(machine instanceof ElectricBeaconMachineBlockEntity beacon))
@@ -51,7 +51,7 @@ public final class ElectricBeaconBlockEntityRenderer extends MultiblockMachineBE
 			state.animationTime = Math.floorMod(beacon.getLevel().getGameTime(), 40) + partialTicks;
 			for(var section : beacon.getBeamSections())
 			{
-				state.sections.add(new BeaconRenderer.BeaconRenderState.Section(section.color(), section.height()));
+				state.sections.add(new net.minecraft.client.renderer.blockentity.state.BeaconRenderState.Section(section.color(), section.height()));
 			}
 		}
 	}

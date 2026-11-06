@@ -14,20 +14,35 @@ public abstract class NanoSuitDecorationModel extends HumanoidModel<HumanoidRend
 {
 	protected final ModelPart          root;
 	protected final NanoSuitDecoration decoration;
-	
+
 	public NanoSuitDecorationModel(ModelPart root, NanoSuitDecoration decoration)
 	{
 		super(root);
 		this.root = root;
 		this.decoration = decoration;
 	}
-	
+
 	public final boolean test(EquipmentSlot slot, ItemStack stack)
 	{
 		return stack.getItem() instanceof NanoSuitArmorItem item &&
 			   decoration.equipmentSlot() == slot && decoration.isActiveFor(item, stack);
 	}
-	
+
 	public abstract void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight,
 								NanoSuitArmorItem item, ItemStack stack, EquipmentSlot slot);
+	public void copyFrom(HumanoidModel<?> parent)
+	{
+		this.head.loadPose(parent.head.storePose());
+		this.hat.loadPose(parent.hat.storePose());
+		this.body.loadPose(parent.body.storePose());
+		this.leftArm.loadPose(parent.leftArm.storePose());
+		this.rightArm.loadPose(parent.rightArm.storePose());
+		this.leftLeg.loadPose(parent.leftLeg.storePose());
+		this.rightLeg.loadPose(parent.rightLeg.storePose());
+	}
+
+	public void setAllVisible(boolean visible)
+	{
+		for(var part : root().getAllParts()) part.visible = visible;
+	}
 }

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -63,7 +63,7 @@ public final class NanoSaberSweepEntityRenderer extends EntityRenderer<NanoSaber
 		if(model != null)
 		{
 			List<BlockStateModelPart> parts = new ArrayList<>();
-			model.collectParts(RandomSource.create(42), parts);
+			parts.add(model);
 			for(var part : parts)
 			{
 				state.quads.addAll(part.getQuads(null));
@@ -99,7 +99,7 @@ public final class NanoSaberSweepEntityRenderer extends EntityRenderer<NanoSaber
 		int color = state.color;
 		var instance = new QuadInstance();
 		instance.setColor(color);
-		instance.setLightCoords(LightTexture.FULL_BRIGHT);
+		instance.setLightCoords(LightCoordsUtil.FULL_BRIGHT);
 		var renderType = RenderTypes.entityCutout(EIClientSheets.NANO_SABER_SWEEP);
 		for(var quad : state.quads)
 		{

@@ -2,7 +2,7 @@ package net.swedz.extended_industrialization.mixin;
 
 import aztech.modern_industrialization.client.machines.MachineOverlayClient;
 import net.minecraft.client.Minecraft;
-import net.neoforged.neoforge.client.event.RenderHighlightEvent;
+import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent;
 import net.swedz.extended_industrialization.machines.blockentity.tesla.TeslaParticleGeneratorMachineBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,9 +20,9 @@ public class DontRenderWrenchStuffForParticleGeneratorMixin
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private static void onBlockOutline(RenderHighlightEvent.Block event, CallbackInfo callback)
+	private static void onBlockOutline(ExtractBlockOutlineRenderStateEvent event, CallbackInfo callback)
 	{
-		var target = event.getTarget();
+		var target = event.getHitResult();
 		var pos = target.getBlockPos();
 		var be = Minecraft.getInstance().level.getBlockEntity(pos);
 		if(be instanceof TeslaParticleGeneratorMachineBlockEntity)

@@ -307,7 +307,12 @@ public final class TeslaTowerBlockEntity extends BasicMultiblockMachineBlockEnti
 			if(redstoneControl.doAllowNormalOperation(this))
 			{
 				long amountToDrain = this.getPassiveDrain();
-				long drained = this.extractEnergy(amountToDrain, false);
+				long drained;
+				try(var transaction = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot())
+				{
+					drained = this.extractEnergy((int) Math.min(Integer.MAX_VALUE, amountToDrain), transaction);
+					transaction.commit();
+				}
 				if(drained == amountToDrain)
 				{
 					lastEnergyTransmitted = this.transmitEnergy(this.getMaxTransfer());

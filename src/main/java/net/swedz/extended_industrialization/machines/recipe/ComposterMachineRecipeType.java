@@ -46,7 +46,7 @@ public final class ComposterMachineRecipeType extends ProxyableMachineRecipeType
 		{
 			for(var item : BuiltInRegistries.ITEM)
 			{
-				if(!RegistryHelper.holder(BuiltInRegistries.ITEM, item).orElseThrow().is(EITags.GeneratedRecipesBlacklist.COMPOSTING))
+				if(!RegistryHelper.holder(BuiltInRegistries.ITEM, item).is(EITags.GeneratedRecipesBlacklist.COMPOSTING))
 				{
 					float chance = ComposterBlock.getValue(item.getDefaultInstance());
 					if(chance > 0f)
