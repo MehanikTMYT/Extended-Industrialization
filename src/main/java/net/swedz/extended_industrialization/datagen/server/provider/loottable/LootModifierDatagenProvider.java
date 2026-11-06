@@ -6,7 +6,7 @@ import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityEquipmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.TagPredicate;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,12 +32,12 @@ import net.swedz.tesseract.neoforge.compat.mi.loot.itempredicate.SimpleEnergyIte
 
 public final class LootModifierDatagenProvider extends GlobalLootModifierProvider
 {
-	public LootModifierDatagenProvider(GatherDataEvent.Client event)
+	public LootModifierDatagenProvider(GatherDataEvent event)
 	{
 		super(event.getGenerator().getPackOutput(), event.getLookupProvider(), EI.ID);
 	}
 	
-	private ItemPredicate.Builder nanoSaberPredicate(ElectricToolItem.Mode mode)
+	private ItemPredicate.Builder nanoSaberPredicate(ElectricToolItem.Mode mode, HolderLookup.Provider registries)
 	{
 		var components = DataComponentMatchers.components()
 				.partial(TesseractMILootConditions.ItemSubPredicates.SIMPLE_ENERGY_ITEM_HAS_CHARGE.get(), new SimpleEnergyItemHasChargePredicate());
@@ -46,25 +46,25 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 			components.partial(EILootModifiers.DataComponentPredicates.ELECTRIC_TOOL_MODE.get(), new ElectricToolModePredicate(mode));
 		}
 		return ItemPredicate.Builder.item()
-				.of(this.registries.lookupOrThrow(Registries.ITEM), EIItems.NANO_SABER.asItem())
+				.of(registries.lookupOrThrow(Registries.ITEM), EIItems.NANO_SABER.asItem())
 				.withComponents(components.build());
 	}
 	
-	private void addBeheading(EntityType entityType, float chance, Item headItem)
+	private void addBeheading(HolderLookup.Provider registries, EntityType entityType, float chance, Item headItem)
 	{
 		var typeKey = EntityType.getKey(entityType);
 		this.add(
 				"nano_saber/beheading/%s/%s".formatted(typeKey.getNamespace(), typeKey.getPath()),
 				new BeheadingLootModifier(
 						new LootItemCondition[]{
-								LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().of(this.registries.lookupOrThrow(Registries.ENTITY_TYPE), entityType)).build(),
+								LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().of(registries.lookupOrThrow(Registries.ENTITY_TYPE), entityType)).build(),
 								LootItemRandomChanceCondition.randomChance(chance).build(),
 								AnyOfCondition.anyOf(
 										DamageSourceCondition.hasDamageSource(new DamageSourcePredicate.Builder()
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP_BEHEADING, true))),
 										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
 												.equipment(new EntityEquipmentPredicate.Builder()
-														.mainhand(this.nanoSaberPredicate(ElectricToolItem.Mode.BEHEADING).build()))
+														.mainhand(this.nanoSaberPredicate(ElectricToolItem.Mode.BEHEADING, registries).build()))
 												.build()
 										).build()
 								).build()
@@ -76,7 +76,7 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 	}
 	
 	@Override
-	protected void start()
+	protected void start(HolderLookup.Provider registries)
 	{
 		this.add(
 				"nano_saber/auto_smelting",
@@ -87,7 +87,7 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 												.tag(new TagPredicate<>(EITags.DamageTypes.NANO_SABER_SWEEP, true))),
 										LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.DIRECT_ATTACKER, new EntityPredicate.Builder()
 												.equipment(new EntityEquipmentPredicate.Builder()
-														.mainhand(this.nanoSaberPredicate(null).build()))
+														.mainhand(this.nanoSaberPredicate(null, registries).build()))
 												.build()
 										).build()
 								).build()
@@ -98,10 +98,10 @@ public final class LootModifierDatagenProvider extends GlobalLootModifierProvide
 		
 		// This is the same drop chance as wither skeleton skulls with looting 10
 		float headChance = 0.125f;
-		this.addBeheading(EntityType.WITHER_SKELETON, headChance, Items.WITHER_SKELETON_SKULL);
-		this.addBeheading(EntityType.SKELETON, headChance, Items.SKELETON_SKULL);
-		this.addBeheading(EntityType.ZOMBIE, headChance, Items.ZOMBIE_HEAD);
-		this.addBeheading(EntityType.CREEPER, headChance, Items.CREEPER_HEAD);
-		this.addBeheading(EntityType.PIGLIN, headChance, Items.PIGLIN_HEAD);
+		this.addBeheading(registries, EntityType.WITHER_SKELETON, headChance, Items.WITHER_SKELETON_SKULL);
+		this.addBeheading(registries, EntityType.SKELETON, headChance, Items.SKELETON_SKULL);
+		this.addBeheading(registries, EntityType.ZOMBIE, headChance, Items.ZOMBIE_HEAD);
+		this.addBeheading(registries, EntityType.CREEPER, headChance, Items.CREEPER_HEAD);
+		this.addBeheading(registries, EntityType.PIGLIN, headChance, Items.PIGLIN_HEAD);
 	}
 }
