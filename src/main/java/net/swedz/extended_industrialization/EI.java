@@ -4,9 +4,11 @@ import aztech.modern_industrialization.MIText;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.guidebook.MultiblockShapeCompiler;
 import aztech.modern_industrialization.util.TextHelper;
+import com.google.common.collect.Lists;
 import guideme.Guide;
 import guideme.scene.element.SceneElementTagCompiler;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.EventPriority;
@@ -38,6 +40,7 @@ import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostT
 import net.swedz.tesseract.neoforge.compat.mi.tooltip.MIParser;
 import net.swedz.tesseract.neoforge.config.ModConfigFileAccess;
 import net.swedz.tesseract.neoforge.lang.LangManager;
+import net.swedz.tesseract.neoforge.lang.placeholder.placeholder.EnchantmentLangPlaceholder;
 import net.swedz.tesseract.neoforge.registry.holder.BlockHolder;
 import net.swedz.tesseract.neoforge.registry.holder.FluidHolder;
 import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
@@ -45,7 +48,9 @@ import net.swedz.tesseract.neoforge.tooltip.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static aztech.modern_industrialization.MITooltips.*;
+import java.util.List;
+
+import static net.swedz.extended_industrialization.EITextStyles.*;
 
 @Mod(EI.ID)
 public final class EI
@@ -79,6 +84,7 @@ public final class EI
 		EILootModifiers.init(bus);
 		EIMaterialRegistry.init();
 		EICreativeTabs.init(bus);
+		EICriterionTriggers.init(bus);
 		EIRecipeTypes.init(bus);
 		EISounds.init(bus);
 		EIModularSlotPanelSlots.init();
@@ -140,9 +146,9 @@ public final class EI
 	{
 		var instance = new LangManager(ID)
 				.builtinColorStyles()
-				.style("tooltip", () -> DEFAULT_STYLE)
-				.style("tooltip_subtext", () -> DEFAULT_STYLE.withItalic(true))
-				.style("highlighted", () -> HIGHLIGHT_STYLE)
+				.style("tooltip", DEFAULT_STYLE)
+				.style("tooltip_subtext", DEFAULT_STYLE.withItalic(true))
+				.style("highlighted", HIGHLIGHT_STYLE)
 				.style("rainbow", () -> Style.EMPTY.withColor(RainbowDataComponent.getCurrentRainbowColor()))
 				
 				.builtinParsers()
@@ -175,9 +181,33 @@ public final class EI
 				.parser(EuCostTransformer.class, () -> MIParser.EU_COST_TRANSFORMER_PARSER)
 				.parser(ElectricToolItem.Mode.class, () -> (mode) -> mode.text().name())
 				
-				.parser(EIText.EnchantmentWithLevelField.class, () -> (value) -> Parser.ENCHANTMENT_AND_LEVEL.parse(value.registry(), new Pair<>(value.enchantment(), value.level())))
-				.parser(EIText.EnchantmentField.class, () -> (value) -> Parser.ENCHANTMENT.parse(value.registry(), value.enchantment()))
+				.parser(
+						EIText.EnchantmentsWithLevelField.class,
+						(context, value) ->
+						{
+							List<Component> components = Lists.newArrayList();
+							for(var enchantment : value.enchantments())
+							{
+								components.add(Parser.ENCHANTMENT_AND_LEVEL.parse(value.registry(), new Pair<>(enchantment, value.level())));
+							}
+							return Parser.COMPONENTS_COMMA_SEPARATED.parse(context, components);
+						}
+				)
+				.parser(
+						EIText.EnchantmentsField.class,
+						(context, value) ->
+						{
+							List<Component> components = Lists.newArrayList();
+							for(var enchantment : value.enchantments())
+							{
+								components.add(Parser.ENCHANTMENT.parse(value.registry(), enchantment));
+							}
+							return Parser.COMPONENTS_COMMA_SEPARATED.parse(context, components);
+						}
+				)
 				.parser("enchantment_level", int.class, () -> Parser.ENCHANTMENT_LEVEL)
+				
+				.placeholder(new EnchantmentLangPlaceholder(HIGHLIGHT_STYLE))
 				
 				.build(EIText.class)
 				.load();

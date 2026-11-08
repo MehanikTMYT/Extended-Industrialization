@@ -1,0 +1,2 @@
+src/main/java/net/swedz/extended_industrialization/datagen/client/provider/models/BlockModelsDatagenProvider.java
+src/main/java/net/swedz/extended_industrialization/datagen/client/provider/models/ItemModelsDatagenProvider.java

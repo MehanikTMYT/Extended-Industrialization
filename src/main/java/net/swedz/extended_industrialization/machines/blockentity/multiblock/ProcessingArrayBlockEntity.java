@@ -16,6 +16,7 @@ import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import com.google.common.collect.Lists;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.swedz.extended_industrialization.EI;
 import net.swedz.extended_industrialization.EITags;

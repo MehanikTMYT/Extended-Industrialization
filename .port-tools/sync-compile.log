@@ -1,0 +1,1319 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/root/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Enabling dist annotations on PMJ
+
+> Task :neoFormListLibraries UP-TO-DATE
+> Task :neoFormListTransformLibraries UP-TO-DATE
+> Task :cacheVersionManifest26.1.2 UP-TO-DATE
+> Task :cacheVersionExecutableClient26.1.2 UP-TO-DATE
+> Task :cacheVersionExecutableServer26.1.2 UP-TO-DATE
+> Task :neoFormSetup UP-TO-DATE
+> Task :neoFormDecompile UP-TO-DATE
+> Task :neoFormPatch UP-TO-DATE
+> Task :neoFormPatchUserDev UP-TO-DATE
+> Task :neoFormTransformSource UP-TO-DATE
+> Task :neoFormRecompile UP-TO-DATE
+> Task :supplyRawJarForneoFormJoined26.1.2-1 UP-TO-DATE
+> Task :selectRawArtifactNg_dummy_ng.net.neoforged_neoforge_26.1.2.126 UP-TO-DATE
+
+> Task :compileJava
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:10: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.EntityPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:11: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:12: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ItemPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:14: error: cannot find symbol
+import net.minecraft.core.component.DataComponentPredicate;
+                                   ^
+  symbol:   class DataComponentPredicate
+  location: package net.minecraft.core.component
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:18: error: cannot find symbol
+import net.minecraft.resources.ResourceLocation;
+                              ^
+  symbol:   class ResourceLocation
+  location: package net.minecraft.resources
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:23: error: cannot find symbol
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+                                         ^
+  symbol:   class AdvancementProvider
+  location: package net.neoforged.neoforge.common.data
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:24: error: cannot find symbol
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+                                         ^
+  symbol:   class ExistingFileHelper
+  location: package net.neoforged.neoforge.common.data
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:43: error: cannot find symbol
+public final class AdvancementDatagenProvider extends AdvancementProvider
+                                                      ^
+  symbol: class AdvancementProvider
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:62: error: cannot find symbol
+	private static final class Generator implements AdvancementGenerator
+	                                                ^
+  symbol:   class AdvancementGenerator
+  location: class AdvancementDatagenProvider
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:65: error: cannot find symbol
+		public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> output, ExistingFileHelper existingFileHelper)
+		                                                                                         ^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:537: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:545: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:568: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:573: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:591: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:598: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:624: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:628: error: package ItemPredicate does not exist
+				List<ItemPredicate.Builder> itemPredicates,
+				                  ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:633: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:661: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:670: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:693: error: cannot find symbol
+				ResourceLocation parent,
+				^
+  symbol:   class ResourceLocation
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:698: error: cannot find symbol
+				ExistingFileHelper existingFileHelper
+				^
+  symbol:   class ExistingFileHelper
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.EntityPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:14: error: cannot find symbol
+public final class BuiltFullyNetheriteElectricBeaconTrigger extends SimpleCriterionTrigger<BuiltFullyNetheriteElectricBeaconTrigger.TriggerInstance>
+                                                                    ^
+  symbol: class SimpleCriterionTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:34: error: cannot find symbol
+	) implements SimpleInstance
+	             ^
+  symbol:   class SimpleInstance
+  location: class BuiltFullyNetheriteElectricBeaconTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:33: error: cannot find symbol
+			Optional<ContextAwarePredicate> player
+			         ^
+  symbol:   class ContextAwarePredicate
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.CriterionValidator;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.EntityPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:9: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:17: error: cannot find symbol
+public final class KilledByLethalTeslaCoilTrigger extends SimpleCriterionTrigger<KilledByLethalTeslaCoilTrigger.TriggerInstance>
+                                                          ^
+  symbol: class SimpleCriterionTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:44: error: package SimpleCriterionTrigger does not exist
+	) implements SimpleCriterionTrigger.SimpleInstance
+	                                   ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:42: error: cannot find symbol
+			Optional<ContextAwarePredicate> player,
+			         ^
+  symbol:   class ContextAwarePredicate
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:43: error: cannot find symbol
+			Optional<ContextAwarePredicate> entityPredicate
+			         ^
+  symbol:   class ContextAwarePredicate
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.EntityPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:14: error: cannot find symbol
+public final class LinkedManyChainersTrigger extends SimpleCriterionTrigger<LinkedManyChainersTrigger.TriggerInstance>
+                                                     ^
+  symbol: class SimpleCriterionTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:40: error: cannot find symbol
+	) implements SimpleInstance
+	             ^
+  symbol:   class SimpleInstance
+  location: class LinkedManyChainersTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:38: error: cannot find symbol
+			Optional<ContextAwarePredicate> player,
+			         ^
+  symbol:   class ContextAwarePredicate
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.EntityPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:14: error: cannot find symbol
+public final class MusicalTeslaCoilTrigger extends SimpleCriterionTrigger<MusicalTeslaCoilTrigger.TriggerInstance>
+                                                   ^
+  symbol: class SimpleCriterionTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:34: error: cannot find symbol
+	) implements SimpleInstance
+	             ^
+  symbol:   class SimpleInstance
+  location: class MusicalTeslaCoilTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:33: error: cannot find symbol
+			Optional<ContextAwarePredicate> player
+			         ^
+  symbol:   class ContextAwarePredicate
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:19: error: package EntityPredicate does not exist
+	public static Criterion<TriggerInstance> killedEntity(EntityPredicate.Builder entityPredicate)
+	                                                                     ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:54: error: cannot find symbol
+		public void validate(CriterionValidator validator)
+		                     ^
+  symbol:   class CriterionValidator
+  location: class TriggerInstance
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:4: error: package net.minecraft.advancements.critereon does not exist
+import net.minecraft.advancements.critereon.ItemSubPredicate;
+                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:9: error: cannot find symbol
+public record ItemStylizedPredicate() implements ItemSubPredicate
+                                                 ^
+  symbol: class ItemSubPredicate
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:529: warning: [removal] ItemHandlerHelper in net.neoforged.neoforge.items has been deprecated and marked for removal
+			totalDrops.forEach((drop) -> ItemHandlerHelper.giveItemToPlayer(player, drop));
+			                             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:529: warning: [removal] giveItemToPlayer(Player,ItemStack) in ItemHandlerHelper has been deprecated and marked for removal
+			totalDrops.forEach((drop) -> ItemHandlerHelper.giveItemToPlayer(player, drop));
+			                                              ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:890: error: no suitable constructor found for NanoSaberSweepEntity(Level,Player,Vec3,boolean,int,boolean,float,boolean)
+		var sweep = new NanoSaberSweepEntity(level, player, motion, quantum, colorRGB, rainbow, damage, getMode(stack) == Mode.BEHEADING);
+		            ^
+    constructor NanoSaberSweepEntity.NanoSaberSweepEntity(EntityType<? extends NanoSaberSweepEntity>,Level) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor NanoSaberSweepEntity.NanoSaberSweepEntity(Level,LivingEntity,Vec3,int,boolean,float,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/DatagenDelegatorServer.java:35: error: incompatible types: bad return type in method reference
+		add(event, AdvancementDatagenProvider::new);
+		           ^
+    AdvancementDatagenProvider cannot be converted to DataProvider
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:75: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:steel_curved_plate", 6)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:101: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:rubber_sheet", 2)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:131: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:133: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:143: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:145: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:156: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_wafer", 2)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:168: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_wafer", 2)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:188: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+							.itemIn("modern_industrialization:silicon_battery", 2)
+							^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:324: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("%s:superconductor_tesla_winding".formatted(EI.ID), 8)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:459: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:silicon_battery", 2)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:533: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("#c:plates/stainless_steel", 8)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:544: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("#c:plates/stainless_steel", 8)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:493: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+				.itemIn("modern_industrialization:electrum_cable", 64)
+				^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:494: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+				.itemOut("extended_industrialization:machine_chainer", 1)
+				^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:577: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:configurable_chest", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:579: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemIn("modern_industrialization:configurable_chest", 1)
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:580: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+						.itemOut("%s:large_configurable_chest".formatted(EI.ID), 1),
+						^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:656: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+							.itemIn("%s:%s_tesla_receiver_hatch".formatted(EI.ID, tier.name), 1)
+							^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:657: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+							.itemOut("%s:%s_machine_hull".formatted(MI.ID, casing), 1)
+							^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:658: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+							.itemOut("%s:tesla_receiver".formatted(EI.ID), 1),
+							^
+  where T is a type-variable:
+    T extends MIRecipeJson<?> declared in class MIRecipeJson
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:64: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:239: error: cannot find symbol
+					BuiltInRegistries.ITEM.get(EI.id("machine_chainer")).getDefaultInstance(),
+					                                                    ^
+  symbol:   method getDefaultInstance()
+  location: class Optional<Reference<Item>>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:299: error: package EntityPredicate does not exist
+									KilledByLethalTeslaCoilTrigger.killedEntity(EntityPredicate.Builder.entity().of(EntityType.WITHER))
+									                                                           ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:332: error: package ItemPredicate does not exist
+			Function<ItemLike, ItemPredicate.Builder> itemStylized = (item) ->
+			                                ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:333: error: package ItemPredicate does not exist
+					ItemPredicate.Builder.item()
+					             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:336: error: cannot find symbol
+									EILootModifiers.ItemSubPredicates.ITEM_STYLIZED.get(),
+									               ^
+  symbol:   variable ItemSubPredicates
+  location: class EILootModifiers
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:363: error: package ItemPredicate does not exist
+			Function<ItemLike, ItemPredicate.Builder> nanoGamer = (item) ->
+			                                ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:364: error: package ItemPredicate does not exist
+					ItemPredicate.Builder.item()
+					             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:366: error: cannot find symbol
+							.hasComponents(DataComponentPredicate.builder()
+							               ^
+  symbol:   variable DataComponentPredicate
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:404: error: package ItemPredicate does not exist
+							ItemPredicate.Builder.item()
+							             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:406: error: cannot find symbol
+									.hasComponents(DataComponentPredicate.builder()
+									               ^
+  symbol:   variable DataComponentPredicate
+  location: class Generator
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:606: error: cannot find symbol
+					BuiltInRegistries.ITEM.get(EI.id(icon)).getDefaultInstance(),
+					                                       ^
+  symbol:   method getDefaultInstance()
+  location: class Optional<Reference<Item>>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:612: error: package InventoryChangeTrigger does not exist
+									InventoryChangeTrigger.TriggerInstance.hasItems(itemsIds.stream()
+									                      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:649: error: package InventoryChangeTrigger does not exist
+							builder.addCriterion("inventory_changed_" + index, InventoryChangeTrigger.TriggerInstance.hasItems(predicate));
+							                                                                         ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:706: error: cannot find symbol
+					BuiltInRegistries.ITEM.get(EI.id(id)).getDefaultInstance(),
+					                                     ^
+  symbol:   method getDefaultInstance()
+  location: class Optional<Reference<Item>>
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/SolarBoilerMachineBlockEntity.java:243: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaParticleGeneratorMachineBlockEntity.java:146: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaReceiverMachineBlockEntity.java:249: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaReceiverHatchBlockEntity.java:324: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaCoilMachineBlockEntity.java:310: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/LethalTeslaCoilMachineBlockEntity.java:223: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/SolarPanelMachineBlockEntity.java:193: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/ProcessingArrayBlockEntity.java:122: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/teslatower/TeslaTowerBlockEntity.java:328: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/FarmerBlockEntity.java:67: warning: [removal] standardMultiblockScreen(MultiblockMachineBlockEntity,IsActiveComponent) in CommonGuiComponents has been deprecated and marked for removal
+		this.registerGuiComponent(CommonGuiComponents.standardMultiblockScreen(this, isActive));
+		                                             ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/ElectricFarmerBlockEntity.java:169: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/ElectricFarmerBlockEntity.java:175: error: method getTooltips in class FarmerBlockEntity cannot be applied to given types;
+		lines.addAll(super.getTooltips(context));
+		                  ^
+  required: no arguments
+  found:    TooltipContext
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/beacon/ElectricBeaconMachineBlockEntity.java:269: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:18: error: no suitable method found for register(String,BuiltFully[...]::new)
+	public static final Supplier<BuiltFullyNetheriteElectricBeaconTrigger> BUILT_FULLY_NETHERITE_ELECTRIC_BEACON = REGISTER.register("built_fully_netherite_electric_beacon", BuiltFullyNetheriteElectricBeaconTrigger::new);
+	                                                                                                                       ^
+    method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+      (inference variable I#1 has incompatible bounds
+        upper bounds: CriterionTrigger<?>
+        lower bounds: BuiltFullyNetheriteElectricBeaconTrigger)
+    method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+      (cannot infer type-variable(s) I#2
+        (argument mismatch; invalid constructor reference
+          constructor BuiltFullyNetheriteElectricBeaconTrigger in class BuiltFullyNetheriteElectricBeaconTrigger cannot be applied to given types
+            required: no arguments
+            found:    Identifier
+            reason: actual and formal argument lists differ in length))
+  where I#1,T,I#2 are type-variables:
+    I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+    T extends Object declared in class DeferredRegister
+    I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:19: error: no suitable method found for register(String,KilledByLe[...]::new)
+	public static final Supplier<KilledByLethalTeslaCoilTrigger>           KILLED_BY_LETHAL_TESLA_COIL           = REGISTER.register("killed_by_lethal_tesla_coil", KilledByLethalTeslaCoilTrigger::new);
+	                                                                                                                       ^
+    method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+      (inference variable I#1 has incompatible bounds
+        upper bounds: CriterionTrigger<?>
+        lower bounds: KilledByLethalTeslaCoilTrigger)
+    method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+      (cannot infer type-variable(s) I#2
+        (argument mismatch; invalid constructor reference
+          constructor KilledByLethalTeslaCoilTrigger in class KilledByLethalTeslaCoilTrigger cannot be applied to given types
+            required: no arguments
+            found:    Identifier
+            reason: actual and formal argument lists differ in length))
+  where I#1,T,I#2 are type-variables:
+    I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+    T extends Object declared in class DeferredRegister
+    I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:20: error: no suitable method found for register(String,LinkedMany[...]::new)
+	public static final Supplier<LinkedManyChainersTrigger>                LINKED_MANY_CHAINERS                  = REGISTER.register("linked_many_chainers", LinkedManyChainersTrigger::new);
+	                                                                                                                       ^
+    method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+      (inference variable I#1 has incompatible bounds
+        upper bounds: CriterionTrigger<?>
+        lower bounds: LinkedManyChainersTrigger)
+    method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+      (cannot infer type-variable(s) I#2
+        (argument mismatch; invalid constructor reference
+          constructor LinkedManyChainersTrigger in class LinkedManyChainersTrigger cannot be applied to given types
+            required: no arguments
+            found:    Identifier
+            reason: actual and formal argument lists differ in length))
+  where I#1,T,I#2 are type-variables:
+    I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+    T extends Object declared in class DeferredRegister
+    I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:21: error: no suitable method found for register(String,MusicalTes[...]::new)
+	public static final Supplier<MusicalTeslaCoilTrigger>                  MUSICAL_TESLA_COIL                    = REGISTER.register("musical_tesla_coil", MusicalTeslaCoilTrigger::new);
+	                                                                                                                       ^
+    method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+      (inference variable I#1 has incompatible bounds
+        upper bounds: CriterionTrigger<?>
+        lower bounds: MusicalTeslaCoilTrigger)
+    method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+      (cannot infer type-variable(s) I#2
+        (argument mismatch; invalid constructor reference
+          constructor MusicalTeslaCoilTrigger in class MusicalTeslaCoilTrigger cannot be applied to given types
+            required: no arguments
+            found:    Identifier
+            reason: actual and formal argument lists differ in length))
+  where I#1,T,I#2 are type-variables:
+    I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+    T extends Object declared in class DeferredRegister
+    I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+	public static Criterion<TriggerInstance> built()
+	                        ^
+  where T is a type-variable:
+    T extends CriterionTriggerInstance declared in record Criterion
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:18: error: cannot find symbol
+		return EICriterionTriggers.BUILT_FULLY_NETHERITE_ELECTRIC_BEACON.get().createCriterion(new TriggerInstance(Optional.empty()));
+		                                                                      ^
+  symbol:   method createCriterion(TriggerInstance)
+  location: class BuiltFullyNetheriteElectricBeaconTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:21: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:29: error: method trigger in class BuiltFullyNetheriteElectricBeaconTrigger cannot be applied to given types;
+		this.trigger(player, (instance) -> true);
+		    ^
+  required: ServerPlayer
+  found:    ServerPlayer,(instance)->true
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:38: error: package EntityPredicate does not exist
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player)
+						               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:19: error: type argument TriggerInstance is not within bounds of type-variable T
+	public static Criterion<TriggerInstance> killedEntity(EntityPredicate.Builder entityPredicate)
+	                        ^
+  where T is a type-variable:
+    T extends CriterionTriggerInstance declared in record Criterion
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:24: error: cannot find symbol
+						Optional.of(EntityPredicate.wrap(entityPredicate))
+						            ^
+  symbol:   variable EntityPredicate
+  location: class KilledByLethalTeslaCoilTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:21: error: cannot find symbol
+		return EICriterionTriggers.KILLED_BY_LETHAL_TESLA_COIL.get().createCriterion(
+		                                                            ^
+  symbol:   method createCriterion(TriggerInstance)
+  location: class KilledByLethalTeslaCoilTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:29: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:37: error: cannot find symbol
+		var context = EntityPredicate.createContext(player, entity);
+		              ^
+  symbol:   variable EntityPredicate
+  location: class KilledByLethalTeslaCoilTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:38: error: incompatible types: Entity is not a functional interface
+		this.trigger(player, (instance) -> instance.matches(player, context));
+		    ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:48: error: package EntityPredicate does not exist
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+						               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:49: error: package EntityPredicate does not exist
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(TriggerInstance::entityPredicate)
+						               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:53: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:56: error: package SimpleCriterionTrigger does not exist
+			SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
+			                      ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+	public static Criterion<TriggerInstance> linked(int count)
+	                        ^
+  where T is a type-variable:
+    T extends CriterionTriggerInstance declared in record Criterion
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:18: error: cannot find symbol
+		return EICriterionTriggers.LINKED_MANY_CHAINERS.get().createCriterion(
+		                                                     ^
+  symbol:   method createCriterion(TriggerInstance)
+  location: class LinkedManyChainersTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:26: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:34: error: incompatible types: int is not a functional interface
+		this.trigger(player, (instance) -> instance.matches(player, count));
+		    ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:44: error: package EntityPredicate does not exist
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+						               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+	public static Criterion<TriggerInstance> sing()
+	                        ^
+  where T is a type-variable:
+    T extends CriterionTriggerInstance declared in record Criterion
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:18: error: cannot find symbol
+		return EICriterionTriggers.MUSICAL_TESLA_COIL.get().createCriterion(new TriggerInstance(Optional.empty()));
+		                                                   ^
+  symbol:   method createCriterion(TriggerInstance)
+  location: class MusicalTeslaCoilTrigger
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:21: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:29: error: method trigger in class MusicalTeslaCoilTrigger cannot be applied to given types;
+		this.trigger(player, (instance) -> true);
+		    ^
+  required: ServerPlayer
+  found:    ServerPlayer,(instance)->true
+  reason: actual and formal argument lists differ in length
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:38: error: package EntityPredicate does not exist
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player)
+						               ^
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:13: error: cannot find symbol
+	public static final Codec<ItemStylizedPredicate> CODEC = Codec.unit(INSTANCE);
+	                                                              ^
+  symbol:   method unit(ItemStylizedPredicate)
+  location: interface Codec
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:17: error: cannot find symbol
+		return !stack.is(ItemTags.DYEABLE) ||
+		                         ^
+  symbol:   variable DYEABLE
+  location: class ItemTags
+/root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:27: error: method does not override or implement a method from a supertype
+	@Override
+	^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+114 errors
+24 warnings
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///root/home/forks/mi-stack/Extended-Industrialization/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/ElectricFarmerBlockEntity.java:175: error: method getTooltips in class FarmerBlockEntity cannot be applied to given types;
+  		lines.addAll(super.getTooltips(context));
+  		                  ^
+    required: no arguments
+    found:    TooltipContext
+    reason: actual and formal argument lists differ in length
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:29: error: method trigger in class BuiltFullyNetheriteElectricBeaconTrigger cannot be applied to given types;
+  		this.trigger(player, (instance) -> true);
+  		    ^
+    required: ServerPlayer
+    found:    ServerPlayer,(instance)->true
+    reason: actual and formal argument lists differ in length
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:29: error: method trigger in class MusicalTeslaCoilTrigger cannot be applied to given types;
+  		this.trigger(player, (instance) -> true);
+  		    ^
+    required: ServerPlayer
+    found:    ServerPlayer,(instance)->true
+    reason: actual and formal argument lists differ in length
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:890: error: no suitable constructor found for NanoSaberSweepEntity(Level,Player,Vec3,boolean,int,boolean,float,boolean)
+  		var sweep = new NanoSaberSweepEntity(level, player, motion, quantum, colorRGB, rainbow, damage, getMode(stack) == Mode.BEHEADING);
+  		            ^
+      constructor NanoSaberSweepEntity.NanoSaberSweepEntity(EntityType<? extends NanoSaberSweepEntity>,Level) is not applicable
+        (actual and formal argument lists differ in length)
+      constructor NanoSaberSweepEntity.NanoSaberSweepEntity(Level,LivingEntity,Vec3,int,boolean,float,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:18: error: no suitable method found for register(String,BuiltFully[...]::new)
+  	public static final Supplier<BuiltFullyNetheriteElectricBeaconTrigger> BUILT_FULLY_NETHERITE_ELECTRIC_BEACON = REGISTER.register("built_fully_netherite_electric_beacon", BuiltFullyNetheriteElectricBeaconTrigger::new);
+  	                                                                                                                       ^
+      method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+        (inference variable I#1 has incompatible bounds
+          upper bounds: CriterionTrigger<?>
+          lower bounds: BuiltFullyNetheriteElectricBeaconTrigger)
+      method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+        (cannot infer type-variable(s) I#2
+          (argument mismatch; invalid constructor reference
+            constructor BuiltFullyNetheriteElectricBeaconTrigger in class BuiltFullyNetheriteElectricBeaconTrigger cannot be applied to given types
+              required: no arguments
+              found:    Identifier
+              reason: actual and formal argument lists differ in length))
+    where I#1,T,I#2 are type-variables:
+      I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+      T extends Object declared in class DeferredRegister
+      I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:19: error: no suitable method found for register(String,KilledByLe[...]::new)
+  	public static final Supplier<KilledByLethalTeslaCoilTrigger>           KILLED_BY_LETHAL_TESLA_COIL           = REGISTER.register("killed_by_lethal_tesla_coil", KilledByLethalTeslaCoilTrigger::new);
+  	                                                                                                                       ^
+      method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+        (inference variable I#1 has incompatible bounds
+          upper bounds: CriterionTrigger<?>
+          lower bounds: KilledByLethalTeslaCoilTrigger)
+      method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+        (cannot infer type-variable(s) I#2
+          (argument mismatch; invalid constructor reference
+            constructor KilledByLethalTeslaCoilTrigger in class KilledByLethalTeslaCoilTrigger cannot be applied to given types
+              required: no arguments
+              found:    Identifier
+              reason: actual and formal argument lists differ in length))
+    where I#1,T,I#2 are type-variables:
+      I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+      T extends Object declared in class DeferredRegister
+      I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:20: error: no suitable method found for register(String,LinkedMany[...]::new)
+  	public static final Supplier<LinkedManyChainersTrigger>                LINKED_MANY_CHAINERS                  = REGISTER.register("linked_many_chainers", LinkedManyChainersTrigger::new);
+  	                                                                                                                       ^
+      method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+        (inference variable I#1 has incompatible bounds
+          upper bounds: CriterionTrigger<?>
+          lower bounds: LinkedManyChainersTrigger)
+      method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+        (cannot infer type-variable(s) I#2
+          (argument mismatch; invalid constructor reference
+            constructor LinkedManyChainersTrigger in class LinkedManyChainersTrigger cannot be applied to given types
+              required: no arguments
+              found:    Identifier
+              reason: actual and formal argument lists differ in length))
+    where I#1,T,I#2 are type-variables:
+      I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+      T extends Object declared in class DeferredRegister
+      I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/EICriterionTriggers.java:21: error: no suitable method found for register(String,MusicalTes[...]::new)
+  	public static final Supplier<MusicalTeslaCoilTrigger>                  MUSICAL_TESLA_COIL                    = REGISTER.register("musical_tesla_coil", MusicalTeslaCoilTrigger::new);
+  	                                                                                                                       ^
+      method DeferredRegister.<I#1>register(String,Supplier<? extends I#1>) is not applicable
+        (inference variable I#1 has incompatible bounds
+          upper bounds: CriterionTrigger<?>
+          lower bounds: MusicalTeslaCoilTrigger)
+      method DeferredRegister.<I#2>register(String,Function<Identifier,? extends I#2>) is not applicable
+        (cannot infer type-variable(s) I#2
+          (argument mismatch; invalid constructor reference
+            constructor MusicalTeslaCoilTrigger in class MusicalTeslaCoilTrigger cannot be applied to given types
+              required: no arguments
+              found:    Identifier
+              reason: actual and formal argument lists differ in length))
+    where I#1,T,I#2 are type-variables:
+      I#1 extends CriterionTrigger<?> declared in method <I#1>register(String,Supplier<? extends I#1>)
+      T extends Object declared in class DeferredRegister
+      I#2 extends CriterionTrigger<?> declared in method <I#2>register(String,Function<Identifier,? extends I#2>)
+  Note: Recompile with -Xlint:deprecation for details.
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:14: error: cannot find symbol
+  import net.minecraft.core.component.DataComponentPredicate;
+                                     ^
+    symbol:   class DataComponentPredicate
+    location: package net.minecraft.core.component
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:18: error: cannot find symbol
+  import net.minecraft.resources.ResourceLocation;
+                                ^
+    symbol:   class ResourceLocation
+    location: package net.minecraft.resources
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:23: error: cannot find symbol
+  import net.neoforged.neoforge.common.data.AdvancementProvider;
+                                           ^
+    symbol:   class AdvancementProvider
+    location: package net.neoforged.neoforge.common.data
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:24: error: cannot find symbol
+  import net.neoforged.neoforge.common.data.ExistingFileHelper;
+                                           ^
+    symbol:   class ExistingFileHelper
+    location: package net.neoforged.neoforge.common.data
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:62: error: cannot find symbol
+  	private static final class Generator implements AdvancementGenerator
+  	                                                ^
+    symbol:   class AdvancementGenerator
+    location: class AdvancementDatagenProvider
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:65: error: cannot find symbol
+  		public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> output, ExistingFileHelper existingFileHelper)
+  		                                                                                         ^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:537: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:545: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:568: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:573: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:591: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:598: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:624: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:633: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:661: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:670: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:693: error: cannot find symbol
+  				ResourceLocation parent,
+  				^
+    symbol:   class ResourceLocation
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:698: error: cannot find symbol
+  				ExistingFileHelper existingFileHelper
+  				^
+    symbol:   class ExistingFileHelper
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:34: error: cannot find symbol
+  	) implements SimpleInstance
+  	             ^
+    symbol:   class SimpleInstance
+    location: class BuiltFullyNetheriteElectricBeaconTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:33: error: cannot find symbol
+  			Optional<ContextAwarePredicate> player
+  			         ^
+    symbol:   class ContextAwarePredicate
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:42: error: cannot find symbol
+  			Optional<ContextAwarePredicate> player,
+  			         ^
+    symbol:   class ContextAwarePredicate
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:43: error: cannot find symbol
+  			Optional<ContextAwarePredicate> entityPredicate
+  			         ^
+    symbol:   class ContextAwarePredicate
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:40: error: cannot find symbol
+  	) implements SimpleInstance
+  	             ^
+    symbol:   class SimpleInstance
+    location: class LinkedManyChainersTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:38: error: cannot find symbol
+  			Optional<ContextAwarePredicate> player,
+  			         ^
+    symbol:   class ContextAwarePredicate
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:34: error: cannot find symbol
+  	) implements SimpleInstance
+  	             ^
+    symbol:   class SimpleInstance
+    location: class MusicalTeslaCoilTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:33: error: cannot find symbol
+  			Optional<ContextAwarePredicate> player
+  			         ^
+    symbol:   class ContextAwarePredicate
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:54: error: cannot find symbol
+  		public void validate(CriterionValidator validator)
+  		                     ^
+    symbol:   class CriterionValidator
+    location: class TriggerInstance
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:336: error: cannot find symbol
+  									EILootModifiers.ItemSubPredicates.ITEM_STYLIZED.get(),
+  									               ^
+    symbol:   variable ItemSubPredicates
+    location: class EILootModifiers
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:366: error: cannot find symbol
+  							.hasComponents(DataComponentPredicate.builder()
+  							               ^
+    symbol:   variable DataComponentPredicate
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:406: error: cannot find symbol
+  									.hasComponents(DataComponentPredicate.builder()
+  									               ^
+    symbol:   variable DataComponentPredicate
+    location: class Generator
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:24: error: cannot find symbol
+  						Optional.of(EntityPredicate.wrap(entityPredicate))
+  						            ^
+    symbol:   variable EntityPredicate
+    location: class KilledByLethalTeslaCoilTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:37: error: cannot find symbol
+  		var context = EntityPredicate.createContext(player, entity);
+  		              ^
+    symbol:   variable EntityPredicate
+    location: class KilledByLethalTeslaCoilTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:17: error: cannot find symbol
+  		return !stack.is(ItemTags.DYEABLE) ||
+  		                         ^
+    symbol:   variable DYEABLE
+    location: class ItemTags
+  Note: Recompile with -Xlint:unchecked for details.
+  Note: Some input files use or override a deprecated API.
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:64: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/SolarBoilerMachineBlockEntity.java:243: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaParticleGeneratorMachineBlockEntity.java:146: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaReceiverMachineBlockEntity.java:249: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaReceiverHatchBlockEntity.java:324: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/TeslaCoilMachineBlockEntity.java:310: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/tesla/LethalTeslaCoilMachineBlockEntity.java:223: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/SolarPanelMachineBlockEntity.java:193: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/ProcessingArrayBlockEntity.java:122: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/teslatower/TeslaTowerBlockEntity.java:328: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/ElectricFarmerBlockEntity.java:169: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/beacon/ElectricBeaconMachineBlockEntity.java:269: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:21: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:29: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:53: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:26: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:21: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:27: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:529: warning: [removal] ItemHandlerHelper in net.neoforged.neoforge.items has been deprecated and marked for removal
+  			totalDrops.forEach((drop) -> ItemHandlerHelper.giveItemToPlayer(player, drop));
+  			                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/item/ElectricToolItem.java:529: warning: [removal] giveItemToPlayer(Player,ItemStack) in ItemHandlerHelper has been deprecated and marked for removal
+  			totalDrops.forEach((drop) -> ItemHandlerHelper.giveItemToPlayer(player, drop));
+  			                                              ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:75: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:steel_curved_plate", 6)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:101: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:rubber_sheet", 2)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:131: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:133: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:143: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_n_doped_plate", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:145: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_p_doped_plate", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:156: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_wafer", 2)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:168: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_wafer", 2)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:188: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  							.itemIn("modern_industrialization:silicon_battery", 2)
+  							^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:324: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("%s:superconductor_tesla_winding".formatted(EI.ID), 8)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:459: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:silicon_battery", 2)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:533: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("#c:plates/stainless_steel", 8)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/CommonRecipesServerDatagenProvider.java:544: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("#c:plates/stainless_steel", 8)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:493: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  				.itemIn("modern_industrialization:electrum_cable", 64)
+  				^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:494: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+  				.itemOut("extended_industrialization:machine_chainer", 1)
+  				^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:577: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:configurable_chest", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:579: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemIn("modern_industrialization:configurable_chest", 1)
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:580: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+  						.itemOut("%s:large_configurable_chest".formatted(EI.ID), 1),
+  						^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:656: warning: [removal] itemIn(String,int) in MIRecipeJson has been deprecated and marked for removal
+  							.itemIn("%s:%s_tesla_receiver_hatch".formatted(EI.ID, tier.name), 1)
+  							^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:657: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+  							.itemOut("%s:%s_machine_hull".formatted(MI.ID, casing), 1)
+  							^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/recipes/MachineItemRecipesServerDatagenProvider.java:658: warning: [removal] itemOut(String,int) in MIRecipeJson has been deprecated and marked for removal
+  							.itemOut("%s:tesla_receiver".formatted(EI.ID), 1),
+  							^
+    where T is a type-variable:
+      T extends MIRecipeJson<?> declared in class MIRecipeJson
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/machines/blockentity/multiblock/farmer/FarmerBlockEntity.java:67: warning: [removal] standardMultiblockScreen(MultiblockMachineBlockEntity,IsActiveComponent) in CommonGuiComponents has been deprecated and marked for removal
+  		this.registerGuiComponent(CommonGuiComponents.standardMultiblockScreen(this, isActive));
+  		                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+  	public static Criterion<TriggerInstance> built()
+  	                        ^
+    where T is a type-variable:
+      T extends CriterionTriggerInstance declared in record Criterion
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:19: error: type argument TriggerInstance is not within bounds of type-variable T
+  	public static Criterion<TriggerInstance> killedEntity(EntityPredicate.Builder entityPredicate)
+  	                        ^
+    where T is a type-variable:
+      T extends CriterionTriggerInstance declared in record Criterion
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+  	public static Criterion<TriggerInstance> linked(int count)
+  	                        ^
+    where T is a type-variable:
+      T extends CriterionTriggerInstance declared in record Criterion
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:16: error: type argument TriggerInstance is not within bounds of type-variable T
+  	public static Criterion<TriggerInstance> sing()
+  	                        ^
+    where T is a type-variable:
+      T extends CriterionTriggerInstance declared in record Criterion
+  Note: Some input files use unchecked or unsafe operations.
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:239: error: cannot find symbol
+  					BuiltInRegistries.ITEM.get(EI.id("machine_chainer")).getDefaultInstance(),
+  					                                                    ^
+    symbol:   method getDefaultInstance()
+    location: class Optional<Reference<Item>>
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:606: error: cannot find symbol
+  					BuiltInRegistries.ITEM.get(EI.id(icon)).getDefaultInstance(),
+  					                                       ^
+    symbol:   method getDefaultInstance()
+    location: class Optional<Reference<Item>>
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:706: error: cannot find symbol
+  					BuiltInRegistries.ITEM.get(EI.id(id)).getDefaultInstance(),
+  					                                     ^
+    symbol:   method getDefaultInstance()
+    location: class Optional<Reference<Item>>
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:18: error: cannot find symbol
+  		return EICriterionTriggers.BUILT_FULLY_NETHERITE_ELECTRIC_BEACON.get().createCriterion(new TriggerInstance(Optional.empty()));
+  		                                                                      ^
+    symbol:   method createCriterion(TriggerInstance)
+    location: class BuiltFullyNetheriteElectricBeaconTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:21: error: cannot find symbol
+  		return EICriterionTriggers.KILLED_BY_LETHAL_TESLA_COIL.get().createCriterion(
+  		                                                            ^
+    symbol:   method createCriterion(TriggerInstance)
+    location: class KilledByLethalTeslaCoilTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:18: error: cannot find symbol
+  		return EICriterionTriggers.LINKED_MANY_CHAINERS.get().createCriterion(
+  		                                                     ^
+    symbol:   method createCriterion(TriggerInstance)
+    location: class LinkedManyChainersTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:18: error: cannot find symbol
+  		return EICriterionTriggers.MUSICAL_TESLA_COIL.get().createCriterion(new TriggerInstance(Optional.empty()));
+  		                                                   ^
+    symbol:   method createCriterion(TriggerInstance)
+    location: class MusicalTeslaCoilTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:13: error: cannot find symbol
+  	public static final Codec<ItemStylizedPredicate> CODEC = Codec.unit(INSTANCE);
+  	                                                              ^
+    symbol:   method unit(ItemStylizedPredicate)
+    location: interface Codec
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/DatagenDelegatorServer.java:35: error: incompatible types: bad return type in method reference
+  		add(event, AdvancementDatagenProvider::new);
+  		           ^
+      AdvancementDatagenProvider cannot be converted to DataProvider
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:38: error: incompatible types: Entity is not a functional interface
+  		this.trigger(player, (instance) -> instance.matches(player, context));
+  		    ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:34: error: incompatible types: int is not a functional interface
+  		this.trigger(player, (instance) -> instance.matches(player, count));
+  		    ^
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:43: error: cannot find symbol
+  public final class AdvancementDatagenProvider extends AdvancementProvider
+                                                        ^
+    symbol: class AdvancementProvider
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:14: error: cannot find symbol
+  public final class BuiltFullyNetheriteElectricBeaconTrigger extends SimpleCriterionTrigger<BuiltFullyNetheriteElectricBeaconTrigger.TriggerInstance>
+                                                                      ^
+    symbol: class SimpleCriterionTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:17: error: cannot find symbol
+  public final class KilledByLethalTeslaCoilTrigger extends SimpleCriterionTrigger<KilledByLethalTeslaCoilTrigger.TriggerInstance>
+                                                            ^
+    symbol: class SimpleCriterionTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:14: error: cannot find symbol
+  public final class LinkedManyChainersTrigger extends SimpleCriterionTrigger<LinkedManyChainersTrigger.TriggerInstance>
+                                                       ^
+    symbol: class SimpleCriterionTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:14: error: cannot find symbol
+  public final class MusicalTeslaCoilTrigger extends SimpleCriterionTrigger<MusicalTeslaCoilTrigger.TriggerInstance>
+                                                     ^
+    symbol: class SimpleCriterionTrigger
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:9: error: cannot find symbol
+  public record ItemStylizedPredicate() implements ItemSubPredicate
+                                                   ^
+    symbol: class ItemSubPredicate
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:10: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.EntityPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:11: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:12: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ItemPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:628: error: package ItemPredicate does not exist
+  				List<ItemPredicate.Builder> itemPredicates,
+  				                  ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.EntityPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.CriterionValidator;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.EntityPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:9: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:44: error: package SimpleCriterionTrigger does not exist
+  	) implements SimpleCriterionTrigger.SimpleInstance
+  	                                   ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.EntityPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:6: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ContextAwarePredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:7: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.EntityPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:8: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:19: error: package EntityPredicate does not exist
+  	public static Criterion<TriggerInstance> killedEntity(EntityPredicate.Builder entityPredicate)
+  	                                                                     ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/lootmodifier/ItemStylizedPredicate.java:4: error: package net.minecraft.advancements.critereon does not exist
+  import net.minecraft.advancements.critereon.ItemSubPredicate;
+                                             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:299: error: package EntityPredicate does not exist
+  									KilledByLethalTeslaCoilTrigger.killedEntity(EntityPredicate.Builder.entity().of(EntityType.WITHER))
+  									                                                           ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:332: error: package ItemPredicate does not exist
+  			Function<ItemLike, ItemPredicate.Builder> itemStylized = (item) ->
+  			                                ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:333: error: package ItemPredicate does not exist
+  					ItemPredicate.Builder.item()
+  					             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:363: error: package ItemPredicate does not exist
+  			Function<ItemLike, ItemPredicate.Builder> nanoGamer = (item) ->
+  			                                ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:364: error: package ItemPredicate does not exist
+  					ItemPredicate.Builder.item()
+  					             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:404: error: package ItemPredicate does not exist
+  							ItemPredicate.Builder.item()
+  							             ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:612: error: package InventoryChangeTrigger does not exist
+  									InventoryChangeTrigger.TriggerInstance.hasItems(itemsIds.stream()
+  									                      ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/datagen/server/provider/advancements/AdvancementDatagenProvider.java:649: error: package InventoryChangeTrigger does not exist
+  							builder.addCriterion("inventory_changed_" + index, InventoryChangeTrigger.TriggerInstance.hasItems(predicate));
+  							                                                                         ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/BuiltFullyNetheriteElectricBeaconTrigger.java:38: error: package EntityPredicate does not exist
+  						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player)
+  						               ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:48: error: package EntityPredicate does not exist
+  						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+  						               ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:49: error: package EntityPredicate does not exist
+  						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(TriggerInstance::entityPredicate)
+  						               ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/KilledByLethalTeslaCoilTrigger.java:56: error: package SimpleCriterionTrigger does not exist
+  			SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
+  			                      ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/LinkedManyChainersTrigger.java:44: error: package EntityPredicate does not exist
+  						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+  						               ^
+  /root/home/forks/mi-stack/Extended-Industrialization/src/main/java/net/swedz/extended_industrialization/advancement/MusicalTeslaCoilTrigger.java:38: error: package EntityPredicate does not exist
+  						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player)
+  						               ^
+  114 errors
+  24 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 4s
+15 actionable tasks: 1 executed, 14 up-to-date

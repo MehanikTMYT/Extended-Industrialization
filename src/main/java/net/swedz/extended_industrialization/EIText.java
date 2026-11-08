@@ -13,11 +13,15 @@ import net.minecraft.world.level.material.Fluid;
 import net.swedz.extended_industrialization.item.ElectricToolItem;
 import net.swedz.tesseract.neoforge.api.WorldPos;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostTransformer;
+import net.swedz.tesseract.neoforge.lang.annotation.Contextual;
 import net.swedz.tesseract.neoforge.lang.annotation.LangKey;
 import net.swedz.tesseract.neoforge.lang.annotation.Parsed;
 import net.swedz.tesseract.neoforge.lang.annotation.ParsedDecimal;
 import net.swedz.tesseract.neoforge.lang.annotation.WithStyle;
+import net.swedz.tesseract.neoforge.lang.annotation.WithStyleSeparator;
 import net.swedz.tesseract.neoforge.tooltip.Parser;
+
+import java.util.List;
 
 public interface EIText
 {
@@ -224,9 +228,9 @@ public interface EIText
 			@Parsed("block") @WithStyle("highlighted") Identifier blockId
 	);
 	
-	record EnchantmentWithLevelField(
+	record EnchantmentsWithLevelField(
 			HolderLookup.Provider registry,
-			ResourceKey<Enchantment> enchantment,
+			List<ResourceKey<Enchantment>> enchantments,
 			int level
 	)
 	{
@@ -236,23 +240,23 @@ public interface EIText
 	@WithStyle("tooltip")
 	@Deprecated
 	MutableComponent enchantmentModuleSingleValue(
-			@WithStyle("highlighted") EnchantmentWithLevelField enchantment,
+			@WithStyleSeparator(separator = "tooltip", element = "highlighted") EnchantmentsWithLevelField enchantment,
 			@Parsed("eu_per_tick") @WithStyle("highlighted") long euPerTick
 	);
 	
 	default MutableComponent enchantmentModuleSingleValue(
 			HolderLookup.Provider registry,
-			ResourceKey<Enchantment> enchantment,
+			List<ResourceKey<Enchantment>> enchantments,
 			int level,
 			long euPerTick
 	)
 	{
-		return this.enchantmentModuleSingleValue(new EnchantmentWithLevelField(registry, enchantment, level), euPerTick);
+		return this.enchantmentModuleSingleValue(new EnchantmentsWithLevelField(registry, enchantments, level), euPerTick);
 	}
 	
-	record EnchantmentField(
+	record EnchantmentsField(
 			HolderLookup.Provider registry,
-			ResourceKey<Enchantment> enchantment
+			List<ResourceKey<Enchantment>> enchantments
 	)
 	{
 	}
@@ -261,16 +265,22 @@ public interface EIText
 	@WithStyle("tooltip")
 	@Deprecated
 	MutableComponent enchantmentModuleValues(
-			@WithStyle("highlighted") EnchantmentField enchantment
+			@WithStyleSeparator(separator = "tooltip", element = "highlighted") EnchantmentsField enchantment
 	);
 	
 	default MutableComponent enchantmentModuleValues(
 			HolderLookup.Provider registry,
-			ResourceKey<Enchantment> enchantment
+			List<ResourceKey<Enchantment>> enchantments
 	)
 	{
-		return this.enchantmentModuleValues(new EnchantmentField(registry, enchantment));
+		return this.enchantmentModuleValues(new EnchantmentsField(registry, enchantments));
 	}
+	
+	@LangKey(text = "When using <enchantment:fortune>, all drops will be increased, not just ones that are typically affected by <enchantment:fortune>.")
+	@WithStyle("tooltip")
+	MutableComponent farmerEnhancedFortune(
+			@Contextual HolderLookup.Provider registries
+	);
 	
 	@LangKey(text = "Not Tilling")
 	MutableComponent farmerNotTilling();
@@ -381,6 +391,12 @@ public interface EIText
 	@LangKey(text = "Can connect to other machine chainers, but it must not link back to itself.")
 	@WithStyle("tooltip")
 	MutableComponent machineChainerHelp3();
+	
+	@LangKey(text = "Can only transfer up to %s times as much energy as the cables of its voltage.")
+	@WithStyle("tooltip")
+	MutableComponent machineChainerHelpMaxTransfer(
+			@WithStyle("highlighted") int maxTransferMultiplier
+	);
 	
 	@LangKey(text = "Problem at: %s")
 	MutableComponent machineChainerProblemAt(

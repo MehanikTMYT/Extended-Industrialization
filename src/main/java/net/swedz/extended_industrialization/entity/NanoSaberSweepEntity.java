@@ -34,11 +34,13 @@ import java.util.function.Predicate;
 
 public final class NanoSaberSweepEntity extends Projectile
 {
+	private static final EntityDataAccessor<Boolean> DATA_QUANTUM = SynchedEntityData.defineId(NanoSaberSweepEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> DATA_COLOR   = SynchedEntityData.defineId(NanoSaberSweepEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> DATA_RAINBOW = SynchedEntityData.defineId(NanoSaberSweepEntity.class, EntityDataSerializers.BOOLEAN);
 	
 	private long ticks;
 	
+	private boolean quantum;
 	private int     color;
 	private boolean rainbow;
 	private float   power;
@@ -50,11 +52,12 @@ public final class NanoSaberSweepEntity extends Projectile
 	}
 	
 	public NanoSaberSweepEntity(Level level, LivingEntity owner, Vec3 movement,
-								int color, boolean rainbow,
+								boolean quantum, int color, boolean rainbow,
 								float power, boolean beheading)
 	{
 		super(EIEntities.NANO_SABER_SWEEP.get(), level);
 		
+		this.setQuantum(quantum);
 		this.setOwner(owner);
 		this.setDeltaMovement(movement.normalize().multiply(3, 3, 3));
 		
@@ -62,6 +65,18 @@ public final class NanoSaberSweepEntity extends Projectile
 		this.setRainbow(rainbow);
 		this.setPower(power);
 		this.setBeheading(beheading);
+	}
+	
+	public boolean isQuantum()
+	{
+		return quantum;
+	}
+	
+	public void setQuantum(boolean quantum)
+	{
+		this.quantum = quantum;
+		
+		entityData.set(DATA_QUANTUM, quantum);
 	}
 	
 	public int getColor()
@@ -239,6 +254,7 @@ public final class NanoSaberSweepEntity extends Projectile
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
+		builder.define(DATA_QUANTUM, quantum);
 		builder.define(DATA_COLOR, color);
 		builder.define(DATA_RAINBOW, rainbow);
 	}
@@ -246,7 +262,11 @@ public final class NanoSaberSweepEntity extends Projectile
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key)
 	{
-		if(key.equals(DATA_COLOR))
+		if(key.equals(DATA_QUANTUM))
+		{
+			quantum = entityData.get(DATA_QUANTUM);
+		}
+		else if(key.equals(DATA_COLOR))
 		{
 			color = entityData.get(DATA_COLOR);
 		}

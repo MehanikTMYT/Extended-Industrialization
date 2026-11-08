@@ -24,6 +24,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.swedz.extended_industrialization.EI;
@@ -275,6 +276,10 @@ public final class TeslaCoilMachineBlockEntity extends MachineBlockEntity implem
 				if(!singing.hasNote())
 				{
 					lastEnergyTransmitted = this.transmitEnergy(this.getMaxTransfer());
+				}
+				else
+				{
+					singing.maybeRewardPlayer();
 				}
 				active = true;
 			}

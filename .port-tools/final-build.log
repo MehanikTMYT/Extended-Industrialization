@@ -1,0 +1,48 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/root/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+The message received from the daemon indicates that the daemon has disappeared.
+Build request sent: Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization}
+Attempting to read last messages from the daemon log...
+Daemon pid: 3863065
+  log file: /root/.gradle/daemon/9.2.1/daemon-3863065.out.log
+----- Last 20 lines from daemon log file - daemon-3863065.out.log -----
+2026-11-06T17:11:51.286+0300 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 170: Received non-IO message from client: Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization}
+2026-11-06T17:11:51.287+0300 [INFO] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received command: Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization}.
+2026-11-06T17:11:51.287+0300 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Starting executing command: Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization} with connection: socket connection from /127.0.0.1:38263 to /127.0.0.1:39768.
+2026-11-06T17:11:51.297+0300 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: started DaemonCommandExecution[command = Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:38263 to /127.0.0.1:39768] after 0.08373333333333334 minutes of idle
+2026-11-06T17:11:51.298+0300 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as busy, address: [cf5f4987-f2f2-4b2d-8da7-b0bfcdc80734 port:38263, addresses:[localhost/127.0.0.1]]
+2026-11-06T17:11:51.298+0300 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [cf5f4987-f2f2-4b2d-8da7-b0bfcdc80734 port:38263, addresses:[localhost/127.0.0.1]]
+2026-11-06T17:11:51.298+0300 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+2026-11-06T17:11:51.298+0300 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+2026-11-06T17:11:51.300+0300 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+2026-11-06T17:11:51.301+0300 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+2026-11-06T17:11:51.302+0300 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+2026-11-06T17:11:51.305+0300 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=58969f8c-ea1b-4eb2-8916-dc96e1b62cc8, currentDir=/root/home/forks/mi-stack/Extended-Industrialization}. Dispatching build started information...
+2026-11-06T17:11:51.305+0300 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 39: dispatching org.gradle.launcher.daemon.protocol.BuildStarted@6aee59c9
+2026-11-06T17:11:51.306+0300 [DEBUG] [org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment] Configuring env variables: [PATH, NO_PROXY, LESSCLOSE, XDG_DATA_DIRS, OPENCODE_SESSION_ID, OPENCODE_TERMINAL, TERM, LANG, DBUS_SESSION_BUS_ADDRESS, XDG_SESSION_ID, XDG_SESSION_TYPE, AGENT, LOGNAME, PWD, XDG_SESSION_CLASS, _, no_proxy, SHELL, LESSOPEN, SSH_CLIENT, SSH_TTY, AI_AGENT, OLDPWD, USER, OPENCODE, SSH_CONNECTION, LS_COLORS, XDG_RUNTIME_DIR, SHLVL, HOME]
+2026-11-06T17:11:51.307+0300 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+2026-11-06T17:11:51.307+0300 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 3863065). The daemon log file: /root/.gradle/daemon/9.2.1/daemon-3863065.out.log
+2026-11-06T17:11:51.348+0300 [INFO] [org.gradle.launcher.daemon.server.exec.LogAndCheckHealth] Starting 2nd build in daemon [uptime: 1 mins 59.536 secs, performance: 98%, GC rate: 0.00/s, heap usage: 0% of 2 GiB]
+2026-11-06T17:11:51.349+0300 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+2026-11-06T17:11:51.350+0300 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=92d4352e-0b10-46cb-94a2-cf7fc2f25704,javaHome=/usr/lib/jvm/java-25-openjdk-amd64,javaVersion=25,javaVendor=Ubuntu,daemonRegistryDir=/root/.gradle/daemon,pid=3863065,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-Xmx2G,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]
+Daemon vm is shutting down... The daemon has exited normally or was terminated in response to a user interrupt.----- End of the daemon log -----
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Gradle build daemon disappeared unexpectedly (it may have been killed or may have crashed)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
